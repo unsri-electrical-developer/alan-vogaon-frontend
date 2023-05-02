@@ -29,7 +29,7 @@ const Brand = ({ children }) => {
                 <Link to="/dashboard">
                     <img
                         src="/assets/images/logos/logo.webp"
-                        alt="wika realty"
+                        alt="Vogaon"
                         height={20}
                     />
                 </Link>

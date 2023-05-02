@@ -48,7 +48,7 @@ const Footer = () => {
                 className="text-primary fw-bold"
                 rel="noopener noreferrer"
               >
-                Wika Realty.
+                Vogaon.
               </a>{" "}
               All rights reserved.
             </p>

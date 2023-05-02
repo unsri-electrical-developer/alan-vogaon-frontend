@@ -88,7 +88,7 @@ const SignIn = () => {
                         <Link to="/home">
                             <img
                                 src="/assets/images/logos/logo.webp"
-                                alt="wika realty"
+                                alt="Vogaon"
                                 className={classes.logo}
                             />
                         </Link>

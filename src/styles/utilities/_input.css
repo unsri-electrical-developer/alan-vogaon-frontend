@@ -1,0 +1,13 @@
+._input-image {
+    border: 1px solid rgba(0, 0, 0, 0.23);
+    border-radius: 4px;
+    padding: 13px 10px;
+}
+._input-image .placeholder {
+    position: absolute;
+    top: -10px;
+    background: #fff;
+    padding: 0px 5px;
+    font-size: 11px;
+    color: rgba(0, 0, 0, 0.4);
+}

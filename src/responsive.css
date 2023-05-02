@@ -1,0 +1,19 @@
+@media (min-width: 992px) {
+    .m-footer .container-social {
+        justify-content: flex-start !important;
+    }
+    .m-footer .btn-social {
+        width: 45px !important;
+        height: 45px !important;
+        border-radius: 45px !important;
+        margin-right: 10px;
+    }
+    .m-footer .btn-social img {
+        width: 20px !important;
+        height: 20px !important;
+    }
+    .tabs-produk .nav-link {
+        width: max-content;
+        text-align: left;
+    }
+}

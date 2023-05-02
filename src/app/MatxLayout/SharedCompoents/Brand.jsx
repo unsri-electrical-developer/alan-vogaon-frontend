@@ -30,7 +30,7 @@ const Brand = ({ children }) => {
                     <img
                         src="/assets/images/logos/logo.webp"
                         alt="wika realty"
-                        height={45}
+                        height={20}
                     />
                 </Link>
             </div>

@@ -1,29 +1,4 @@
-<<<<<<< HEAD
 import { authRoles } from './auth/authRoles';
-
-export const navigations = [
-  {
-    name: 'Dashboard',
-    path: '/dashboard',
-    icon: 'dashboard_customize',
-    auth: authRoles.all,
-  },
-  {
-    name: 'Users',
-    path: '/sertifikat_penghargaan',
-    icon: 'dashboard_customize',
-    auth: authRoles.all,
-  },
-  {
-    name: 'Games',
-    icon: 'manage_accounts',
-    auth: authRoles.all,
-    children: [
-      {
-        name: 'Category',
-        path: '/kategori_manajemen',
-=======
-import { authRoles } from "./auth/authRoles";
 import {
   ic_dashboard,
   ic_games,
@@ -32,109 +7,109 @@ import {
   ic_slider,
   ic_transaction,
   ic_user,
-} from "./assets/components/exportIcons";
+} from './assets/components/exportIcons';
 
 export const navigations = [
   {
-    name: "Dashboard",
-    path: "/dashboard",
+    name: 'Dashboard',
+    path: '/dashboard',
     icon: ic_dashboard(),
     auth: authRoles.all,
+    exact: true,
   },
   {
-    name: "Users",
-    path: "/users",
+    name: 'Users',
+    path: '/users',
     icon: ic_user(),
     auth: authRoles.all,
+    exact: true,
   },
   {
-    name: "Games",
+    name: 'Games',
     icon: ic_games(),
     auth: authRoles.all,
     children: [
       {
-        name: "Category",
-        path: "/games_category",
->>>>>>> 170b5c39287197918714e412fb8ca55689d12c8f
+        name: 'Category',
+        path: '/games_category',
         auth: authRoles.all,
+        exact: true,
       },
       {
         name: 'List Games',
         path: '/data_manajemen',
         auth: authRoles.all,
+        exact: true,
       },
     ],
   },
   {
-<<<<<<< HEAD
     name: 'Sliders',
     path: '/sliders',
-    icon: 'dashboard_customize',
+    icon: ic_slider(),
     auth: authRoles.all,
+    exact: true,
   },
   {
     name: 'Payment Method',
-    path: '/payment_gateway',
-    icon: 'dashboard_customize',
+    icon: ic_payment(),
     auth: authRoles.all,
+    children: [
+      {
+        name: 'Gateway',
+        path: '/payment_gateway',
+        auth: authRoles.all,
+        exact: true,
+      },
+      {
+        name: 'Method',
+        path: '/payment_method',
+        auth: authRoles.all,
+        exact: true,
+      },
+    ],
   },
   {
     name: 'Transaction',
     path: '/404',
-    icon: 'dashboard_customize',
+    icon: ic_transaction(),
     auth: authRoles.all,
+    exact: true,
   },
   {
     name: 'Settings',
-    icon: 'manage_accounts',
-=======
-    name: "Sliders",
-    path: "/404",
-    icon: ic_slider(),
-    auth: authRoles.all,
-  },
-  {
-    name: "Payment Method",
-    path: "/404",
-    icon: ic_payment(),
-    auth: authRoles.all,
-  },
-  {
-    name: "Transaction",
-    path: "/404",
-    icon: ic_transaction(),
-    auth: authRoles.all,
-  },
-  {
-    name: "Settings",
     icon: ic_setting(),
->>>>>>> 170b5c39287197918714e412fb8ca55689d12c8f
     auth: authRoles.all,
     children: [
       {
         name: 'General Indo',
         path: '/404',
         auth: authRoles.all,
+        exact: true,
       },
       {
         name: 'FAQ',
         path: '/404',
         auth: authRoles.all,
+        exact: true,
       },
       {
         name: 'FAQ',
         path: '/404',
         auth: authRoles.all,
+        exact: true,
       },
       {
         name: 'S&K',
         path: '/404',
         auth: authRoles.all,
+        exact: true,
       },
       {
         name: 'Privacy Policy',
         path: '/404',
         auth: authRoles.all,
+        exact: true,
       },
     ],
   },

@@ -1,26 +1,35 @@
 import { authRoles } from "./auth/authRoles";
+import {
+  ic_dashboard,
+  ic_games,
+  ic_payment,
+  ic_setting,
+  ic_slider,
+  ic_transaction,
+  ic_user,
+} from "./assets/components/exportIcons";
 
 export const navigations = [
   {
     name: "Dashboard",
     path: "/dashboard",
-    icon: "dashboard_customize",
+    icon: ic_dashboard(),
     auth: authRoles.all,
   },
   {
     name: "Users",
-    path: "/sertifikat_penghargaan",
-    icon: "dashboard_customize",
+    path: "/users",
+    icon: ic_user(),
     auth: authRoles.all,
   },
   {
     name: "Games",
-    icon: "manage_accounts",
+    icon: ic_games(),
     auth: authRoles.all,
     children: [
       {
         name: "Category",
-        path: "/kategori_manajemen",
+        path: "/games_category",
         auth: authRoles.all,
       },
       {
@@ -33,24 +42,24 @@ export const navigations = [
   {
     name: "Sliders",
     path: "/404",
-    icon: "dashboard_customize",
+    icon: ic_slider(),
     auth: authRoles.all,
   },
   {
     name: "Payment Method",
     path: "/404",
-    icon: "dashboard_customize",
+    icon: ic_payment(),
     auth: authRoles.all,
   },
   {
     name: "Transaction",
     path: "/404",
-    icon: "dashboard_customize",
+    icon: ic_transaction(),
     auth: authRoles.all,
   },
   {
     name: "Settings",
-    icon: "manage_accounts",
+    icon: ic_setting(),
     auth: authRoles.all,
     children: [
       {

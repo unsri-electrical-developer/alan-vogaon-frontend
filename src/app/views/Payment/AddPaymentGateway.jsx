@@ -70,24 +70,16 @@ const AddPaymentGateway = () => {
         alignItems="center"
       >
         <Grid item xs={12} sm>
-          <h1 className="font-semibold text-25" style={{ color: '#0A0A0A' }}>
-            Add Payment Gateway
-          </h1>
+          <h1 className="fw-600 text-25 text-black">Add Payment Gateway</h1>
         </Grid>
-        <Grid
-          item
-          xs={12}
-          sm
-          className="d-flex mr-4"
-          style={{ justifyContent: 'flex-end' }}
-        >
+        <Grid item xs={12} sm className="d-flex mr-4 justify-end">
           <Button
             variant="contained"
             color="primary"
-            className="px-15 py-3"
+            className="px-15 py-3 text-white fw-500 border-radius-4"
             onClick={handleSubmit}
           >
-            <span className="">Simpan</span>
+            <span className="">Save</span>
           </Button>
         </Grid>
       </Grid>
@@ -109,21 +101,21 @@ const AddPaymentGateway = () => {
                 alignItems="center"
               >
                 <Grid item xs={12} sm>
-                  <h1 className="mb-5 font-semimedium text-14 text-black">
+                  <h1 className="mb-5 fw-500 text-15 text-black">
                     Payment Gateway
                   </h1>
                   <TextField
                     required={true}
                     size="small"
-                    inputProps={{
-                      className: classes.input,
-                    }}
                     style={{
                       transform: 'scaleY(1.25)',
                     }}
+                    inputProps={{
+                      className: classes.input,
+                    }}
                     value={state.jenis_bonus}
                     name="jenis_bonus"
-                    className={`${classes.outlined} border-radius-5 w-full`}
+                    className={`${classes.outlined} border-radius-4 w-full`}
                     placeholder="Payment Gateway"
                     variant="outlined"
                     onChange={handleChange}

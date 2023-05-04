@@ -53,7 +53,11 @@ export const typographyStyles = makeStyles(({ palette, ...theme }) => ({
     '.text-62': { fontSize: '62px !important' },
     '.text-72': { fontSize: '72px !important' },
     '.text-small': { fontSize: '0.8125rem !important' },
-    'fw-600': { fontWeight: 600 },
+    '.fw-500': { fontWeight: 500 },
+    '.fw-600': { fontWeight: 600 },
+    '.fw-700': { fontWeight: 700 },
+    '.fw-800': { fontWeight: 800 },
+    '.fw-900': { fontWeight: 900 },
     '.whitespace-pre-wrap': {
       whiteSpace: 'pre-wrap',
       wordBreak: 'break-word',

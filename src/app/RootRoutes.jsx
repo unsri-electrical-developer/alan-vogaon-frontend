@@ -28,9 +28,10 @@ const routes = [
   ...PaymentRoutes,
   ...setifikatRoute,
   ...profileRoutes,
+  ...transactionRoutes,
+
   ...redirectRoute,
   ...errorRoute,
-  ...transactionRoutes,
 ];
 
 export default routes;

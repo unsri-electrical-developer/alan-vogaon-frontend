@@ -25,6 +25,146 @@
   flex-grow: 1;
 }
 
+.background-white {
+  background: #ffffff !important;
+}
+
+.file-input-label {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  width: 73px;
+  height: 50px;
+  cursor: pointer;
+  background-color: #ffffff;
+  color: #1253fa;
+  border: #1253fa 2px solid;
+  font-size: 16px;
+  padding-left: 12px;
+  font-weight: bold;
+  border-radius: 4px;
+  margin-right: 8px;
+}
+
+.back-button Button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 150px;
+  height: 50px;
+  /* padding-inline: 20px; */
+  cursor: pointer;
+  background-color: #ffffff;
+
+  border: #1253fa 2px solid;
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 150%;
+  /* identical to box height, or 21px */
+
+  /* Primary */
+
+  color: #1253fa;
+
+  border-radius: 4px;
+}
+
+.file-delete {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  width: max-content;
+  height: 50px;
+  cursor: pointer;
+  background-color: #ffffff;
+  color: var(--bs-danger);
+  border: var(--bs-danger) 2px solid;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 12px 24px;
+  border-radius: 4px;
+  margin-right: 8px;
+}
+
+.file-input-label input {
+  cursor: pointer;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.avatar-container {
+  height: max-content;
+  width: max-content;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 100%;
+  border: 2px solid #1253fa;
+}
+
+.simple-card-content {
+  padding-inline: 84px;
+  padding-block: 30px;
+
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 150%;
+  /* identical to box height, or 24px */
+
+  /* Black */
+
+  color: #0a0a0a;
+}
+
+.header-detail {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 150%;
+  /* identical to box height, or 36px */
+
+  /* Neutral/100 */
+
+  color: #0a0a0a;
+}
+
+.simple-card-content h5 {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 150%;
+  margin-bottom: 12px;
+  /* identical to box height, or 21px */
+
+  /* darkgrey */
+
+  color: #bbbbbb;
+}
+
+.simple-card-content h1 {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 150%;
+  /* identical to box height, or 30px */
+
+  /* Black */
+
+  color: #0a0a0a;
+}
+
 .Hapus-button Button {
   /* Auto layout */
 
@@ -39,9 +179,9 @@
   height: 45px;
 
   /* primary */
-  border: 1px solid #72be42 !important;
+  border: 1px solid var(--primary) !important;
 
-  background: #72be42 !important;
+  background: var(--primary) !important;
   border-radius: 1px !important;
   color: #ffffff !important;
 
@@ -62,8 +202,47 @@
 }
 
 .riwayat-gaji-card {
-  max-height: 400px !important;
-  margin-bottom: 30px !important;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.riwayat-gaji-card h3 {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 150%;
+  /* identical to box height, or 27px */
+
+  /* Neutral/100 */
+
+  color: #0a0a0a;
+}
+.riwayat-gaji-card h1 {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 28px;
+  line-height: 150%;
+  /* identical to box height, or 42px */
+
+  /* Neutral/100 */
+
+  color: #0a0a0a;
+}
+
+.riwayat-gaji-card h3 {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 150%;
+  /* identical to box height, or 27px */
+
+  /* Neutral/100 */
+
+  color: #0a0a0a;
 }
 
 .max-height-40px {
@@ -140,25 +319,10 @@
 }
 
 .lembur-button-active {
-  font-family: "Poppins";
-  font-style: normal;
-  font-weight: 500;
-  font-size: 16px;
-  line-height: 28px;
-  /* identical to box height, or 175% */
-
-  /* primary */
-
-  color: #72be42;
-  border-bottom: #72be42 1px solid;
-}
-
-.lembur-button-active {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 128px;
-  margin-top: 15px;
+  width: 200px;
 
   font-family: "Poppins";
   font-style: normal;
@@ -170,8 +334,8 @@
 
   /* primary */
 
-  color: #72be42;
-  border-bottom: #72be42 1px solid;
+  color: var(--primary);
+  background: #f9fafe;
   height: 46px;
   -webkit-user-select: none; /* Safari */
   -moz-user-select: none; /* Firefox */
@@ -190,13 +354,12 @@
   font-size: 15px;
   line-height: 28px;
   padding-bottom: 5px;
-  margin-top: 15px;
 
   /* identical to box height, or 175% */
 
   /* primary */
 
-  width: 126px;
+  width: 200px;
   height: 46px;
 
   color: #bbbbbb;
@@ -427,7 +590,7 @@
 }
 
 .color-green {
-  color: #72be42;
+  color: var(--primary);
 }
 
 .time-picker-long {
@@ -537,9 +700,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #72be42;
+  background: var(--primary);
 
-  border: 1px solid #72be42;
+  border: 1px solid var(--primary);
   border-radius: 5px;
   padding-inline: 5px;
 }
@@ -566,10 +729,13 @@
   height: 42px;
   border-radius: 100%;
 
-  /* Background */
+  background: #e7eefe;
+  opacity: 1;
+}
 
-  background: #f3ffec;
-  opacity: 0.5;
+.money-icon AttachMoneyIcon {
+  filter: invert(18%) sepia(79%) saturate(4456%) hue-rotate(226deg)
+    brightness(102%) contrast(96%);
 }
 
 .up-arrow-icon {
@@ -598,4 +764,17 @@
 
   background: #f7eeee;
   opacity: 0.5;
+}
+
+.table-head-font {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 28px;
+  /* identical to box height, or 175% */
+
+  /* Neutral/100 */
+
+  color: #0a0a0a;
 }

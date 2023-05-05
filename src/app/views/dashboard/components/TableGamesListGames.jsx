@@ -10,8 +10,7 @@ import {
     TableHead,
   Avatar
 } from "@material-ui/core";
-import Aksieye from "./../../../assets/components/Aksieye.svg"
-import { Link } from "react-router-dom";
+import IcDot from "./../../../assets/components/IcDot.svg"
 
 const RenderTable = ({ data, state, search, getData }) => {
   const handleNumbering = () => {
@@ -82,7 +81,7 @@ const RenderTable = ({ data, state, search, getData }) => {
         >
           1
         </TableCell>
-        <TableCell style={{ color: "#0A0A0A" }} colSpan={3}>
+        <TableCell colSpan={5}>
           <div
             className=" z-100 text-14 d-flex items-center"
             style={{ gap: "16px" }}
@@ -92,22 +91,15 @@ const RenderTable = ({ data, state, search, getData }) => {
               src={`https://ui-avatars.com/api/?name=nurlestari&background=97CB72&color=ffffff`}
               width={"50px"}
             />
-            Nur Lestari
+            Free Fire
           </div>
         </TableCell>
-        <TableCell align="center" style={{ color: "#0A0A0A" }} colSpan={3}>
-          nur@gmail.com
-        </TableCell>
-        <TableCell align="center" colSpan={3}>
-          1234567
-        </TableCell>
-        <TableCell align="center" colSpan={3}>
-          06/12/2022
-        </TableCell>
-        <TableCell align="center" colSpan={2}>
-          <img src={Aksieye} alt="eye" />
+        <TableCell colSpan={5}>Mobile Game</TableCell>
+        <TableCell align="center" colSpan={1}>
+          <img src={IcDot} alt="eye" />
         </TableCell>
       </TableRow>
+
       <TableRow hover>
         {/* <TableCell colSpan={12} align="center">
         Data kosong
@@ -120,7 +112,8 @@ const RenderTable = ({ data, state, search, getData }) => {
         >
           2
         </TableCell>
-        <TableCell style={{ color: "#0A0A0A" }} colSpan={3}>
+        <TableCell colSpan={5}>
+          {" "}
           <div
             className=" z-100 text-14 d-flex items-center"
             style={{ gap: "16px" }}
@@ -130,29 +123,19 @@ const RenderTable = ({ data, state, search, getData }) => {
               src={`https://ui-avatars.com/api/?name=nurlestari&background=97CB72&color=ffffff`}
               width={"50px"}
             />
-            Nur Lestari
+            Free Fire
           </div>
         </TableCell>
-        <TableCell align="center" style={{ color: "#0A0A0A" }} colSpan={3}>
-          nur@gmail.com
-        </TableCell>
-        <TableCell align="center" colSpan={3}>
-          1234567
-        </TableCell>
-        <TableCell align="center" colSpan={3}>
-          06/12/2022
-        </TableCell>
-          <TableCell align="center" colSpan={2}>
-            <Link to="/users/detail">
-              <img src={Aksieye} alt="eye" />
-            </Link>
+        <TableCell colSpan={5}>Entertainment</TableCell>
+        <TableCell align="center" colSpan={1}>
+          <img src={IcDot} alt="eye" />
         </TableCell>
       </TableRow>
     </>
   );
 };
 
-const TableUsers = ({ search, data, getData }) => {
+const TableGamesListGames = ({ search, data, getData }) => {
   const [state, setState] = useState({
     page: 0,
     rowsPerPage: 10,
@@ -196,38 +179,21 @@ const TableUsers = ({ search, data, getData }) => {
               No
             </TableCell>
             <TableCell
-              colSpan={3}
+              colSpan={5}
               className="font-medium text-15"
               style={{ color: "#0a0a0a" }}
             >
-              Nama
+              Games
             </TableCell>
             <TableCell
-              colSpan={3}
+              colSpan={5}
               className="font-medium text-15"
               style={{ color: "#0a0a0a" }}
-              align="center"
             >
-              Email
+              Kategori
             </TableCell>
             <TableCell
-              colSpan={3}
-              className="font-medium text-15"
-              style={{ color: "#0a0a0a" }}
-              align="center"
-            >
-              No. Handphone
-            </TableCell>
-            <TableCell
-              colSpan={3}
-              className="font-medium text-15"
-              style={{ color: "#0a0a0a" }}
-              align="center"
-            >
-              Tanggal Daftar
-            </TableCell>
-            <TableCell
-              colSpan={2}
+              colSpan={1}
               className="font-medium text-15"
               style={{ color: "#0a0a0a" }}
               align="center"
@@ -269,4 +235,4 @@ const TableUsers = ({ search, data, getData }) => {
   );
 };
 
-export default TableUsers;
+export default TableGamesListGames;

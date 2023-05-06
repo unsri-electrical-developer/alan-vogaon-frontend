@@ -1,9 +1,9 @@
-import React, { useContext, useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { Redirect, Route, useLocation } from "react-router-dom";
+import React, { useContext, useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { Redirect, Route, useLocation } from 'react-router-dom';
 
-import { MatxLoading } from "../../matx";
-import AppContext from "../appContext";
+import { MatxLoading } from '../../matx';
+import AppContext from '../appContext';
 
 const getAuthStatus = (pathname, user, routes) => {
   const matched = routes.find((r) => r.path === pathname);
@@ -31,14 +31,14 @@ const AuthGuard = ({ component: Component, isPrivate = true, ...rest }) => {
     setPreviousRoute(pathname);
   }, [pathname]);
 
-  let path = pathname.split("/", 3);
+  let path = pathname.split('/', 3);
   return (
     <Route
       {...rest}
       render={(props) => {
         if (loading) return <MatxLoading />;
-        else if (pathname === "/") return <Redirect to="/dashboard" />;
-        else if (authenticated && path[1] === "login")
+        else if (pathname === '/') return <Redirect to="/dashboard" />;
+        else if (authenticated && path[1] === 'login')
           return <Redirect to="/dashboard" />;
         else if (authenticated || !isPrivate) return <Component {...props} />;
         else if (user && isPrivate && authenticated)
@@ -47,7 +47,7 @@ const AuthGuard = ({ component: Component, isPrivate = true, ...rest }) => {
           return (
             <Redirect
               to={{
-                pathname: "/login",
+                pathname: '/login',
                 state: { redirectUrl: previouseRoute },
               }}
             />

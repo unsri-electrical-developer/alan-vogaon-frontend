@@ -20,6 +20,7 @@ const UploadImage = ({
   note,
   formatIcon,
   isNotFigma,
+  type = 'big',
 }) => {
   const [FileName, setFileName] = useState(null);
   const [FilePath, setFilePath] = useState(null);
@@ -109,7 +110,11 @@ const UploadImage = ({
           {required ? <span className="text-danger"> *</span> : null}
         </label>
       )}
-      <Card className="card-input-image position-relative shadow-none">
+      <Card
+        className={`${
+          type === 'mini' ? 'card-input-image-mini' : 'card-input-image'
+        } position-relative shadow-none border-radius-4`}
+      >
         {preview && (
           <div className="h-full w-full position-absolute">
             <img

@@ -9,79 +9,80 @@ export const LOGIN_LOADING = 'LOGIN_LOADING';
 export const RESET_PASSWORD = 'RESET_PASSWORD';
 
 export const setAuthLoadingStatus = (status = false) => {
-    return (dispatch) =>
-        dispatch({
-            type: LOGIN_LOADING,
-            data: status
-        });
+  return (dispatch) =>
+    dispatch({
+      type: LOGIN_LOADING,
+      data: status,
+    });
 };
 
 export function loginWithEmailAndPassword({ email, password }) {
-    return (dispatch) => {
-        return apiAuthService
-            .loginWithEmailAndPassword(email, password)
-            .then((user) => {
-                dispatch(setUserData(user));
+  return (dispatch) => {
+    return apiAuthService
+      .loginWithEmailAndPassword(email, password)
+      .then((user) => {
+        dispatch(setUserData(user));
 
-                return dispatch({
-                    type: LOGIN_SUCCESS
-                });
-            })
-            .catch((error) => {
-                return dispatch({
-                    type: LOGIN_ERROR,
-                    payload: error?.response
-                });
-            });
-    };
+        return dispatch({
+          type: LOGIN_SUCCESS,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+        return dispatch({
+          type: LOGIN_ERROR,
+          payload: error?.response,
+        });
+      });
+  };
 }
 
 export function resetPassword({ email }) {
-    return (dispatch) => {
-        dispatch({
-            payload: email,
-            type: RESET_PASSWORD
-        });
-    };
+  return (dispatch) => {
+    dispatch({
+      payload: email,
+      type: RESET_PASSWORD,
+    });
+  };
 }
 
 export function firebaseLoginEmailPassword({ email, password }) {
-    return (dispatch) => {
-        FirebaseAuthService.signInWithEmailAndPassword(email, password)
-            .then((user) => {
-                if (user) {
-                    dispatch(
-                        setUserData({
-                            userId: '1',
-                            role: 'ADMIN',
-                            displayName: 'Watson Joyce',
-                            email: 'watsonjoyce@gmail.com',
-                            photoURL: '/assets/images/face-7.jpg',
-                            age: 25,
-                            token: 'faslkhfh423oiu4h4kj432rkj23h432u49ufjaklj423h4jkhkjh',
-                            ...user
-                        })
-                    );
-
-                    history.push({
-                        pathname: '/'
-                    });
-
-                    return dispatch({
-                        type: LOGIN_SUCCESS
-                    });
-                } else {
-                    return dispatch({
-                        type: LOGIN_ERROR,
-                        payload: 'Login Failed'
-                    });
-                }
+  return (dispatch) => {
+    FirebaseAuthService.signInWithEmailAndPassword(email, password)
+      .then((user) => {
+        if (user) {
+          dispatch(
+            setUserData({
+              userId: '1',
+              role: 'ADMIN',
+              displayName: 'Watson Joyce',
+              email: 'watsonjoyce@gmail.com',
+              photoURL: '/assets/images/face-7.jpg',
+              age: 25,
+              token: 'faslkhfh423oiu4h4kj432rkj23h432u49ufjaklj423h4jkhkjh',
+              ...user,
             })
-            .catch((error) => {
-                return dispatch({
-                    type: LOGIN_ERROR,
-                    payload: error
-                });
-            });
-    };
+          );
+
+          history.push({
+            pathname: '/',
+          });
+
+          return dispatch({
+            type: LOGIN_SUCCESS,
+          });
+        } else {
+          return dispatch({
+            type: LOGIN_ERROR,
+            payload: 'Login Failed',
+          });
+        }
+      })
+      .catch((error) => {
+        return dispatch({
+          type: LOGIN_ERROR,
+          payload: error,
+        });
+      });
+  };
 }

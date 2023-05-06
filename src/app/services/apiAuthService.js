@@ -1,21 +1,22 @@
-import axios from "axios";
+import axios from 'axios';
 
-import { API, setAuthToken } from "../../config/API";
-import localStorageService from "./localStorageService";
+import { API, setAuthToken } from '../../config/API';
+import localStorageService from './localStorageService';
 
 class apiAuthService {
   loginWithEmailAndPassword = (email, password) => {
     const params = { email, password };
-    return API.post("/login", params).then((response) => {
-      this.setSession(response.data.data.token);
-      this.setUser(response.data.data);
-      return response.data.data;
+    return API.post('/login', params).then((response) => {
+      const data = response.data.data;
+      this.setSession(data.access_token);
+      this.setUser(data);
+      return data;
     });
   };
 
   loginWithToken = (token) => {
     setAuthToken(token);
-    return API.get("admin/check/token").then((response) => {
+    return API.post('check/token').then((response) => {
       this.setSession(token);
       this.setUser(response.data.data);
       return response.data.data;
@@ -24,7 +25,7 @@ class apiAuthService {
 
   getUserDetail = (token) => {
     setAuthToken(token);
-    return API.get("admin/profile").then((response) => {
+    return API.get('admin/profile').then((response) => {
       this.setSession(token);
       this.setUser(response.data.data);
       return response.data.data;
@@ -33,7 +34,7 @@ class apiAuthService {
 
   logout = (token) => {
     setAuthToken(token);
-    return API.post("admin/logout")
+    return API.post('admin/logout')
       .then((response) => {
         this.setSession(null);
         this.removeUser();
@@ -47,17 +48,17 @@ class apiAuthService {
   // Set token to all http request header, so you don't need to attach everytime
   setSession = (token) => {
     if (token) {
-      localStorage.setItem("jwt_token", token);
-      axios.defaults.headers.common["Authorization"] = "Bearer " + token;
+      localStorage.setItem('jwt_token', token);
+      axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
     } else {
-      localStorage.removeItem("jwt_token");
-      delete axios.defaults.headers.common["Authorization"];
+      localStorage.removeItem('jwt_token');
+      delete axios.defaults.headers.common['Authorization'];
     }
   };
 
   checkFitur = (parent, code) => {
     let res = false;
-    let allFitur = localStorage.getItem("fitur");
+    let allFitur = localStorage.getItem('fitur');
     if (allFitur) {
       allFitur = JSON.parse(allFitur);
       let cek = allFitur?.filter((item) => item.fitur_type === parent);
@@ -74,15 +75,15 @@ class apiAuthService {
 
   // Save user to localstorage
   setUser = (user) => {
-    localStorageService.setItem("auth_user", user);
+    localStorageService.setItem('auth_user', user);
   };
   // Remove user from localstorage
   removeUser = () => {
-    localStorage.removeItem("auth_user");
+    localStorage.removeItem('auth_user');
   };
   // Remove token from localstorage
   removeToken = () => {
-    localStorage.removeItem("jwt_token");
+    localStorage.removeItem('jwt_token');
   };
 }
 

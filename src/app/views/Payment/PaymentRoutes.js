@@ -2,6 +2,7 @@ import { authRoles } from '../../auth/authRoles';
 import PaymentGateway from './PaymentGateway';
 import PaymentMethod from './PaymentMethod';
 import AddPaymentGateway from './AddPaymentGateway';
+import EditPaymentGateway from './EditPaymentGateway';
 
 const PaymentRoutes = [
   {
@@ -18,7 +19,7 @@ const PaymentRoutes = [
   },
   {
     path: '/payment_gateway/edit',
-    component: PaymentGateway,
+    component: EditPaymentGateway,
     auth: authRoles.all,
     exact: true,
   },

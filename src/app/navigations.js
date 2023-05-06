@@ -82,20 +82,14 @@ export const navigations = [
     auth: authRoles.all,
     children: [
       {
-        name: 'General Indo',
-        path: '/404',
+        name: 'General Info',
+        path: '/general_info',
         auth: authRoles.all,
         exact: true,
       },
       {
         name: 'FAQ',
-        path: '/404',
-        auth: authRoles.all,
-        exact: true,
-      },
-      {
-        name: 'FAQ',
-        path: '/404',
+        path: '/faq',
         auth: authRoles.all,
         exact: true,
       },

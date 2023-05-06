@@ -50,7 +50,7 @@ const GamesCategory = () => {
             <ThemeProvider theme={theme}>
               <Button
                 variant="contained"
-                className="px-8 py-3"
+                className="px-13 py-3"
                 style={{ textTransform: 'none' }}
               >
                 <AddIcon />

@@ -10,7 +10,7 @@ import {
     TableHead,
   Avatar
 } from "@material-ui/core";
-import Aksieye from "./../../../assets/components/Aksieye.svg"
+import Aksieye from "../../../assets/components/icons/Aksieye.svg"
 import { Link } from "react-router-dom";
 
 const RenderTable = ({ data, state, search, getData }) => {
@@ -91,6 +91,7 @@ const RenderTable = ({ data, state, search, getData }) => {
               variant="square"
               src={`https://ui-avatars.com/api/?name=nurlestari&background=97CB72&color=ffffff`}
               width={"50px"}
+              style={{ borderRadius: "5px" }}
             />
             Nur Lestari
           </div>
@@ -129,6 +130,7 @@ const RenderTable = ({ data, state, search, getData }) => {
               variant="square"
               src={`https://ui-avatars.com/api/?name=nurlestari&background=97CB72&color=ffffff`}
               width={"50px"}
+              style={{ borderRadius: "5px" }}
             />
             Nur Lestari
           </div>
@@ -142,10 +144,10 @@ const RenderTable = ({ data, state, search, getData }) => {
         <TableCell align="center" colSpan={3}>
           06/12/2022
         </TableCell>
-          <TableCell align="center" colSpan={2}>
-            <Link to="/users/detail">
-              <img src={Aksieye} alt="eye" />
-            </Link>
+        <TableCell align="center" colSpan={2}>
+          <Link to="/users/detail">
+            <img src={Aksieye} alt="eye" />
+          </Link>
         </TableCell>
       </TableRow>
     </>

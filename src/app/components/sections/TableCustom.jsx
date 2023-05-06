@@ -10,9 +10,9 @@ import {
   TableHead,
   Avatar,
 } from "@material-ui/core";
-import IcDot from "./../../assets/components/IcDot.svg";
+import IcDot from "./../../assets/components/icons/IcDot.svg";
 import { Link } from "react-router-dom";
-import Aksieye from "./../../assets/components/Aksieye.svg";
+import Aksieye from "./../../assets/components/icons/Aksieye.svg";
 
 const RenderTable = ({
   data,

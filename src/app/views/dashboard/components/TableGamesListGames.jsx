@@ -1,6 +1,6 @@
 import { useState } from "react";
 import React from 'react';
-// import MenuDenda from "./MenuDenda";
+import MenuListGames from "./MenuListGames";
 import {
   TablePagination,
   Table,
@@ -10,7 +10,7 @@ import {
     TableHead,
   Avatar
 } from "@material-ui/core";
-import IcDot from "./../../../assets/components/IcDot.svg"
+import IcDot from "../../../assets/components/icons/IcDot.svg"
 
 const RenderTable = ({ data, state, search, getData }) => {
   const handleNumbering = () => {
@@ -90,6 +90,7 @@ const RenderTable = ({ data, state, search, getData }) => {
               variant="square"
               src={`https://ui-avatars.com/api/?name=nurlestari&background=97CB72&color=ffffff`}
               width={"50px"}
+              style={{ borderRadius: "5px" }}
             />
             Free Fire
           </div>
@@ -128,7 +129,13 @@ const RenderTable = ({ data, state, search, getData }) => {
         </TableCell>
         <TableCell colSpan={5}>Entertainment</TableCell>
         <TableCell align="center" colSpan={1}>
-          <img src={IcDot} alt="eye" />
+          <MenuListGames
+          // item={item}
+          // getData={getData}
+          // setState={setState}
+          // editPath={`/lokasiabsensi/edit/${item.lokasi_absensi_code}`}
+          // detailPath={`/lokasiabsensi/detail/${item.lokasi_absensi_code}`}
+          />
         </TableCell>
       </TableRow>
     </>

@@ -7,6 +7,9 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import { UploadImage } from '../../components';
+import SimpleCard from '../../assets/components/cards/SimpleCard';
+import ic_plus from '../../assets/components/icons/ic_plus.svg';
+import ic_bin from '../../assets/components/icons/ic_bin.svg';
 
 const theme = createTheme({
   palette: {
@@ -20,14 +23,12 @@ const AddGamesCategory = () => {
   // table input
   const [inputList, setInputList] = useState([
     {
-      yang_diserahterimakan: '',
-      pic_keterangan: '',
-      yang_diserahterimakan_jabatan: '',
+      nama: '',
+      harga: '',
     },
     {
-      yang_diserahterimakan: '',
-      pic_keterangan: '',
-      yang_diserahterimakan_jabatan: '',
+      nama: '',
+      harga: '',
     },
   ]);
 
@@ -43,9 +44,8 @@ const AddGamesCategory = () => {
     setInputList([
       ...inputList,
       {
-        yang_diserahterimakan: '',
-        pic_keterangan: '',
-        yang_diserahterimakan_jabatan: '',
+        nama: '',
+        harga: '',
       },
     ]);
   };
@@ -63,68 +63,60 @@ const AddGamesCategory = () => {
       <>
         {inputList?.map((item, index) => (
           <Grid container justifyContent="space-between" spacing={1}>
-            <Grid item sm={3} xs={6}>
-              <h5 className="font-semibold text-13">Yang Diserahterimakan *</h5>
+            <Grid item xs={6} sm={5}>
+              <h5 className="font-semibold text-13">Produk</h5>
               <TextField
-                className="text-field-modifier-long"
-                variant="standard"
-                id={`input-${index}`}
-                InputProps={{
-                  disableUnderline: true,
+                required={true}
+                size="small"
+                inputProps={{
+                  className: classes.input,
                 }}
-                onChange={handleInputChange(index, 'yang_diserahterimakan')}
-                value={item.yang_diserahterimakan}
-                fullWidth
+                style={{
+                  transform: 'scaleY(1.25)',
+                  marginTop: '10px',
+                  marginBottom: '10px',
+                }}
+                // value={state.jenis_bonus}
+                name="game"
+                className={`${classes.outlined} border-radius-5 w-full`}
+                placeholder="Produk"
+                variant="outlined"
+                // onChange={handleChange}
               />
             </Grid>
 
-            <Grid item sm={3} xs={6}>
-              <h5 className="font-semibold text-13">PIC / Keterangan *</h5>
+            <Grid Grid item xs={6} sm={5}>
+              <h5 className="font-semibold text-13">Harga</h5>
               <TextField
-                className="text-field-modifier-long"
-                variant="standard"
-                id={`input-${index}`}
-                InputProps={{
-                  disableUnderline: true,
+                required={true}
+                size="small"
+                inputProps={{
+                  className: classes.input,
                 }}
-                onChange={handleInputChange(index, 'pic_keterangan')}
-                value={item.pic_keterangan}
-                fullWidth
-              />
-            </Grid>
-
-            <Grid item sm={3} xs={6}>
-              <h5 className="font-semibold text-13">
-                Yang diserahterimakan / Jabatan *
-              </h5>
-              <TextField
-                className="text-field-modifier-long"
-                variant="standard"
-                id={`input-${index}`}
-                InputProps={{
-                  disableUnderline: true,
+                style={{
+                  transform: 'scaleY(1.25)',
+                  marginTop: '10px',
+                  marginBottom: '10px',
                 }}
-                onChange={handleInputChange(
-                  index,
-                  'yang_diserahterimakan_jabatan'
-                )}
-                fullWidth
-                value={item.yang_diserahterimakan_jabatan}
+                // value={state.jenis_bonus}
+                name="game"
+                className={`${classes.outlined} border-radius-5 w-full`}
+                placeholder="Harga"
+                variant="outlined"
+                // onChange={handleChange}
               />
             </Grid>
 
             {isLastInput(index) ? (
-              <div className="delete-button  mb-4">
+              <div className="delete-button  mt-5">
                 <Button onClick={() => handleRemoveInput(index)}>
-                  {/* <img src={ic_remove} alt="" /> */}
-                  delete button
+                  <img src={ic_bin} alt="del" />
                 </Button>
               </div>
             ) : (
-              <div className="add-button mb-4">
+              <div className="add-button mt-5">
                 <Button onClick={() => handleAddInput()} fullWidth>
-                  {/* <img src={ic_add} alt="" /> */}
-                  add button
+                  <img src={ic_plus} alt="add" />
                 </Button>
               </div>
             )}
@@ -186,7 +178,7 @@ const AddGamesCategory = () => {
           <ThemeProvider theme={theme}>
             <Button
               variant="contained"
-              className="px-8 py-3"
+              className="px-13 py-3"
               style={{ textTransform: 'none' }}
             >
               <span className="karyawan-btn-span">Save</span>
@@ -306,11 +298,7 @@ const AddGamesCategory = () => {
               // onChange={handleChange}
             />
           </Grid>
-          {/* <SimpleCard title=""> */}
-          <div className="karyawan-add-ultra-container mt-5 mb-5 px-8 ">
-            {renderInput()}
-          </div>
-          {/* </SimpleCard> */}
+          <div className="mt-5">{renderInput()}</div>
         </div>
       </Card>
     </div>

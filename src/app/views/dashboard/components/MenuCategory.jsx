@@ -8,6 +8,7 @@ import DeleteOutlineOutlinedIcon from '@material-ui/icons/DeleteOutlineOutlined'
 import VisibilityOutlinedIcon from '@material-ui/icons/VisibilityOutlined';
 // import { deleteLokasiAbsensi } from 'app/redux/actions/AbsenAction';
 import { useDispatch } from 'react-redux';
+import React from 'react';
 
 export default function MenuCategory({
   item,
@@ -26,18 +27,18 @@ export default function MenuCategory({
   };
 
   const handleDelete = (params) => {
-    try {
-      dispatch(deleteLokasiAbsensi(params));
-      getData();
-      handleClose();
-      setState((prev) => ({
-        ...prev,
-        searchTgl: new Date(),
-      }));
-      Swal.fire('Success!', 'Data Lokasi Absensi berhasil disimpan', 'success');
-    } catch (e) {
-      Swal.fire('Oopss!', 'Data Lokasi Absensi gagal disimpan', 'error');
-    }
+    // try {
+    //   dispatch(deleteLokasiAbsensi(params));
+    //   getData();
+    //   handleClose();
+    //   setState((prev) => ({
+    //     ...prev,
+    //     searchTgl: new Date(),
+    //   }));
+    //   Swal.fire('Success!', 'Data Lokasi Absensi berhasil disimpan', 'success');
+    // } catch (e) {
+    //   Swal.fire('Oopss!', 'Data Lokasi Absensi gagal disimpan', 'error');
+    // }
   };
 
   return (
@@ -59,28 +60,19 @@ export default function MenuCategory({
       >
         <Link
           to={{
-            pathname: detailPath,
-          }}
-        >
-          <MenuItem className="mb-3" onClick={handleClose}>
-            <span className="">
-              <VisibilityOutlinedIcon />
-            </span>
-            <span className="pl-3 ">Lihat Detail</span>
-          </MenuItem>
-        </Link>
-        <Link
-          to={{
             pathname: editPath,
           }}
         >
           <MenuItem className="mb-3" onClick={handleClose}>
-            <span className="text-green">
-              <CreateOutlinedIcon />
+            <span className="">
+              <CreateOutlinedIcon style={{ color: "#1253FA" }} />
             </span>
-            <span className="pl-3 text-green">Edit Data</span>
+            <span className="pl-3" style={{ color: "#1253FA" }}>
+              Edit Data
+            </span>
           </MenuItem>
         </Link>
+
         <MenuItem
           className=""
           onClick={() => handleDelete(item.lokasi_absensi_code)}

@@ -1,14 +1,9 @@
 import axios from 'axios';
 
-<<<<<<< HEAD
 // Set config defaults when creating the instance
 export const URL_API = process.env.REACT_APP_API_URL;
 // export const URL_API = "https://wrwb.alanschool.id/";
-=======
-// export const URL_API = process.env.REACT_APP_API_URL;
-// export const URL_API = 'https://wrwb.alanschool.id/';
-export const URL_API = 'http://127.0.0.1:8000/';
->>>>>>> 644d4876a6cfbc45b0fec54c183b668b5fe21da0
+// export const URL_API = 'http://127.0.0.1:8000/';
 
 export const API = axios.create({
   baseURL: `${URL_API}api/v1/`,

@@ -3,13 +3,9 @@ import React, { useLayoutEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import '../../../styles/css/DetailUser.css';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-<<<<<<< HEAD
 import Button from '@mui/material/Button';
 import { Link } from "react-router-dom";
 import GeneralButton from './../../components/buttons/GeneralButton.jsx';
-=======
-import { Link } from 'react-router-dom';
->>>>>>> 644d4876a6cfbc45b0fec54c183b668b5fe21da0
 
 const theme = createTheme({
   palette: {
@@ -80,28 +76,6 @@ const Sliders = () => {
         </Grid>
       </Grid>
 
-=======
-      <h1 className="fw-600 m-0">Detail User</h1>
-      <Grid
-        item
-        xs={12}
-        sm
-        className="d-flex mr-8"
-        style={{ justifyContent: 'flex-end' }}
-      >
-        <Link to="/users">
-          <ThemeProvider theme={theme}>
-            <Button
-              variant="outlined"
-              className="px-8 py-3"
-              style={{ textTransform: 'none' }}
-            >
-              <span className="karyawan-btn-span">Back</span>
-            </Button>
-          </ThemeProvider>
-        </Link>
-      </Grid>
->>>>>>> 644d4876a6cfbc45b0fec54c183b668b5fe21da0
       <Card className="mt-5 py-10 px-10">
         <Grid container spacing={3}>
           <Grid item xs={12} sm={6}>

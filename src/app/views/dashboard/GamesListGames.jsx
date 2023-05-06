@@ -34,43 +34,23 @@ const GamesListGames = () => {
         className="my-4 d-flex items-center"
       >
         <Grid item xs={12} sm>
-<<<<<<< HEAD
-                <h1 className="fw-600 m-0">List Games</h1>
-=======
           <h1
             className="font-semibold text-25 my-auto"
             style={{ color: '#0A0A0A' }}
           >
             List Games
           </h1>
->>>>>>> 644d4876a6cfbc45b0fec54c183b668b5fe21da0
         </Grid>
         <Grid
           item
           xs={12}
           sm
-<<<<<<< HEAD
-          className="d-flex mr-6 items-center"
-=======
           className="d-flex mr-8"
->>>>>>> 644d4876a6cfbc45b0fec54c183b668b5fe21da0
           style={{ justifyContent: 'flex-end' }}
         >
           <Link to="/games/listGames/add">
             <ThemeProvider theme={theme}>
-<<<<<<< HEAD
-            <GeneralButton name="Add" icon={<AddIcon/>} variant="contained"/>
-=======
-              <Button variant="contained" className="px-13 py-3">
-                <AddIcon />
-                <span
-                  className="karyawan-btn-span"
-                  style={{ textTransform: 'none' }}
-                >
-                  Add
-                </span>
-              </Button>
->>>>>>> 644d4876a6cfbc45b0fec54c183b668b5fe21da0
+              <GeneralButton name="Add" icon={<AddIcon/>} variant="contained"/>
             </ThemeProvider>
 
           </Link>

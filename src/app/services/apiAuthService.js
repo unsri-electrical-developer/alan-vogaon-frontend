@@ -16,11 +16,7 @@ class apiAuthService {
 
   loginWithToken = (token) => {
     setAuthToken(token);
-<<<<<<< HEAD
-    return API.post("/check/token").then((response) => {
-=======
     return API.post('check/token').then((response) => {
->>>>>>> 644d4876a6cfbc45b0fec54c183b668b5fe21da0
       this.setSession(token);
       this.setUser(response.data.data);
       return response.data.data;

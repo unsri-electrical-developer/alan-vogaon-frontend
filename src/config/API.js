@@ -1,8 +1,8 @@
 import axios from "axios";
 
 // Set config defaults when creating the instance
-// export const URL_API = process.env.REACT_APP_API_URL;
-export const URL_API = "https://wrwb.alanschool.id/";
+export const URL_API = process.env.REACT_APP_API_URL;
+// export const URL_API = "https://wrwb.alanschool.id/";
 
 export const API = axios.create({
   baseURL: `${URL_API}api/v1/`,

@@ -12,6 +12,8 @@ import TableGamesListGames from "./components/TableGamesListGames";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Button from "@mui/material/Button";
 import ListGamesFilter from './components/ListGamesFilter';
+import GeneralButton from './../../components/buttons/GeneralButton.jsx';
+
 const theme = createTheme({
   palette: {
     primary: {
@@ -25,35 +27,28 @@ const GamesListGames = () => {
     <div className="m-sm-30">
       <Grid
         container
-        spacing={3}
-        className="mb-4 mx-auto px-2"
-        alignItems="center"
+        spacing={1}
         justifyContent="space-between"
+        alignItems="center"
+        className="my-4 d-flex items-center"
       >
         <Grid item xs={12} sm>
-          <h1
-            className="font-semibold text-25 my-auto"
-            style={{ color: "#0A0A0A" }}
-          >
-            List Games
-          </h1>
+                <h1 className="fw-600 m-0">List Games</h1>
         </Grid>
-
         <Grid
           item
           xs={12}
           sm
-          className="d-flex mr-8"
-          style={{ justifyContent: "flex-end" }}
+          className="d-flex mr-6 items-center"
+          style={{ justifyContent: 'flex-end' }}
         >
           <Link to="/games/listGames/add">
             <ThemeProvider theme={theme}>
-              <Button variant="contained" className="px-13 py-3">
-                <AddIcon />
-                <span className="karyawan-btn-span" style={{ textTransform: 'none' }}>Add</span>
-              </Button>
+            <GeneralButton name="Add" icon={<AddIcon/>} variant="contained"/>
             </ThemeProvider>
+
           </Link>
+
         </Grid>
       </Grid>
 

@@ -5,6 +5,7 @@ import "../../../styles/css/DetailUser.css";
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Button from '@mui/material/Button';
 import { Link } from "react-router-dom";
+import GeneralButton from './../../components/buttons/GeneralButton.jsx';
 
 const theme = createTheme({
   palette: {
@@ -51,24 +52,29 @@ const Sliders = () => {
 
   return (
     <div className="analytics m-sm-30 mt-7 text-black">
-      <h1 className="fw-600 m-0">Detail User</h1>
-      <Grid
+        <Grid
+        container
+        spacing={1}
+        justifyContent="space-between"
+        alignItems="center"
+        className="my-4 d-flex items-center"
+      >
+        <Grid item xs={12} sm>
+                <h1 className="fw-600 m-0">Detail User</h1>
+        </Grid>
+        <Grid
           item
           xs={12}
           sm
-          className="d-flex mr-8"
-          style={{ justifyContent: "flex-end" }}
+          className="d-flex mr-6 items-center"
+          style={{ justifyContent: 'flex-end' }}
         >
-          <Link to="/users">
-            <ThemeProvider theme={theme}>
-              <Button variant="outlined" className="px-8 py-3" style={{ textTransform: 'none' }}>
-                <span className="karyawan-btn-span">
-                  Back
-                </span>
-              </Button>
-            </ThemeProvider>
+          <Link to="/lokasiabsensi/add">
+            <GeneralButton name="Back" variant="outlined"/>
           </Link>
         </Grid>
+      </Grid>
+
       <Card className="mt-5 py-10 px-10">
         <Grid container spacing={3}>
          <Grid item xs={12} sm={6}>

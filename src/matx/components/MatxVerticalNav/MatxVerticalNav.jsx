@@ -16,9 +16,10 @@ const useStyles = makeStyles(({ palette, ...theme }) => ({
         borderColor: "var(--primary)",
         background: "var(--primary)",
       },
-    },
-    "& .icon-color": {
+       "&.icon-color": {
       color: "var(--primary)",
+      backgroundColor: "var(--primary)"
+    },
     },
 
     transition: "all 250ms ease-in-out",
@@ -50,6 +51,7 @@ const MatxVerticalNav = () => {
 
     const renderLevels = (data) => {
         return data.map((item, index) => {
+
             if (item.type === 'label')
                 return (
                   <p
@@ -62,6 +64,7 @@ const MatxVerticalNav = () => {
                     {item.label}
                   </p>
                 );
+
             if (item.children) {
                 return (
                     <MatxVerticalNavExpansionPanel
@@ -70,10 +73,11 @@ const MatxVerticalNav = () => {
                         key={index}
                     >
                         {renderLevels(item.children)}
-                       
                     </MatxVerticalNavExpansionPanel>
                 );
-            } else if (item.type === 'extLink') {
+            } 
+
+            else if (item.type === 'extLink') {
                 return (
                     <a
                         key={index}
@@ -125,7 +129,8 @@ const MatxVerticalNav = () => {
                         </TouchRipple>
                     </a>
                 );
-            } else {
+            } 
+            else {
                 return (
                   <NavLink
                     key={index}
@@ -141,8 +146,7 @@ const MatxVerticalNav = () => {
                       name="child"
                       className="w-full"
                     >
-                      {" "}
-                      1
+                     
                       {item?.icon ? (
                         <Icon className="text-18 align-middle w-36 px-4 icon-color">
                           {item.icon}
@@ -171,7 +175,7 @@ const MatxVerticalNav = () => {
                           classes.itemText
                         )}
                       >
-                        2{item.name}
+                        {item.name}
                       </span>
                       <div className="mx-auto"></div>
                       {item.badge && (
@@ -182,7 +186,7 @@ const MatxVerticalNav = () => {
                             classes.itemIcon
                           )}
                         >
-                          {item.badge.value}
+                         {item.badge.value}
                         </div>
                       )}
                     </TouchRipple>

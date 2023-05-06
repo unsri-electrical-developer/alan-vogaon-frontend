@@ -11,7 +11,6 @@ import AddIcon from '@material-ui/icons/Add';
 import SimpleCard from '../../assets/components/cards/SimpleCard';
 import TableGamesCategory from './components/TableGamesCategory';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import Button from '@mui/material/Button';
 import GeneralButton from '../../components/buttons/GeneralButton.jsx';
 
 const theme = createTheme({

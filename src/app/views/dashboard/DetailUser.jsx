@@ -3,7 +3,6 @@ import React, { useLayoutEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import '../../../styles/css/DetailUser.css';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import Button from '@mui/material/Button';
 import { Link } from "react-router-dom";
 import GeneralButton from './../../components/buttons/GeneralButton.jsx';
 
@@ -52,7 +51,6 @@ const Sliders = () => {
 
   return (
     <div className="analytics m-sm-30 mt-7 text-black">
-<<<<<<< HEAD
         <Grid
         container
         spacing={1}

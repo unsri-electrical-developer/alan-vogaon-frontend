@@ -304,8 +304,8 @@ a:hover {
   background: #fbfbfb;
   transition: 0.3s;
   overflow: hidden;
-  min-height: 15.5rem;
-  max-height: 16rem;
+  min-height: 18rem;
+  max-height: 18.5rem;
   border-radius: 0px;
 }
 .card-input-image-mini {

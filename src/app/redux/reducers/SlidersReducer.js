@@ -1,9 +1,4 @@
-import {
-  GET_SLIDERS,
-  ADD_SLIDERS,
-  EDIT_SLIDERS,
-  DELETE_SLIDERS,
-} from '../constant.js';
+import { GET_SLIDERS } from '../constant.js';
 
 const initialState = {
   dataSliders: [],

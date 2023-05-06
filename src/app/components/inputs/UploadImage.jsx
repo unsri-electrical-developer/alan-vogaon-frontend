@@ -1,12 +1,14 @@
 import 'cropperjs/dist/cropper.css';
 
-import { Button } from '@material-ui/core';
+import { Button, Avatar } from '@material-ui/core';
 import { AddPhotoAlternateOutlined } from '@material-ui/icons';
 import React, { useState } from 'react';
 import { useRef } from 'react';
 import { Card } from 'react-bootstrap';
 import Swal from 'sweetalert2';
-
+import { makeStyles } from '@material-ui/core/styles';
+import ic_input from '../../assets/components/ic_input.svg';
+import ic_delete from '../../assets/components/ic_delete.svg';
 import ModalCrop from '../modals/ModalCrop';
 
 const UploadImage = ({
@@ -20,7 +22,7 @@ const UploadImage = ({
   note,
   formatIcon,
   isNotFigma,
-  type = 'big',
+  avatar,
 }) => {
   const [FileName, setFileName] = useState(null);
   const [FilePath, setFilePath] = useState(null);
@@ -53,6 +55,14 @@ const UploadImage = ({
       }
     }
   };
+  const useStyles = makeStyles((theme) => ({
+    avatar: {
+      height: '80px',
+      width: '80px',
+      margin: '7px',
+    },
+  }));
+  const classes = useStyles();
 
   const kbConverter = (size) => {
     return size * 1024;
@@ -104,94 +114,127 @@ const UploadImage = ({
   };
   return (
     <>
-      {label && (
-        <label className="mb-2">
-          {/* {label} */}
-          {required ? <span className="text-danger"> *</span> : null}
-        </label>
-      )}
-      <Card
-        className={`${
-          type === 'mini' ? 'card-input-image-mini' : 'card-input-image'
-        } position-relative shadow-none border-radius-4`}
-      >
-        {preview && (
-          <div className="h-full w-full position-absolute">
-            <img
-              src={preview}
-              alt="preview foto"
-              className="preview h-full w-full"
+      {avatar ? (
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '15px',
+            flexDirection: 'row',
+          }}
+        >
+          <div className="avatar-container">
+            <Avatar src={preview} className={classes.avatar} />
+          </div>
+          <div className="file-input-label">
+            <img src={ic_input} alt="ic_input" />
+            Edit
+            <input
+              type="file"
+              name="foto"
+              onChange={handleImageChange}
+              ref={fileInput}
+              accept={
+                formatIcon
+                  ? 'image/svg+xml, image/webp'
+                  : 'image/webp, image/jpg, image/jpeg, image/png'
+              }
+              id="input-file"
             />
           </div>
-        )}
-        <div
-          className={`w-full h-full p-5 position-absolute d-flex align-items-center justify-content-center flex-column ${
-            preview ? 'has-preview' : null
-          }`}
-        >
-          <AddPhotoAlternateOutlined
-            style={{ transform: 'scale(1.5)', marginBottom: '8px' }}
-            fontSize="large"
-            color="primary"
-          />
-          <p className="m-0 text-center mt-2">
-            {FileName
-              ? FileName
-              : isNotFigma
-              ? 'Seret foto ke area ini atau tekan tombol unggah dibawah ini. Pastikan foto memiliki kualitas yang baik.'
-              : 'Taruh foto disini atau klik disini'}
-          </p>
-          {isNotFigma && (
-            <Button
-              variant="contained"
-              color="primary"
-              className="mt-3 text-white text-capitalize"
-              disableElevation
-            >
-              Unggah Foto
-            </Button>
-          )}
+          <div className="file-delete">
+            <img src={ic_delete} alt="ic_delete" />
+            Delete
+          </div>
         </div>
-        <input
-          type="file"
-          name="foto"
-          className="cursor-pointer"
-          onChange={handleImageChange}
-          ref={fileInput}
-          accept={
-            formatIcon
-              ? 'image/svg+xml, image/webp'
-              : 'image/webp, image/jpg, image/jpeg, image/png'
-          }
-          id="input-file"
-        />
-      </Card>
-      {note && (
-        <ul className="pl-3 mt-4 mb-0">
-          {note?.map((item, i) => (
-            <li key={i + 1} className="text-muted">
-              {item}
-            </li>
-          ))}
-        </ul>
+      ) : (
+        <>
+          {label && (
+            <label className="mb-2">
+              {/* {label} */}
+              {required ? <span className="text-danger"> *</span> : null}
+            </label>
+          )}
+          <Card className="card-input-image position-relative shadow-none">
+            {preview && (
+              <div className="h-full w-full position-absolute">
+                <img
+                  src={preview}
+                  alt="preview foto"
+                  className="preview h-full w-full"
+                />
+              </div>
+            )}
+            <div
+              className={`w-full h-full p-5 position-absolute d-flex align-items-center justify-content-center flex-column ${
+                preview ? 'has-preview' : null
+              }`}
+            >
+              <AddPhotoAlternateOutlined
+                style={{ transform: 'scale(1.5)', marginBottom: '8px' }}
+                fontSize="large"
+                color="primary"
+              />
+              <p className="m-0 text-center mt-2">
+                {FileName
+                  ? FileName
+                  : isNotFigma
+                  ? 'Seret foto ke area ini atau tekan tombol unggah dibawah ini. Pastikan foto memiliki kualitas yang baik.'
+                  : 'Taruh foto disini atau klik disini'}
+              </p>
+              {isNotFigma && (
+                <Button
+                  variant="contained"
+                  color="primary"
+                  className="mt-3 text-white text-capitalize"
+                  disableElevation
+                >
+                  Unggah Foto
+                </Button>
+              )}
+            </div>
+            <input
+              type="file"
+              name="foto"
+              className="cursor-pointer"
+              onChange={handleImageChange}
+              ref={fileInput}
+              accept={
+                formatIcon
+                  ? 'image/svg+xml, image/webp'
+                  : 'image/webp, image/jpg, image/jpeg, image/png'
+              }
+              id="input-file"
+            />
+          </Card>
+          {note && (
+            <ul className="pl-3 mt-4 mb-0">
+              {note?.map((item, i) => (
+                <li key={i + 1} className="text-muted">
+                  {item}
+                </li>
+              ))}
+            </ul>
+          )}
+          {FilePath?.length > 0 ? (
+            <ModalCrop
+              handleClose={() => {
+                setFilePath('');
+                fileInput.current.value = '';
+              }}
+              open={true}
+              filePath={FilePath}
+              handleSave={(data) => {
+                uploadFoto(data, data);
+                setFilePath(null);
+              }}
+              handleUpload={() => fileInput.current?.click()}
+              aspectRatio={aspectRatio || 1 / 1}
+              maxHeight={maxHeight}
+            />
+          ) : null}
+        </>
       )}
-      {FilePath?.length > 0 ? (
-        <ModalCrop
-          handleClose={() => {
-            setFilePath('');
-            fileInput.current.value = '';
-          }}
-          open={true}
-          filePath={FilePath}
-          handleSave={(data) => {
-            uploadFoto(data, data);
-            setFilePath(null);
-          }}
-          handleUpload={() => fileInput.current?.click()}
-          aspectRatio={aspectRatio || 1 / 1}
-          maxHeight={maxHeight}
-        />
-      ) : null}
     </>
   );
 };

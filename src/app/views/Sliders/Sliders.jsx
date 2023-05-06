@@ -1,8 +1,13 @@
 import { Card, Grid, Icon } from '@material-ui/core';
 import React, { useEffect, useLayoutEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { UploadImage } from '../../components';
-import { getSliders } from '../../redux/actions/SlidersAction';
+import { UploadImageWithButton } from '../../components';
+import {
+  getSliders,
+  addSlider,
+  updateSlider,
+  deleteSlider,
+} from '../../redux/actions/SlidersAction';
 
 const Sliders = () => {
   const dispatch = useDispatch();
@@ -14,12 +19,22 @@ const Sliders = () => {
 
   const [state, setState] = useState({});
 
-  const handleChangePhoto = (file, path) => {
-    setState({
-      ...state,
-      foto: file,
-      preview1: path,
-    });
+  const handleChangePhoto = (file, path, id) => {
+    if (id === 'New') {
+      addSlider({
+        image: file,
+      }).then((res) => {
+        console.log(res);
+        getData();
+      });
+    } else {
+      updateSlider(id, {
+        image: file,
+      }).then((res) => {
+        console.log(res);
+        getData();
+      });
+    }
   };
 
   useLayoutEffect(() => {
@@ -29,15 +44,15 @@ const Sliders = () => {
   useEffect(() => {
     if (dataSliders.length > 0) {
       let obj = {};
-      for (let i = 1; i <= dataSliders.length; i++) {
+      for (let i = 0; i < dataSliders.length; i++) {
         obj = {
           ...obj,
-          [`preview${i}`]: dataSliders[i - 1].image,
+          [`preview${dataSliders[i].id}`]: dataSliders[i].image,
         };
       }
       obj = {
         ...obj,
-        [`preview${dataSliders.length + 1}`]: '',
+        [`previewNew`]: '',
       };
 
       console.log(obj);
@@ -68,20 +83,26 @@ const Sliders = () => {
           {dataSliders.length > 0 &&
             dataSliders.map((data, index) => (
               <Grid item xs={11} md={6} key={data.id}>
-                <h4 className="fw-600">Banner {index + 1}</h4>
-                <UploadImage
+                <h5 className="fw-500">Banner {index + 1}</h5>
+                <UploadImageWithButton
                   uploadFoto={handleChangePhoto}
-                  preview={state[`preview${index + 1}`]}
+                  preview={state[`preview${data.id}`]}
                   formatIcon={false}
+                  state={{ index: index + 1, id: data.id }}
+                  handleDelete={deleteSlider}
+                  getData={getData}
                 />
               </Grid>
             ))}
           <Grid item xs={11} md={6}>
-            <h4 className="fw-600">Banner {dataSliders.length + 1}</h4>
-            <UploadImage
+            <h5 className="fw-500">Banner {dataSliders.length + 1}</h5>
+            <UploadImageWithButton
               uploadFoto={handleChangePhoto}
-              preview={state[`preview${dataSliders.length + 1}`]}
+              preview={state[`previewNew`]}
               formatIcon={false}
+              state={{ index: 'New', id: 'New' }}
+              handleDelete={deleteSlider}
+              getData={getData}
             />
           </Grid>
         </Grid>

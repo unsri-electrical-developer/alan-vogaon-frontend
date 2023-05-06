@@ -69,7 +69,7 @@ const RenderTable = ({ data, state, search, getData }) => {
       ))
   ) : (
     <>
-        <TableRow hover>
+      <TableRow hover style={{ borderBottom: "1px #e6e5e5 solid" }}>
         {/* <TableCell colSpan={12} align="center">
         Data kosong
       </TableCell> */}
@@ -81,9 +81,7 @@ const RenderTable = ({ data, state, search, getData }) => {
         >
           1
         </TableCell>
-        <TableCell colSpan={10}>
-          Entertainment
-        </TableCell>
+        <TableCell colSpan={10}>Entertainment</TableCell>
         <TableCell align="center" colSpan={1}>
           <img src={IcDot} alt="eye" />
         </TableCell>
@@ -100,9 +98,7 @@ const RenderTable = ({ data, state, search, getData }) => {
         >
           2
         </TableCell>
-        <TableCell colSpan={10}>
-          Entertainment
-        </TableCell>
+        <TableCell colSpan={10}>Entertainment</TableCell>
         <TableCell align="center" colSpan={1}>
           <img src={IcDot} alt="eye" />
         </TableCell>
@@ -111,7 +107,7 @@ const RenderTable = ({ data, state, search, getData }) => {
   );
 };
 
-const TableUsers = ({ search, data, getData }) => {
+const TableGamesCategory = ({ search, data, getData }) => {
   const [state, setState] = useState({
     page: 0,
     rowsPerPage: 10,
@@ -204,4 +200,4 @@ const TableUsers = ({ search, data, getData }) => {
   );
 };
 
-export default TableUsers;
+export default TableGamesCategory;

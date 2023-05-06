@@ -1,10 +1,5 @@
 import { API, setAuthToken } from '../../../config/API.js';
-import {
-  GET_SLIDERS,
-  ADD_SLIDERS,
-  EDIT_SLIDERS,
-  DELETE_SLIDERS,
-} from '../constant.js';
+import { GET_SLIDERS } from '../constant.js';
 
 export const getSliders = (params) => {
   return (dispatch) => {
@@ -24,4 +19,24 @@ export const getSliders = (params) => {
         });
       });
   };
+};
+
+export const addSlider = (body) => {
+  const token = localStorage.getItem('jwt_token');
+  setAuthToken(token);
+  return API.post('/sliders', body);
+  // body: image: data:/image/base64
+};
+
+export const updateSlider = (params, body) => {
+  const token = localStorage.getItem('jwt_token');
+  setAuthToken(token);
+  return API.patch('/sliders/' + params, body);
+  // body: image: data:/image/base64
+};
+
+export const deleteSlider = (params) => {
+  const token = localStorage.getItem('jwt_token');
+  setAuthToken(token);
+  return API.delete('/sliders/' + params);
 };

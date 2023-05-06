@@ -7,6 +7,7 @@ import setifikatRoute from './views/Manajemen/Sertifikat/SertifikatRoutes';
 import SlidersRoutes from './views/Sliders/SlidersRoutes';
 import PaymentRoutes from './views/Payment/PaymentRoutes';
 import SettingsRoutes from './views/Settings/SettingsRoutes';
+import transactionRoutes from './views/transaction/TransactionRoutes';
 
 const redirectRoute = [
   {
@@ -29,6 +30,8 @@ const routes = [
   ...SettingsRoutes,
   ...setifikatRoute,
   ...profileRoutes,
+  ...transactionRoutes,
+
   ...redirectRoute,
   ...errorRoute,
 ];

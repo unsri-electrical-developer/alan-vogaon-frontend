@@ -1,18 +1,18 @@
 import React from 'react';
 import {
-  Button,
   TextField,
   Icon,
   InputAdornment,
   Grid,
+  Button,
 } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import AddIcon from '@material-ui/icons/Add';
 import SimpleCard from '../../assets/components/cards/SimpleCard';
-import TableGamesCategory from './components/TableGamesCategory';
+import TableGamesListGames from './components/TableGamesListGames';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-// import Button from '@mui/material/Button'
-
+// import Button from "@mui/material/Button";
+import ListGamesFilter from './components/ListGamesFilter';
 const theme = createTheme({
   palette: {
     primary: {
@@ -21,7 +21,7 @@ const theme = createTheme({
   },
 });
 
-const GamesCategory = () => {
+const GamesListGames = () => {
   return (
     <div className="m-sm-30">
       <Grid
@@ -36,9 +36,10 @@ const GamesCategory = () => {
             className="font-semibold text-25 my-auto"
             style={{ color: '#0A0A0A' }}
           >
-            Games Category
+            List Games
           </h1>
         </Grid>
+
         <Grid
           item
           xs={12}
@@ -46,20 +47,22 @@ const GamesCategory = () => {
           className="d-flex mr-8"
           style={{ justifyContent: 'flex-end' }}
         >
-          <Link to="/games/category/add">
+          <Link to="/games/listGames/add">
             <ThemeProvider theme={theme}>
-              <Button
-                variant="contained"
-                className="px-8 py-3"
-                style={{ textTransform: 'none' }}
-              >
+              <Button variant="contained" className="px-8 py-3">
                 <AddIcon />
-                <span className="karyawan-btn-span">Add</span>
+                <span
+                  className="karyawan-btn-span"
+                  style={{ textTransform: 'none' }}
+                >
+                  Add
+                </span>
               </Button>
             </ThemeProvider>
           </Link>
         </Grid>
       </Grid>
+
       <SimpleCard title="">
         <div
           className="mt-2 mb-7 d-flex items-center"
@@ -79,11 +82,19 @@ const GamesCategory = () => {
               ),
             }}
           />
+          {/* <ListGamesFilter
+            dataSelect={this.state.list_unit_kerja}
+            state={this.state}
+            setState={this.setState.bind(this)}
+            label="Unit Kerja"
+            name="unit_kerja"
+            width="240px"
+          /> */}
         </div>
-        <TableGamesCategory />
+        <TableGamesListGames />
       </SimpleCard>
     </div>
   );
 };
 
-export default GamesCategory;
+export default GamesListGames;

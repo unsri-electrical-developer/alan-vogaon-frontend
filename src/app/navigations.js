@@ -31,13 +31,13 @@ export const navigations = [
     children: [
       {
         name: 'Category',
-        path: '/games_category',
+        path: '/games/category',
         auth: authRoles.all,
         exact: true,
       },
       {
         name: 'List Games',
-        path: '/data_manajemen',
+        path: '/games/listGames',
         auth: authRoles.all,
         exact: true,
       },
@@ -71,7 +71,7 @@ export const navigations = [
   },
   {
     name: 'Transaction',
-    path: '/404',
+    path: '/transaction',
     icon: ic_transaction(),
     auth: authRoles.all,
     exact: true,

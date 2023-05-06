@@ -9,6 +9,7 @@ import LoginReducer from './LoginReducer';
 import sertifikatReducer from './SertifikatReducer';
 import UserReducer from './UserReducer';
 import SlidersReducer from './SlidersReducer';
+import PaymentReducer from './PaymentReducer';
 
 const RootReducer = combineReducers({
   login: LoginReducer,
@@ -20,6 +21,7 @@ const RootReducer = combineReducers({
   sertifikat: sertifikatReducer,
   global: globalReducer,
   sliders: SlidersReducer,
+  payment: PaymentReducer,
 });
 
 export default RootReducer;

@@ -1,7 +1,7 @@
 @import "~perfect-scrollbar/css/perfect-scrollbar.css";
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
 :root {
-  --primary: #0083e2 !important;
+  --primary: #1253FA !important;
   --light-primary: #0084e232 !important;
   --dark-primary: #0d6fa7 !important;
   --secondary: #6fbd44 !important;
@@ -15,6 +15,7 @@
   --bs-danger: #fd6d5d !important;
   --bs-danger-rgb: 253, 109, 93 !important;
 }
+
 @media print {
   body,
   *,
@@ -32,6 +33,7 @@
 a:hover {
   color: var(--primary);
 }
+
 * {
   font-family: "Poppins", sans-serif;
 }
@@ -407,12 +409,13 @@ a:hover {
 }
 /* Sidebar */
 .nav-bullet {
-  width: 14px;
-  height: 14px;
-  background: transparent;
+  width: 10px;
+  height: 10px;
+  background: black;
   border: 2px solid var(--black);
   transition: 0.3s;
 }
+
 /* Popup Menu */
 .popup-menu-item:hover {
   color: var(--primary) !important;

@@ -62,3 +62,9 @@ export const updProfile = async (params) => {
     setAuthToken(token);
     return await API.post('user/profile/edit', params);
 };
+
+// export const getAllUsers = async (params) => {
+//     const oken = localStorage.getItem("jwt_token");
+//     setAuthToken(token);
+//     return await API.get("users/", params);
+// }

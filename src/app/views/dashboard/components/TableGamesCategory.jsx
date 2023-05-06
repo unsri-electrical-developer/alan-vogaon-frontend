@@ -10,7 +10,8 @@ import {
     TableHead,
   Avatar
 } from "@material-ui/core";
-import IcDot from "./../../../assets/components/IcDot.svg"
+import IcDot from "./../../../assets/components/icons/IcDot.svg"
+import MenuCategory from "./MenuCategory"
 
 const RenderTable = ({ data, state, search, getData }) => {
   const handleNumbering = () => {
@@ -100,7 +101,13 @@ const RenderTable = ({ data, state, search, getData }) => {
         </TableCell>
         <TableCell colSpan={10}>Entertainment</TableCell>
         <TableCell align="center" colSpan={1}>
-          <img src={IcDot} alt="eye" />
+          <MenuCategory
+            // item={item}
+            // getData={getData}
+            // setState={setState}
+            // editPath={`/lokasiabsensi/edit/${item.lokasi_absensi_code}`}
+            // detailPath={`/lokasiabsensi/detail/${item.lokasi_absensi_code}`}
+          />
         </TableCell>
       </TableRow>
     </>

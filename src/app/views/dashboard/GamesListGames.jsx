@@ -48,7 +48,7 @@ const GamesListGames = () => {
         >
           <Link to="/games/listGames/add">
             <ThemeProvider theme={theme}>
-              <Button variant="contained" className="px-8 py-3">
+              <Button variant="contained" className="px-13 py-3">
                 <AddIcon />
                 <span className="karyawan-btn-span" style={{ textTransform: 'none' }}>Add</span>
               </Button>

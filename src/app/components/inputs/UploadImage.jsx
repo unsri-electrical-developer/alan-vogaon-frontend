@@ -109,7 +109,10 @@ const UploadImage = ({
           {required ? <span className="text-danger"> *</span> : null}
         </label>
       )}
-      <Card className="card-input-image position-relative shadow-none">
+      <Card
+        className="card-input-image position-relative shadow-none"
+        style={{ borderRadius: "10px", borderColor: "#1253FA" }}
+      >
         {preview && (
           <div className="h-full w-full position-absolute">
             <img
@@ -121,11 +124,11 @@ const UploadImage = ({
         )}
         <div
           className={`w-full h-full p-5 position-absolute d-flex align-items-center justify-content-center flex-column ${
-            preview ? 'has-preview' : null
+            preview ? "has-preview" : null
           }`}
         >
           <AddPhotoAlternateOutlined
-            style={{ transform: 'scale(1.5)', marginBottom: '8px' }}
+            style={{ transform: "scale(1.5)", marginBottom: "8px", color:"#1253FA" }}
             fontSize="large"
             color="primary"
           />
@@ -133,8 +136,8 @@ const UploadImage = ({
             {FileName
               ? FileName
               : isNotFigma
-              ? 'Seret foto ke area ini atau tekan tombol unggah dibawah ini. Pastikan foto memiliki kualitas yang baik.'
-              : 'Taruh foto disini atau klik disini'}
+              ? "Seret foto ke area ini atau tekan tombol unggah dibawah ini. Pastikan foto memiliki kualitas yang baik."
+              : "Taruh foto disini atau klik disini"}
           </p>
           {isNotFigma && (
             <Button
@@ -155,8 +158,8 @@ const UploadImage = ({
           ref={fileInput}
           accept={
             formatIcon
-              ? 'image/svg+xml, image/webp'
-              : 'image/webp, image/jpg, image/jpeg, image/png'
+              ? "image/svg+xml, image/webp"
+              : "image/webp, image/jpg, image/jpeg, image/png"
           }
           id="input-file"
         />
@@ -173,8 +176,8 @@ const UploadImage = ({
       {FilePath?.length > 0 ? (
         <ModalCrop
           handleClose={() => {
-            setFilePath('');
-            fileInput.current.value = '';
+            setFilePath("");
+            fileInput.current.value = "";
           }}
           open={true}
           filePath={FilePath}

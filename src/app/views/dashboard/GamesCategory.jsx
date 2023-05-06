@@ -48,7 +48,7 @@ const GamesCategory = () => {
         >
           <Link to="/games/category/add">
             <ThemeProvider theme={theme}>
-              <Button variant="contained" className="px-8 py-3" style={{ textTransform: 'none' }}>
+              <Button variant="contained" className="px-13 py-3" style={{ textTransform: 'none' }}>
                 <AddIcon />
                 <span className="karyawan-btn-span">
                   Add

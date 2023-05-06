@@ -1,31 +1,31 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Card, Grid, Icon } from "@material-ui/core";
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import SimpleCard from "../../assets/components/cards/SimpleCard";
-import { formatRupiah } from "../../../utlis/formatRupiah";
-import ic_topup from "../../assets/components/ic_topup.svg";
+import { Card, Grid, Icon } from '@material-ui/core';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import SimpleCard from '../../assets/components/cards/SimpleCard';
+import { formatRupiah } from '../../../utlis/formatRupiah';
+import ic_topup from '../../assets/components/ic_topup.svg';
 
 import {
   CardChartTotalData,
   CardChartTotalPenghargaan,
-} from "../../components";
-import CardChartUsia from "../../components/cards/CardChartUsia";
+} from '../../components';
+import CardChartUsia from '../../components/cards/CardChartUsia';
 
 import {
   getChatDashboard,
   getDashboardData,
-} from "../../redux/actions/AppActions";
+} from '../../redux/actions/AppActions';
 
 const Dashboard = () => {
   const dispatch = useDispatch();
-  const { dashboard, loadingPie, pieData, loadingLine, lineData } = useSelector(
-    ({ app }) => app
-  );
+  // const { dashboard, loadingPie, pieData, loadingLine, lineData } = useSelector(
+  //   ({ app }) => app
+  // );
   const getData = () => {
     dispatch(getDashboardData());
-    dispatch(getChatDashboard("CHART_PIE"));
-    dispatch(getChatDashboard("CHART_LINE"));
+    dispatch(getChatDashboard('CHART_PIE'));
+    dispatch(getChatDashboard('CHART_LINE'));
   };
 
   useEffect(() => {
@@ -50,7 +50,7 @@ const Dashboard = () => {
                 <div className="money-icon">
                   <img src={ic_topup} />
                 </div>
-                <div style={{ paddingLeft: "15px" }}>
+                <div style={{ paddingLeft: '15px' }}>
                   <h1>
                     {/* {formatRupiah(TotalGaji())} */} {formatRupiah(120000)}
                   </h1>
@@ -71,10 +71,10 @@ const Dashboard = () => {
                 <div>
                   <div
                     style={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "flex-start",
-                      gap: "5px",
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'flex-start',
+                      gap: '5px',
                     }}
                   >
                     <h1>200</h1>
@@ -100,10 +100,10 @@ const Dashboard = () => {
                 <div>
                   <div
                     style={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "flex-start",
-                      gap: "5px",
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'flex-start',
+                      gap: '5px',
                     }}
                   >
                     <h1>200</h1>
@@ -119,13 +119,13 @@ const Dashboard = () => {
           </SimpleCard>
         </Grid>
         <Grid item xs={11} md={6}>
-          <CardChartTotalPenghargaan chart={lineData} loading={loadingLine} />
+          {/* <CardChartTotalPenghargaan chart={lineData} loading={loadingLine} /> */}
         </Grid>
         <Grid item xs={11} md={6}>
-          <CardChartTotalPenghargaan chart={lineData} loading={loadingLine} />
+          {/* <CardChartTotalPenghargaan chart={lineData} loading={loadingLine} /> */}
         </Grid>
         <Grid item xs={22} md={12}>
-          <CardChartUsia loading={loadingLine} />
+          {/* <CardChartUsia loading={loadingLine} /> */}
         </Grid>
       </Grid>
     </div>

@@ -1,4 +1,4 @@
-export const SET_USER_NAVIGATION = "SET_USER_NAVIGATION";
+export const SET_USER_NAVIGATION = 'SET_USER_NAVIGATION';
 
 const getfilteredNavigations = (navList = [], role) => {
   return navList.reduce((array, nav) => {

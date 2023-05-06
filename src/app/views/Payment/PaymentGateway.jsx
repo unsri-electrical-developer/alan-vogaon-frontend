@@ -42,7 +42,7 @@ const PaymentGateway = () => {
             <Button
               variant="contained"
               color="primary"
-              className="px-18 py-3 text-white border-radius-4 fw-500"
+              className="px-14 py-3 text-white border-radius-4 fw-500"
             >
               <AddIcon /> <span className="ml-2">Add</span>
             </Button>

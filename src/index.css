@@ -1,5 +1,5 @@
-@import "~perfect-scrollbar/css/perfect-scrollbar.css";
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
+@import '~perfect-scrollbar/css/perfect-scrollbar.css';
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 :root {
   --primary: #1253FA !important;
   --light-primary: #0084e232 !important;
@@ -35,10 +35,10 @@ a:hover {
 }
 
 * {
-  font-family: "Poppins", sans-serif;
+  font-family: 'Poppins', sans-serif;
 }
 .text-poppins {
-  font-family: "Poppins", sans-serif;
+  font-family: 'Poppins', sans-serif;
 }
 .text-black {
   color: #000 !important;
@@ -306,27 +306,58 @@ a:hover {
   background: #fbfbfb;
   transition: 0.3s;
   overflow: hidden;
-  min-height: 15.5rem;
-  max-height: 16rem;
+  min-height: 18rem;
+  max-height: 18.5rem;
   border-radius: 0px;
 }
+.card-input-image-mini {
+  border: 1px dashed var(--primary);
+  background: #fbfbfb;
+  transition: 0.3s;
+  overflow: hidden;
+  min-height: 9rem;
+  max-height: 10rem;
+  border-radius: 0px;
+}
+
 .card-input-image .preview {
   object-fit: contain;
   object-position: center;
 }
+.card-input-image-mini .preview {
+  object-fit: contain;
+  object-position: center;
+}
+
 .card-input-image .has-preview {
   background-color: rgba(0, 0, 0, 0.5);
 }
+.card-input-image-mini .has-preview {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
 .card-input-image input {
   opacity: 0;
   width: 100%;
   height: 100%;
   position: absolute;
 }
+.card-input-image-mini input {
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+}
+
 .card-input-image p {
   color: var(--grey);
   font-size: 12px;
 }
+.card-input-image-mini p {
+  color: var(--grey);
+  font-size: 12px;
+}
+
 /* Keranjang */
 .card-keranjang .img-produk {
   aspect-ratio: 1/1;

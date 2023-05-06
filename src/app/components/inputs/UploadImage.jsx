@@ -1,15 +1,15 @@
-import "cropperjs/dist/cropper.css";
+import 'cropperjs/dist/cropper.css';
 
-import { Button, Avatar } from "@material-ui/core";
-import { AddPhotoAlternateOutlined } from "@material-ui/icons";
-import React, { useState } from "react";
-import { useRef } from "react";
-import { Card } from "react-bootstrap";
-import Swal from "sweetalert2";
-import { makeStyles } from "@material-ui/core/styles";
-import ic_input from "../../assets/components/ic_input.svg";
-import ic_delete from "../../assets/components/ic_delete.svg";
-import ModalCrop from "../modals/ModalCrop";
+import { Button, Avatar } from '@material-ui/core';
+import { AddPhotoAlternateOutlined } from '@material-ui/icons';
+import React, { useState } from 'react';
+import { useRef } from 'react';
+import { Card } from 'react-bootstrap';
+import Swal from 'sweetalert2';
+import { makeStyles } from '@material-ui/core/styles';
+import ic_input from '../../assets/components/ic_input.svg';
+import ic_delete from '../../assets/components/ic_delete.svg';
+import ModalCrop from '../modals/ModalCrop';
 
 const UploadImage = ({
   uploadFoto,
@@ -29,7 +29,7 @@ const UploadImage = ({
   let fileInput = useRef();
 
   const getExtension = (filename) => {
-    var parts = filename.split(".");
+    var parts = filename.split('.');
     return parts[parts.length - 1];
   };
 
@@ -37,18 +37,18 @@ const UploadImage = ({
     var ext = getExtension(filename);
     if (formatIcon) {
       switch (ext.toLowerCase()) {
-        case "svg":
-        case "webp":
+        case 'svg':
+        case 'webp':
           return true;
         default:
           return false;
       }
     } else {
       switch (ext.toLowerCase()) {
-        case "jpg":
-        case "png":
-        case "webp":
-        case "jpeg":
+        case 'jpg':
+        case 'png':
+        case 'webp':
+        case 'jpeg':
           return true;
         default:
           return false;
@@ -57,9 +57,9 @@ const UploadImage = ({
   };
   const useStyles = makeStyles((theme) => ({
     avatar: {
-      height: "80px",
-      width: "80px",
-      margin: "7px",
+      height: '80px',
+      width: '80px',
+      margin: '7px',
     },
   }));
   const classes = useStyles();
@@ -76,17 +76,17 @@ const UploadImage = ({
       let file = files[0];
       let reader = new FileReader();
       if (maxSize && kbConverter(maxSize) < file.size) {
-        fileInput.current.value = "";
-        setFileName("");
-        uploadFoto("", "");
+        fileInput.current.value = '';
+        setFileName('');
+        uploadFoto('', '');
         Swal.fire({
-          title: "Oopss!",
-          text: "Ukuran file terlalu besar",
-          imageUrl: "/assets/images/icons/ic_error.svg",
+          title: 'Oopss!',
+          text: 'Ukuran file terlalu besar',
+          imageUrl: '/assets/images/icons/ic_error.svg',
           imageWidth: 92,
           imageHeight: 92,
-          confirmButtonText: "Ok",
-          confirmButtonColor: "#0083E2",
+          confirmButtonText: 'Ok',
+          confirmButtonColor: '#0083E2',
         });
         return;
       }
@@ -102,13 +102,13 @@ const UploadImage = ({
       };
     } else {
       Swal.fire({
-        title: "Oopss!",
-        text: "Format file tidak didukung",
-        imageUrl: "/assets/images/icons/ic_error.svg",
+        title: 'Oopss!',
+        text: 'Format file tidak didukung',
+        imageUrl: '/assets/images/icons/ic_error.svg',
         imageWidth: 92,
         imageHeight: 92,
-        confirmButtonText: "Ok",
-        confirmButtonColor: "#0083E2",
+        confirmButtonText: 'Ok',
+        confirmButtonColor: '#0083E2',
       });
     }
   };
@@ -117,10 +117,10 @@ const UploadImage = ({
       {avatar ? (
         <div
           style={{
-            display: "flex",
-            alignItems: "center",
-            gap: "15px",
-            flexDirection: "row",
+            display: 'flex',
+            alignItems: 'center',
+            gap: '15px',
+            flexDirection: 'row',
           }}
         >
           <div className="avatar-container">
@@ -136,8 +136,8 @@ const UploadImage = ({
               ref={fileInput}
               accept={
                 formatIcon
-                  ? "image/svg+xml, image/webp"
-                  : "image/webp, image/jpg, image/jpeg, image/png"
+                  ? 'image/svg+xml, image/webp'
+                  : 'image/webp, image/jpg, image/jpeg, image/png'
               }
               id="input-file"
             />
@@ -167,11 +167,11 @@ const UploadImage = ({
             )}
             <div
               className={`w-full h-full p-5 position-absolute d-flex align-items-center justify-content-center flex-column ${
-                preview ? "has-preview" : null
+                preview ? 'has-preview' : null
               }`}
             >
               <AddPhotoAlternateOutlined
-                style={{ transform: "scale(1.5)", marginBottom: "8px" }}
+                style={{ transform: 'scale(1.5)', marginBottom: '8px' }}
                 fontSize="large"
                 color="primary"
               />
@@ -179,8 +179,8 @@ const UploadImage = ({
                 {FileName
                   ? FileName
                   : isNotFigma
-                  ? "Seret foto ke area ini atau tekan tombol unggah dibawah ini. Pastikan foto memiliki kualitas yang baik."
-                  : "Taruh foto disini atau klik disini"}
+                  ? 'Seret foto ke area ini atau tekan tombol unggah dibawah ini. Pastikan foto memiliki kualitas yang baik.'
+                  : 'Taruh foto disini atau klik disini'}
               </p>
               {isNotFigma && (
                 <Button
@@ -201,8 +201,8 @@ const UploadImage = ({
               ref={fileInput}
               accept={
                 formatIcon
-                  ? "image/svg+xml, image/webp"
-                  : "image/webp, image/jpg, image/jpeg, image/png"
+                  ? 'image/svg+xml, image/webp'
+                  : 'image/webp, image/jpg, image/jpeg, image/png'
               }
               id="input-file"
             />
@@ -219,8 +219,8 @@ const UploadImage = ({
           {FilePath?.length > 0 ? (
             <ModalCrop
               handleClose={() => {
-                setFilePath("");
-                fileInput.current.value = "";
+                setFilePath('');
+                fileInput.current.value = '';
               }}
               open={true}
               filePath={FilePath}

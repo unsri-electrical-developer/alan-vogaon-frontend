@@ -8,6 +8,8 @@ import LayoutReducer from './LayoutReducer';
 import LoginReducer from './LoginReducer';
 import sertifikatReducer from './SertifikatReducer';
 import UserReducer from './UserReducer';
+import SlidersReducer from './SlidersReducer';
+import PaymentReducer from './PaymentReducer';
 
 const RootReducer = combineReducers({
   login: LoginReducer,
@@ -18,6 +20,8 @@ const RootReducer = combineReducers({
   admin: adminReducer,
   sertifikat: sertifikatReducer,
   global: globalReducer,
+  sliders: SlidersReducer,
+  payment: PaymentReducer,
 });
 
 export default RootReducer;

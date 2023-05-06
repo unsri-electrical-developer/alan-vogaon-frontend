@@ -1,35 +1,34 @@
-import { Card, Grid, Icon, TextField } from "@material-ui/core";
-import React, { useLayoutEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import "../../../styles/css/DetailUser.css";
+import { Card, Grid, Icon, TextField, Button } from '@material-ui/core';
+import React, { useLayoutEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import '../../../styles/css/DetailUser.css';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import Button from '@mui/material/Button';
-import { Link } from "react-router-dom";
-import { makeStyles } from "@material-ui/core/styles";
+// import Button from '@mui/material/Button';
+import { Link } from 'react-router-dom';
+import { makeStyles } from '@material-ui/core/styles';
 import { UploadImage } from '../../components';
 import SimpleCard from '../../assets/components/cards/SimpleCard';
-import ic_plus  from "../../assets/components/icons/ic_plus.svg";
-import ic_bin  from "../../assets/components/icons/ic_bin.svg";
-
+import ic_plus from '../../assets/components/icons/ic_plus.svg';
+import ic_bin from '../../assets/components/icons/ic_bin.svg';
 
 const theme = createTheme({
   palette: {
     primary: {
-      main: "#1253FA",
+      main: '#1253FA',
     },
   },
 });
 
 const AddGamesCategory = () => {
-    // table input
-const [inputList, setInputList] = useState([
+  // table input
+  const [inputList, setInputList] = useState([
     {
-      nama: "",
-      harga: "",
+      nama: '',
+      harga: '',
     },
     {
-      nama: "",
-      harga: "",
+      nama: '',
+      harga: '',
     },
   ]);
 
@@ -45,8 +44,8 @@ const [inputList, setInputList] = useState([
     setInputList([
       ...inputList,
       {
-        nama: "",
-        harga: "",
+        nama: '',
+        harga: '',
       },
     ]);
   };
@@ -73,9 +72,9 @@ const [inputList, setInputList] = useState([
                   className: classes.input,
                 }}
                 style={{
-                  transform: "scaleY(1.25)",
-                  marginTop: "10px",
-                  marginBottom: "10px",
+                  transform: 'scaleY(1.25)',
+                  marginTop: '10px',
+                  marginBottom: '10px',
                 }}
                 // value={state.jenis_bonus}
                 name="game"
@@ -95,9 +94,9 @@ const [inputList, setInputList] = useState([
                   className: classes.input,
                 }}
                 style={{
-                  transform: "scaleY(1.25)",
-                  marginTop: "10px",
-                  marginBottom: "10px",
+                  transform: 'scaleY(1.25)',
+                  marginTop: '10px',
+                  marginBottom: '10px',
                 }}
                 // value={state.jenis_bonus}
                 name="game"
@@ -127,7 +126,7 @@ const [inputList, setInputList] = useState([
     );
   };
 
-    const [state, setState] = useState({
+  const [state, setState] = useState({
     preview: '',
   });
 
@@ -140,27 +139,27 @@ const [inputList, setInputList] = useState([
   };
 
   useLayoutEffect(() => {
-    console.log("uselayouteffect");
+    console.log('uselayouteffect');
   }, []);
 
-    const useStyles = makeStyles((theme) => ({
+  const useStyles = makeStyles((theme) => ({
     root: {
-      display: "flex",
-      alignItems: "center",
-      width: "100%",
-      flexWrap: "wrap",
-      "& > *": {
+      display: 'flex',
+      alignItems: 'center',
+      width: '100%',
+      flexWrap: 'wrap',
+      '& > *': {
         margin: theme.spacing(0.5),
       },
     },
-    "& .MuiOutlinedInput-root": {
-      "& fieldset": {
-        border: "1px solid #e6e9ed",
+    '& .MuiOutlinedInput-root': {
+      '& fieldset': {
+        border: '1px solid #e6e9ed',
       },
     },
     input: {
-      transform: "scaleY(0.88)",
-      marginBlock: "auto",
+      transform: 'scaleY(0.88)',
+      marginBlock: 'auto',
     },
   }));
   const classes = useStyles();
@@ -173,14 +172,14 @@ const [inputList, setInputList] = useState([
         xs={12}
         sm
         className="d-flex mr-8"
-        style={{ justifyContent: "flex-end" }}
+        style={{ justifyContent: 'flex-end' }}
       >
         <Link to="/users">
           <ThemeProvider theme={theme}>
             <Button
               variant="contained"
               className="px-13 py-3"
-              style={{ textTransform: "none" }}
+              style={{ textTransform: 'none' }}
             >
               <span className="karyawan-btn-span">Save</span>
             </Button>
@@ -193,7 +192,7 @@ const [inputList, setInputList] = useState([
           <Grid item xs={12} sm={6}>
             <h3
               className="text-20 font-medium mb-5"
-              style={{ color: "#0A0A0A" }}
+              style={{ color: '#0A0A0A' }}
             >
               Games
             </h3>
@@ -201,7 +200,7 @@ const [inputList, setInputList] = useState([
           <Grid item xs={12} sm={6}>
             <h1
               className="font-semimedium text-14"
-              style={{ color: "#0a0a0a" }}
+              style={{ color: '#0a0a0a' }}
             >
               Unggah Foto
             </h1>
@@ -217,7 +216,7 @@ const [inputList, setInputList] = useState([
             <Grid item xs={12} sm={6}>
               <h1
                 className="mb-5 font-semimedium text-14"
-                style={{ color: "#0a0a0a" }}
+                style={{ color: '#0a0a0a' }}
               >
                 Game
               </h1>
@@ -228,7 +227,7 @@ const [inputList, setInputList] = useState([
                   className: classes.input,
                 }}
                 style={{
-                  transform: "scaleY(1.25)",
+                  transform: 'scaleY(1.25)',
                 }}
                 // value={state.jenis_bonus}
                 name="game"
@@ -242,7 +241,7 @@ const [inputList, setInputList] = useState([
             <Grid item xs={12} sm={6}>
               <h1
                 className="mb-5 font-semimedium text-14"
-                style={{ color: "#0a0a0a" }}
+                style={{ color: '#0a0a0a' }}
               >
                 Kategori
               </h1>
@@ -253,7 +252,7 @@ const [inputList, setInputList] = useState([
                   className: classes.input,
                 }}
                 style={{
-                  transform: "scaleY(1.25)",
+                  transform: 'scaleY(1.25)',
                 }}
                 // value={state.jenis_bonus}
                 name="game"
@@ -266,20 +265,19 @@ const [inputList, setInputList] = useState([
           </Grid>
         </div>
       </Card>
-
       {/* Second card */}
       <Card className="mt-5 py-10 px-10">
         <div className="mx-8 px-10 mt-5 mb-8">
           <Grid item xs={12} sm={6}>
             <h3
               className="text-20 font-medium mb-5"
-              style={{ color: "#0A0A0A" }}
+              style={{ color: '#0A0A0A' }}
             >
               Product
             </h3>
             <h1
               className="mb-5 font-semimedium text-14"
-              style={{ color: "#0a0a0a" }}
+              style={{ color: '#0a0a0a' }}
             >
               Nama
             </h1>
@@ -290,7 +288,7 @@ const [inputList, setInputList] = useState([
                 className: classes.input,
               }}
               style={{
-                transform: "scaleY(1.25)",
+                transform: 'scaleY(1.25)',
               }}
               // value={state.jenis_bonus}
               name="game"
@@ -308,4 +306,3 @@ const [inputList, setInputList] = useState([
 };
 
 export default AddGamesCategory;
-                

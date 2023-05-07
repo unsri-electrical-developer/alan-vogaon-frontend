@@ -1,18 +1,30 @@
-import React, { useState } from 'react';
+import React, { useEffect, useLayoutEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Button, TextField, Grid, Card } from '@material-ui/core';
 import Swal from 'sweetalert2';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import RichTextEditor from '../../../../matx/components/RichTextEditor';
+import { getGeneralInfo } from '../../../redux/actions/Settings';
 
 const GeneralInfo = () => {
   const dispatch = useDispatch();
-
-  const [state, setState] = useState({
+  const { dataGeneralInfo } = useSelector((state) => state.generalInfo);
+  console.log(dataGeneralInfo);
+  const [state1, setState] = useState({
     jenis_bonus: '',
     content: '',
   });
+
+  const getData = () => {
+    dispatch(getGeneralInfo());
+  };
+
+  useLayoutEffect(() => {
+    getData();
+  }, []);
+
+  useEffect(() => {}, []);
 
   const handleContentChange = (e) => {
     setState((prev) => ({
@@ -114,7 +126,7 @@ const GeneralInfo = () => {
           </div>
         </Card>
       </div>
-      <div className="my-8">
+      {/* <div className="my-8">
         <Card className="py-8 bg-white">
           <div className="mx-8 px-10 mb-8 bg-white">
             <Grid
@@ -273,7 +285,7 @@ const GeneralInfo = () => {
             </Grid>
           </div>
         </Card>
-      </div>
+      </div> */}
     </div>
   );
 };

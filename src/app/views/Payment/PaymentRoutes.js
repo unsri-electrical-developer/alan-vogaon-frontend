@@ -18,7 +18,7 @@ const PaymentRoutes = [
     exact: true,
   },
   {
-    path: '/payment_gateway/edit',
+    path: '/payment_gateway/:id',
     component: EditPaymentGateway,
     auth: authRoles.all,
     exact: true,

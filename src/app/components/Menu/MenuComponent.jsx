@@ -8,11 +8,7 @@ import DeleteOutlineOutlinedIcon from '@material-ui/icons/DeleteOutlineOutlined'
 
 import { useDispatch } from 'react-redux';
 
-export default function MenuComponent({
-  editPath = '',
-  deletePath = '',
-  getData,
-}) {
+export default function MenuComponent({ editPath = '', deletePath = '' }) {
   const [anchorEl, setAnchorEl] = useState(null);
   const dispatch = useDispatch();
   const handleClick = (event) => {
@@ -24,32 +20,8 @@ export default function MenuComponent({
   };
 
   const handleDelete = () => {
-    // if (isPajak) {
-    //   try {
-    //     dispatch(delPajak(item.ketentuan_pajak_code));
-    //     setTimeout(() => {
-    //       getData();
-    //       handleClose();
-    //       Swal.fire('Success!', 'Data Pajak berhasil dihapus', 'success');
-    //     }, 1000);
-    //   } catch (e) {
-    //     handleClose();
-    //     Swal.fire('Oopss!', `${e}`, 'error');
-    //   }
-    // } else {
-    //   try {
-    //     dispatch(delPtkp(item.ptkp_code));
-    //     setTimeout(() => {
-    //       getData();
-    //       handleClose();
-    //       Swal.fire('Success!', 'Data PTKP berhasil dihapus', 'success');
-    //     }, 1000);
-    //   } catch (e) {
-    //     handleClose();
-    //     Swal.fire('Oopss!', `${e}`, 'error');
-    //   }
-    // }
-    console.log('deleted');
+    deletePath();
+    handleClose();
   };
 
   return (

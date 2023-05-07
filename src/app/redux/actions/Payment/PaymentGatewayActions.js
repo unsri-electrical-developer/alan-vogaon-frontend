@@ -50,6 +50,7 @@ export const getDetailPaymentGateway = (params) => {
     setAuthToken(token);
     API.get('/payment_gateway/' + params)
       .then((res) => {
+        console.log(res);
         dispatch({
           type: GET_DETAIL_PAYMENT_GATEWAY,
           payload: res.data.data || [],

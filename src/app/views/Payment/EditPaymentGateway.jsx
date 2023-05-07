@@ -1,17 +1,39 @@
-import React, { useState } from 'react';
+import React, { useLayoutEffect, useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Button, TextField, Grid, Card } from '@material-ui/core';
 import Swal from 'sweetalert2';
-import { useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory, useParams } from 'react-router-dom';
+import {
+  getDetailPaymentGateway,
+  updatePaymentGateway,
+} from '../../redux/actions/Payment/PaymentGatewayActions';
 
 const EditPaymentGateway = () => {
   const dispatch = useDispatch();
+  const { id } = useParams();
+  const { detailPaymentGateway } = useSelector((state) => state.payment);
+
+  const getData = () => {
+    dispatch(getDetailPaymentGateway(id));
+  };
 
   const [state, setState] = useState({
-    jenis_bonus: '',
-    scaleY: '0.85',
+    pg_name: '',
   });
+
+  useLayoutEffect(() => {
+    getData();
+  }, []);
+
+  useEffect(() => {
+    if (detailPaymentGateway.hasOwnProperty('pg_name')) {
+      setState((prev) => ({
+        ...prev,
+        pg_name: detailPaymentGateway.pg_name,
+      }));
+    }
+  }, [detailPaymentGateway]);
 
   const handleChange = (e) => {
     e.persist();
@@ -25,17 +47,18 @@ const EditPaymentGateway = () => {
 
   const handleSubmit = () => {
     try {
-      //   dispatch(
-      //     addJenisBonus({
-      //       jenis: state.jenis_bonus,
-      //     })
-      //   );
-      setTimeout(() => {
-        history.push('/lainnya/bonus');
-        Swal.fire('Success!', 'Data Jenis Bonus berhasil disimpan', 'success');
-      }, 2000);
+      updatePaymentGateway(id, {
+        pg_name: state.pg_name,
+      }).then((res) => {
+        history.push('/payment_gateway');
+        Swal.fire(
+          'Success!',
+          'Data Payment Gateway berhasil diubah',
+          'success'
+        );
+      });
     } catch (e) {
-      Swal.fire('Oopss!', 'Data Jenis Bonus gagal disimpan', 'error');
+      Swal.fire('Oopss!', 'Data Payment Gateway gagal diubah', 'error');
     }
   };
 
@@ -113,8 +136,8 @@ const EditPaymentGateway = () => {
                     inputProps={{
                       className: classes.input,
                     }}
-                    value={state.jenis_bonus}
-                    name="jenis_bonus"
+                    value={state.pg_name}
+                    name="pg_name"
                     className={`${classes.outlined} border-radius-4 w-full`}
                     placeholder="Payment Gateway"
                     variant="outlined"

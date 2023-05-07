@@ -3,7 +3,8 @@ import React, { useLayoutEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import '../../../styles/css/DetailUser.css';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
+import GeneralButton from './../../components/buttons/GeneralButton.jsx';
 
 const theme = createTheme({
   palette: {
@@ -50,26 +51,29 @@ const Sliders = () => {
 
   return (
     <div className="analytics m-sm-30 mt-7 text-black">
-      <h1 className="fw-600 m-0">Detail User</h1>
-      <Grid
-        item
-        xs={12}
-        sm
-        className="d-flex mr-8"
-        style={{ justifyContent: 'flex-end' }}
+        <Grid
+        container
+        spacing={1}
+        justifyContent="space-between"
+        alignItems="center"
+        className="my-4 d-flex items-center"
       >
-        <Link to="/users">
-          <ThemeProvider theme={theme}>
-            <Button
-              variant="outlined"
-              className="px-8 py-3"
-              style={{ textTransform: 'none' }}
-            >
-              <span className="karyawan-btn-span">Back</span>
-            </Button>
-          </ThemeProvider>
-        </Link>
+        <Grid item xs={12} sm>
+                <h1 className="fw-600 m-0">Detail User</h1>
+        </Grid>
+        <Grid
+          item
+          xs={12}
+          sm
+          className="d-flex mr-6 items-center"
+          style={{ justifyContent: 'flex-end' }}
+        >
+          <Link to="/lokasiabsensi/add">
+            <GeneralButton name="Back" variant="outlined"/>
+          </Link>
+        </Grid>
       </Grid>
+
       <Card className="mt-5 py-10 px-10">
         <Grid container spacing={3}>
           <Grid item xs={12} sm={6}>

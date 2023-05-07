@@ -103,7 +103,7 @@ const MatxVerticalNavExpansionPanel = ({ item, children, mode }) => {
         >
           <div className="flex items-center">
             {icon && (
-              <Icon className="align-middle text-18 w-36 px-4">{icon}</Icon>
+              <Icon className="align-middle text-18 w-36 px-4" color="green">{icon}</Icon>
             )}
             {iconText && (
               <div className="w-4 h-4 rounded bg-white ml-5 mr-4"></div>

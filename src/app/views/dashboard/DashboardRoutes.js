@@ -60,8 +60,14 @@ const dashboardRoutes = [
     exact: true,
   },
   {
-    path: "/games/listGames/detail",
+    path: "/games/listGames/detail/:id",
     component: DetailListGames,
+    auth: authRoles.all,
+    exact: true,
+  },
+  {
+    path: "/games/listGames/edit/:id",
+    component: GamesListGames,
     auth: authRoles.all,
     exact: true,
   },

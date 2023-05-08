@@ -5,7 +5,7 @@ import "../../../styles/css/DetailUser.css";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { Link } from "react-router-dom";
 import GeneralButton from "../../components/buttons/GeneralButton.jsx";
-// import { getDetailUser } from "../../redux/actions/UserActions";
+import { getDetailGamesList} from "../../redux/actions/GamesActions";
 import { useHistory, useParams } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import { UploadImage } from "../../components";
@@ -23,7 +23,13 @@ const theme = createTheme({
 
 const DetailListGames = () => {
   const { id } = useParams();
+  console.log(id);
   const history = useHistory();
+
+  const [state, setState] = useState({
+    data: [],
+    games_item: []
+  });
 
   const useStyles = makeStyles((theme) => ({
     root: {
@@ -46,21 +52,21 @@ const DetailListGames = () => {
     },
   }));
   const classes = useStyles();
+  
+  console.log(state.data);
+  useLayoutEffect(() => {
+    getDetailGamesList(id).then((res) => {
+      let data = res.data?.data;
+      console.log(data);
+      setState((prev) => ({
+        ...prev,
+        data: data,
+        games_item: data.games_item
+      }));
+    console.log(state.data);
 
-  const [state, setState] = useState({
-    data: [],
-  });
-
-  // useLayoutEffect(() => {
-  //   getDetailUser(id).then((res) => {
-  //     let data = res.data?.data;
-  //     setState((prev) => ({
-  //       ...prev,
-  //       ...data,
-  //     }));
-  //   });
-  // }, []);
-
+    });
+  }, []);
 
   // const renderInput = () => {
   //   const isLastInput = (index) => inputList.length - 1 !== index;
@@ -195,7 +201,7 @@ const DetailListGames = () => {
             >
               <div
                 style={{
-                  backgroundImage: `url(${state.foto_profile})`,
+                  backgroundImage: `url(${state.data.img})`,
                   backgroundRepeat: "no-repeat",
                   backgroundSize: "cover",
                   height: "100%",
@@ -211,7 +217,7 @@ const DetailListGames = () => {
                 Nama Game
               </h1>
               <p className="text-16 font-medium" style={{ color: "#0A0A0A" }}>
-                Mobile Legend
+                {state.data.title}
               </p>
             </Grid>
 
@@ -220,7 +226,7 @@ const DetailListGames = () => {
                 Kategori
               </h1>
               <p className="text-16 font-medium" style={{ color: "#0A0A0A" }}>
-                Mobile
+                {state.data.category?.category_name}
               </p>
             </Grid>
           </Grid>
@@ -237,7 +243,7 @@ const DetailListGames = () => {
               Product
             </h3>
           </Grid>
-          <TableDetailListGames />
+          <TableDetailListGames data={state.games_item} />
         </div>
       </Card>
     </div>

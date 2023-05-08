@@ -33,37 +33,25 @@ const RenderTable = ({ data, state, search, getData }) => {
             className="text-14 pl-3"
             align="center"
             style={{ color: "#0A0A0A" }}
-            colSpan={1}
+            colSpan={2}
           >
-            {index + 1 + handleNumbering()}
+            1
           </TableCell>
-          <TableCell
-            className="text-14 "
-            style={{ color: "#0A0A0A" }}
-            colSpan={5}
-          >
-            {item.nama_denda}
+          <TableCell colSpan={5}>
+            <div
+              className=" z-100 text-14 d-flex items-center"
+              style={{ gap: "16px" }}
+            >
+              {/* <Avatar
+                variant="square"
+                src={`https://ui-avatars.com/api/?name=nurlestari&background=97CB72&color=ffffff`}
+                width={"50px"}
+                style={{ borderRadius: "5px" }}
+              /> */}
+              {item.title}
+            </div>
           </TableCell>
-          <TableCell
-            className="text-14 "
-            style={{ color: "#0A0A0A" }}
-            colSpan={4}
-          >
-            {item.nominal === null
-              ? ""
-              : item.nominal == undefined
-              ? ""
-              : `Rp ${item.nominal
-                  .toString()
-                  .replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.")}`}
-          </TableCell>
-          <TableCell className="pl-3" align="center" colSpan={2}>
-            {/* <MenuDenda
-              item={item}
-              path={`/lainnya/denda/edit/${item.jenis_denda_code}`}
-              getData={getData}
-            /> */}
-          </TableCell>
+          <TableCell colSpan={5}>{item.price}</TableCell>
         </TableRow>
       ))
   ) : (

@@ -79,7 +79,7 @@ export default function MenuCategory({
       >
         <Link
           to={{
-            pathname: `/game/category/edit/${item.category_code}`,
+            pathname: editPath,
           }}
         >
           <MenuItem className="mb-3" onClick={handleClose}>

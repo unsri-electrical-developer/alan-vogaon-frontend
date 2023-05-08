@@ -10,7 +10,6 @@ import {
     TableHead,
   Avatar
 } from "@material-ui/core";
-import IcDot from "./../../../assets/components/icons/IcDot.svg"
 import MenuCategory from "./MenuCategory"
 
 const RenderTable = ({ data, state, search, getData }) => {
@@ -45,7 +44,7 @@ const RenderTable = ({ data, state, search, getData }) => {
             item={item}
             // getData={getData}
             // setState={setState}
-            editPath={`/lokasiabsensi/edit/${item.category_code}`}
+            editPath={`/games/category/edit/${item.category_code}`}
           />
         </TableCell>
       </TableRow>
@@ -55,41 +54,6 @@ const RenderTable = ({ data, state, search, getData }) => {
         <TableCell colSpan={12} align="center">
         Data kosong
       </TableCell>
-        {/* <TableCell
-          className="text-14 pl-3"
-          align="center"
-          style={{ color: "#0A0A0A" }}
-          colSpan={1}
-        >
-          1
-        </TableCell>
-        <TableCell colSpan={10}>Entertainment</TableCell>
-        <TableCell align="center" colSpan={1}>
-          <img src={IcDot} alt="eye" />
-        </TableCell>
-      </TableRow>
-      <TableRow hover>
-        <TableCell colSpan={12} align="center">
-        Data kosong
-      </TableCell>
-        <TableCell
-          className="text-14 pl-3"
-          align="center"
-          style={{ color: "#0A0A0A" }}
-          colSpan={1}
-        >
-          2
-        </TableCell>
-        <TableCell colSpan={10}>Entertainment</TableCell>
-        <TableCell align="center" colSpan={1}>
-          <MenuCategory
-            // item={item}
-            // getData={getData}
-            // setState={setState}
-            // editPath={`/lokasiabsensi/edit/${item.lokasi_absensi_code}`}
-            // detailPath={`/lokasiabsensi/detail/${item.lokasi_absensi_code}`}
-          />
-        </TableCell> */}
     </>
   );
 };

@@ -47,7 +47,8 @@ const RenderTable = ({ data, state, search, getData }) => {
             >
               <Avatar
                 variant="square"
-                src={`https://ui-avatars.com/api/?name=nurlestari&background=97CB72&color=ffffff`}
+                // src={`https://ui-avatars.com/api/?name=nurlestari&background=97CB72&color=ffffff`}
+                src={item.users_profile_pic}
                 width={"50px"}
                 style={{ borderRadius: "5px" }}
               />
@@ -61,12 +62,14 @@ const RenderTable = ({ data, state, search, getData }) => {
             {item.no_telp}
           </TableCell>
           <TableCell align="center" colSpan={3}>
-            {item.created_at.slice(0,10)}
+            {item.created_at.slice(0, 10)}
           </TableCell>
           <TableCell align="center" colSpan={2}>
-            <Link to={{
-              pathname:`/users/${item.users_code}`,
-              }}>
+            <Link
+              to={{
+                pathname: `/users/${item.users_code}`,
+              }}
+            >
               <img src={Aksieye} alt="eye" />
             </Link>
           </TableCell>
@@ -74,10 +77,10 @@ const RenderTable = ({ data, state, search, getData }) => {
       ))
   ) : (
     <>
-        <TableCell colSpan={12} align="center">
+      <TableCell colSpan={12} align="center">
         Data kosong
       </TableCell>
-      
+
       {/* <TableRow hover>
         <TableCell colSpan={12} align="center">
         Data kosong

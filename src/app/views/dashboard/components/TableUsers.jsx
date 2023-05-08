@@ -23,6 +23,7 @@ const RenderTable = ({ data, state, search, getData }) => {
       return state.page * 25;
     }
   };
+
   return data?.length > 0 ? (
     data
       .slice(
@@ -39,80 +40,48 @@ const RenderTable = ({ data, state, search, getData }) => {
           >
             {index + 1 + handleNumbering()}
           </TableCell>
-          <TableCell
-            className="text-14 "
-            style={{ color: "#0A0A0A" }}
-            colSpan={5}
-          >
-            {item.nama_denda}
+          <TableCell style={{ color: "#0A0A0A" }} colSpan={3}>
+            <div
+              className=" z-100 text-14 d-flex items-center"
+              style={{ gap: "16px" }}
+            >
+              <Avatar
+                variant="square"
+                src={`https://ui-avatars.com/api/?name=nurlestari&background=97CB72&color=ffffff`}
+                width={"50px"}
+                style={{ borderRadius: "5px" }}
+              />
+              {item.name}
+            </div>
           </TableCell>
-          <TableCell
-            className="text-14 "
-            style={{ color: "#0A0A0A" }}
-            colSpan={4}
-          >
-            {item.nominal === null
-              ? ""
-              : item.nominal == undefined
-              ? ""
-              : `Rp ${item.nominal
-                  .toString()
-                  .replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.")}`}
+          <TableCell align="center" style={{ color: "#0A0A0A" }} colSpan={3}>
+            {item.email}
           </TableCell>
-          <TableCell className="pl-3" align="center" colSpan={2}>
-            {/* <MenuDenda
-              item={item}
-              path={`/lainnya/denda/edit/${item.jenis_denda_code}`}
-              getData={getData}
-            /> */}
+          <TableCell align="center" colSpan={3}>
+            {item.no_telp}
+          </TableCell>
+          <TableCell align="center" colSpan={3}>
+            {item.created_at.slice(0,10)}
+          </TableCell>
+          <TableCell align="center" colSpan={2}>
+            <Link to={{
+              pathname:`/users/${item.users_code}`,
+              }}>
+              <img src={Aksieye} alt="eye" />
+            </Link>
           </TableCell>
         </TableRow>
       ))
   ) : (
     <>
-      <TableRow hover style={{ borderBottom: "1px #e6e5e5 solid" }}>
-        {/* <TableCell colSpan={12} align="center">
+        <TableCell colSpan={12} align="center">
         Data kosong
-      </TableCell> */}
-        <TableCell
-          className="text-14 pl-3"
-          align="center"
-          style={{ color: "#0A0A0A" }}
-          colSpan={1}
-        >
-          1
-        </TableCell>
-        <TableCell style={{ color: "#0A0A0A" }} colSpan={3}>
-          <div
-            className=" z-100 text-14 d-flex items-center"
-            style={{ gap: "16px" }}
-          >
-            <Avatar
-              variant="square"
-              src={`https://ui-avatars.com/api/?name=nurlestari&background=97CB72&color=ffffff`}
-              width={"50px"}
-              style={{ borderRadius: "5px" }}
-            />
-            Nur Lestari
-          </div>
-        </TableCell>
-        <TableCell align="center" style={{ color: "#0A0A0A" }} colSpan={3}>
-          nur@gmail.com
-        </TableCell>
-        <TableCell align="center" colSpan={3}>
-          1234567
-        </TableCell>
-        <TableCell align="center" colSpan={3}>
-          06/12/2022
-        </TableCell>
-        <TableCell align="center" colSpan={2}>
-          <img src={Aksieye} alt="eye" />
-        </TableCell>
-      </TableRow>
-      <TableRow hover>
-        {/* <TableCell colSpan={12} align="center">
+      </TableCell>
+      
+      {/* <TableRow hover>
+        <TableCell colSpan={12} align="center">
         Data kosong
-      </TableCell> */}
+      </TableCell>
         <TableCell
           className="text-14 pl-3"
           align="center"
@@ -149,7 +118,7 @@ const RenderTable = ({ data, state, search, getData }) => {
             <img src={Aksieye} alt="eye" />
           </Link>
         </TableCell>
-      </TableRow>
+      </TableRow> */}
     </>
   );
 };

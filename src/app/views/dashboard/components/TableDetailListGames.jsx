@@ -1,17 +1,14 @@
 import { useState } from "react";
-import React from 'react';
-// import MenuDenda from "./MenuDenda";
+import React from "react";
 import {
   TablePagination,
   Table,
   TableCell,
   TableRow,
   TableBody,
-    TableHead,
-  Avatar
+  TableHead,
+  Avatar,
 } from "@material-ui/core";
-import IcDot from "./../../../assets/components/icons/IcDot.svg"
-import MenuCategory from "./MenuCategory"
 
 const RenderTable = ({ data, state, search, getData }) => {
   const handleNumbering = () => {
@@ -22,7 +19,8 @@ const RenderTable = ({ data, state, search, getData }) => {
     } else if (state.rowsPerPage === 25) {
       return state.page * 25;
     }
-  };
+    };
+    
   return data?.length > 0 ? (
     data
       .slice(
@@ -31,70 +29,107 @@ const RenderTable = ({ data, state, search, getData }) => {
       )
       .map((item, index) => (
         <TableRow hover key={index}>
-         <TableCell
-          className="text-14 pl-3"
-          align="center"
-          style={{ color: "#0A0A0A" }}
-          colSpan={1}
-        >
-          {index + 1 + handleNumbering()}
-        </TableCell>
-        <TableCell colSpan={10}>{item.category_name}</TableCell>
-        <TableCell align="center" colSpan={1}>
-          <MenuCategory
-            item={item}
-            // getData={getData}
-            // setState={setState}
-            editPath={`/lokasiabsensi/edit/${item.category_code}`}
-          />
-        </TableCell>
-      </TableRow>
+          <TableCell
+            className="text-14 pl-3"
+            align="center"
+            style={{ color: "#0A0A0A" }}
+            colSpan={1}
+          >
+            {index + 1 + handleNumbering()}
+          </TableCell>
+          <TableCell
+            className="text-14 "
+            style={{ color: "#0A0A0A" }}
+            colSpan={5}
+          >
+            {item.nama_denda}
+          </TableCell>
+          <TableCell
+            className="text-14 "
+            style={{ color: "#0A0A0A" }}
+            colSpan={4}
+          >
+            {item.nominal === null
+              ? ""
+              : item.nominal == undefined
+              ? ""
+              : `Rp ${item.nominal
+                  .toString()
+                  .replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.")}`}
+          </TableCell>
+          <TableCell className="pl-3" align="center" colSpan={2}>
+            {/* <MenuDenda
+              item={item}
+              path={`/lainnya/denda/edit/${item.jenis_denda_code}`}
+              getData={getData}
+            /> */}
+          </TableCell>
+        </TableRow>
       ))
   ) : (
     <>
-        <TableCell colSpan={12} align="center">
+      <TableRow hover style={{ borderBottom: "1px #e6e5e5 solid" }}>
+        {/* <TableCell colSpan={12} align="center">
         Data kosong
-      </TableCell>
-        {/* <TableCell
-          className="text-14 pl-3"
-          align="center"
-          style={{ color: "#0A0A0A" }}
-          colSpan={1}
-        >
-          1
-        </TableCell>
-        <TableCell colSpan={10}>Entertainment</TableCell>
-        <TableCell align="center" colSpan={1}>
-          <img src={IcDot} alt="eye" />
-        </TableCell>
-      </TableRow>
-      <TableRow hover>
-        <TableCell colSpan={12} align="center">
-        Data kosong
-      </TableCell>
+      </TableCell> */}
         <TableCell
           className="text-14 pl-3"
           align="center"
           style={{ color: "#0A0A0A" }}
-          colSpan={1}
+          colSpan={2}
+        >
+          1
+        </TableCell>
+        <TableCell colSpan={5}>
+          <div
+            className=" z-100 text-14 d-flex items-center"
+            style={{ gap: "16px" }}
+          >
+            <Avatar
+              variant="square"
+              src={`https://ui-avatars.com/api/?name=nurlestari&background=97CB72&color=ffffff`}
+              width={"50px"}
+              style={{ borderRadius: "5px" }}
+            />
+            Free Fire
+          </div>
+        </TableCell>
+        <TableCell colSpan={5}>Mobile Game</TableCell>
+      </TableRow>
+
+      <TableRow hover>
+        {/* <TableCell colSpan={12} align="center">
+        Data kosong
+      </TableCell> */}
+        <TableCell
+          className="text-14 pl-3"
+          align="center"
+          style={{ color: "#0A0A0A" }}
+          colSpan={2}
         >
           2
         </TableCell>
-        <TableCell colSpan={10}>Entertainment</TableCell>
-        <TableCell align="center" colSpan={1}>
-          <MenuCategory
-            // item={item}
-            // getData={getData}
-            // setState={setState}
-            // editPath={`/lokasiabsensi/edit/${item.lokasi_absensi_code}`}
-            // detailPath={`/lokasiabsensi/detail/${item.lokasi_absensi_code}`}
-          />
-        </TableCell> */}
+        <TableCell colSpan={5}>
+          {" "}
+          <div
+            className=" z-100 text-14 d-flex items-center"
+            style={{ gap: "16px" }}
+          >
+            <Avatar
+              variant="square"
+              src={`https://ui-avatars.com/api/?name=nurlestari&background=97CB72&color=ffffff`}
+              width={"50px"}
+            />
+            Free Fire
+          </div>
+        </TableCell>
+        <TableCell colSpan={5}>Entertainment</TableCell>
+      </TableRow>
     </>
   );
 };
 
-const TableGamesCategory = ({ search, data, getData }) => {
+const TableDetailListGames = ({ search, data, getData }) => {
   const [state, setState] = useState({
     page: 0,
     rowsPerPage: 10,
@@ -130,7 +165,7 @@ const TableGamesCategory = ({ search, data, getData }) => {
         <TableHead>
           <TableRow style={{ borderBottom: "1px #e6e5e5 solid" }}>
             <TableCell
-              colSpan={1}
+              colSpan={2}
               className="font-medium text-15"
               style={{ color: "#0a0a0a" }}
               align="center"
@@ -138,19 +173,18 @@ const TableGamesCategory = ({ search, data, getData }) => {
               No
             </TableCell>
             <TableCell
-              colSpan={10}
+              colSpan={5}
               className="font-medium text-15"
               style={{ color: "#0a0a0a" }}
             >
-              Kategori
+              Nama Produk
             </TableCell>
             <TableCell
-              colSpan={1}
+              colSpan={5}
               className="font-medium text-15"
               style={{ color: "#0a0a0a" }}
-              align="center"
             >
-              Aksi
+              Harga Produk
             </TableCell>
           </TableRow>
         </TableHead>
@@ -187,4 +221,4 @@ const TableGamesCategory = ({ search, data, getData }) => {
   );
 };
 
-export default TableGamesCategory;
+export default TableDetailListGames;

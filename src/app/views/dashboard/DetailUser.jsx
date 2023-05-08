@@ -5,6 +5,8 @@ import '../../../styles/css/DetailUser.css';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Link } from "react-router-dom";
 import GeneralButton from './../../components/buttons/GeneralButton.jsx';
+import {getDetailUser} from '../../redux/actions/UserActions';
+import { useHistory, useParams} from 'react-router-dom';
 
 const theme = createTheme({
   palette: {
@@ -14,40 +16,26 @@ const theme = createTheme({
   },
 });
 
-const Sliders = () => {
-  const dispatch = useDispatch();
+const DetailUser = () => {
+  const { id } = useParams();
+  const history = useHistory();
 
   const [state, setState] = useState({
-    preview1: '',
-    preview2: '',
-    preview3: '',
+      data:[]
   });
 
-  const handleChangePhoto1 = (file, path) => {
-    setState({
-      ...state,
-      foto: file,
-      preview1: path,
-    });
-  };
-  const handleChangePhoto2 = (file, path) => {
-    setState({
-      ...state,
-      foto: file,
-      preview2: path,
-    });
-  };
-  const handleChangePhoto3 = (file, path) => {
-    setState({
-      ...state,
-      foto: file,
-      preview3: path,
-    });
-  };
 
   useLayoutEffect(() => {
-    console.log('uselayouteffect');
+    getDetailUser(id).then((res) => {
+      let data = res.data?.data;
+      setState((prev) => ({
+        ...prev,
+        ...data,
+      }));
+    });
   }, []);
+
+  console.log(state.data)
 
   return (
     <div className="analytics m-sm-30 mt-7 text-black">
@@ -68,7 +56,7 @@ const Sliders = () => {
           className="d-flex mr-6 items-center"
           style={{ justifyContent: 'flex-end' }}
         >
-          <Link to="/lokasiabsensi/add">
+          <Link to="/users">
             <GeneralButton name="Back" variant="outlined"/>
           </Link>
         </Grid>
@@ -101,7 +89,7 @@ const Sliders = () => {
               Name
             </h1>
             <p className="text-16 font-medium" style={{ color: '#0A0A0A' }}>
-              Nur Lestari
+             {state.name}
             </p>
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -109,7 +97,7 @@ const Sliders = () => {
               No. Handphone
             </h1>
             <p className="text-16 font-medium" style={{ color: '#0A0A0A' }}>
-              123456
+              {state.no_telp}
             </p>
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -117,7 +105,7 @@ const Sliders = () => {
               Email
             </h1>
             <p className="text-16 font-medium" style={{ color: '#0A0A0A' }}>
-              nur@gmail.com
+              {state.email}
             </p>
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -125,7 +113,7 @@ const Sliders = () => {
               User ID
             </h1>
             <p className="text-16 font-medium" style={{ color: '#0A0A0A' }}>
-              VG1234
+              {state.users_code}
             </p>
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -133,7 +121,7 @@ const Sliders = () => {
               Tanggal Daftar
             </h1>
             <p className="text-16 font-medium" style={{ color: '#0A0A0A' }}>
-              06/12/2022
+              {state.created_at}
             </p>
           </Grid>
         </Grid>
@@ -142,4 +130,4 @@ const Sliders = () => {
   );
 };
 
-export default Sliders;
+export default DetailUser;

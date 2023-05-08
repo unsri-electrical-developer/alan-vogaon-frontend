@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState,  useLayoutEffect} from 'react'
 import {
   Button,
   TextField,
@@ -10,7 +10,29 @@ import { Link } from "react-router-dom";
 import AddIcon from "@material-ui/icons/Add";
 import  SimpleCard   from '../../assets/components/cards/SimpleCard';
 import TableUsers from './components/TableUsers';
+import {getAllUsers} from '../../redux/actions/UserActions';
+
+// Start of Component
 const Users = () => {
+    const [search, setSearch] = useState('');
+    const [state, setState] = useState({
+        users:[],
+    });
+
+    const getData = () => {
+    const params = `?search=${search}`;
+    getAllUsers(params).then((res) => {
+      const data = res.data?.data;
+      setState((prev) => ({
+        ...prev,
+        users: data,
+      }));
+    });
+  };
+
+  useLayoutEffect(() => {
+    getData();
+  }, []);
 
     return (
         <div className="m-sm-30">
@@ -29,15 +51,9 @@ const Users = () => {
                 Users
             </h1>
             </Grid>
-            <Grid
-            item
-            xs={12}
-            sm
-            className="d-flex mr-8"
-            style={{ justifyContent: "flex-end" }}
-            >
-            </Grid>
+
         </Grid>
+        
         <SimpleCard title="">
             <div
             className="mt-2 mb-7 d-flex items-center"
@@ -48,6 +64,13 @@ const Users = () => {
                 variant="outlined"
                 className="w-250"
                 placeholder="Cari Pengguna"
+                onChange={(e) => setSearch(e.target.value)}
+                onKeyDown={(e) => {
+                if (e.keyCode == 13) {
+                    getData();
+                }
+                }}
+                value={search}
                 name="search"
                 InputProps={{
                 startAdornment: (
@@ -58,7 +81,7 @@ const Users = () => {
                 }}
             />
                 </div>
-            <TableUsers />
+            <TableUsers data={state.users} getData ={getData} />
         </SimpleCard>
         </div>
     );

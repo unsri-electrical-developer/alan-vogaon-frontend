@@ -1,18 +1,48 @@
-import React, { useState } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import React, { useEffect, useLayoutEffect, useState } from 'react';
 import { Button, TextField, Grid, Card, Icon } from '@material-ui/core';
 import Swal from 'sweetalert2';
-import { useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
-import FaqDummyData from './FaqDummyData';
+import { useDispatch, useSelector } from 'react-redux';
+import { getFaq, addFaq } from '../../../redux/actions/Settings';
 
 const Faq = () => {
   const dispatch = useDispatch();
+  const { dataFaq } = useSelector((state) => state.faq);
 
-  const [state, setState] = useState({
-    jenis_bonus: '',
-    scaleY: '0.85',
-  });
+  const [state, setState] = useState({});
+
+  const getData = () => {
+    dispatch(getFaq());
+  };
+
+  useLayoutEffect(() => {
+    getData();
+  }, []);
+
+  useEffect(() => {
+    if (dataFaq.length > 0) {
+      let spread = dataFaq.map((data) => ({
+        [`pertanyaan${data.id}`]: data.pertanyaan,
+        [`jawaban${data.id}`]: data.jawaban,
+      }));
+
+      let obj = {
+        pertanyaanNew: '',
+        jawabanNew: '',
+      };
+
+      spread.forEach((data) => {
+        obj = {
+          ...obj,
+          ...data,
+        };
+      });
+
+      setState((prev) => ({
+        ...prev,
+        ...obj,
+      }));
+    }
+  }, [dataFaq]);
 
   const handleChange = (e) => {
     e.persist();
@@ -22,45 +52,93 @@ const Faq = () => {
     }));
   };
 
-  const history = useHistory();
-
   const handleSubmit = () => {
-    try {
-      //   dispatch(
-      //     addJenisBonus({
-      //       jenis: state.jenis_bonus,
-      //     })
-      //   );
-      setTimeout(() => {
-        history.push('/lainnya/bonus');
-        Swal.fire('Success!', 'Data Jenis Bonus berhasil disimpan', 'success');
-      }, 2000);
-    } catch (e) {
-      Swal.fire('Oopss!', 'Data Jenis Bonus gagal disimpan', 'error');
+    let arr = Object.entries(state);
+    let faq = [];
+
+    let pertanyaan = arr.filter((data) => data[0].includes('pertanyaan'));
+    let jawaban = arr.filter((data) => data[0].includes('jawaban'));
+
+    pertanyaan.forEach((pertanyaan) => {
+      jawaban.forEach((jawaban) => {
+        if (
+          pertanyaan[0].replace(/[^0-9]/g, '') ===
+          jawaban[0].replace(/[^0-9]/g, '')
+        ) {
+          console.log(pertanyaan);
+          console.log(jawaban);
+          faq.push({
+            pertanyaan: pertanyaan[1],
+            jawaban: jawaban[1],
+          });
+        } else if (
+          pertanyaan[0].includes('New') &&
+          jawaban[0].includes('New')
+        ) {
+          console.log(pertanyaan);
+          faq.push({
+            pertanyaan: pertanyaan[1],
+            jawaban: jawaban[1],
+          });
+        }
+      });
+    });
+    console.log(faq);
+    addFaq({ faq: faq.reverse() }).then((res) => {
+      Swal.fire('Success!', 'Data FAQ berhasil ditambah', 'success');
+      getData();
+      setState({});
+    });
+  };
+
+  const handleAdd = () => {
+    if (state.pertanyaanNew && state.jawabanNew) {
+      let arr = Object.entries(state);
+      let faq = [...dataFaq];
+      var highest_id = dataFaq.length > 0 ? dataFaq.slice(-1)[0].id : 1;
+
+      let pertanyaan = arr.filter((data) => data[0].includes('pertanyaan'));
+      let jawaban = arr.filter((data) => data[0].includes('jawaban'));
+
+      pertanyaan.forEach((pertanyaan) => {
+        jawaban.forEach((jawaban) => {
+          if (pertanyaan[0].includes('New') && jawaban[0].includes('New')) {
+            console.log(highest_id);
+            faq.push({
+              id: highest_id + 1,
+              pertanyaan: pertanyaan[1],
+              jawaban: jawaban[1],
+            });
+          }
+        });
+      });
+      console.log(faq);
+      dispatch({
+        type: 'GET_FAQ',
+        payload: faq,
+      });
+    } else {
+      Swal.fire('Oopss!', 'Pertanyaan dan jawaban harus diisi dahulu', 'error');
     }
   };
 
-  const useStyles = makeStyles((theme) => ({
-    root: {
-      display: 'flex',
-      alignItems: 'center',
-      width: '100%',
-      flexWrap: 'wrap',
-      '& > *': {
-        margin: theme.spacing(0.5),
-      },
-    },
-    '& .MuiOutlinedInput-root': {
-      '& fieldset': {
-        border: '1px solid #e6e9ed',
-      },
-    },
-    input: {
-      transform: 'scaleY(0.88)',
-      marginBlock: 'auto',
-    },
-  }));
-  const classes = useStyles();
+  const handleDelete = (id) => {
+    let faq = [];
+
+    dataFaq.forEach((data) => {
+      if (data.id !== id) {
+        faq.push(data);
+      }
+    });
+    setState({});
+
+    console.log(faq);
+    dispatch({
+      type: 'GET_FAQ',
+      payload: faq,
+    });
+  };
+
   return (
     <div className="m-sm-30">
       <Grid
@@ -87,54 +165,48 @@ const Faq = () => {
       <div className="my-8">
         <Card className="py-15">
           <div className="mx-8 px-4 mt-5 mb-8">
-            {FaqDummyData.length > 0 &&
-              FaqDummyData.map((data) => {
+            {dataFaq.length > 0 &&
+              dataFaq.map((data) => {
                 return (
                   <Grid
                     container
-                    className="mt-2"
-                    spacing={5}
+                    className="mt-3"
+                    spacing={4}
                     justifyContent="center"
-                    alignItems="center"
+                    alignItems="flex-end"
                     key={data.id}
                   >
                     <Grid item xs={12} sm={5}>
-                      <h1 className="mb-5 fw-500 text-15 text-black">
+                      <h3 className="mb-5 fw-500 text-15 text-black">
                         Pertanyaan
-                      </h1>
+                      </h3>
                       <TextField
-                        required={true}
                         size="small"
-                        style={{
-                          transform: 'scaleY(1.25)',
-                        }}
-                        inputProps={{
-                          className: classes.input,
-                        }}
-                        value={data.pertanyaan}
-                        name="jenis_bonus"
-                        className={`${classes.outlined} border-radius-4 w-full`}
+                        value={
+                          state.hasOwnProperty(`pertanyaan${data.id}`)
+                            ? state[`pertanyaan${data.id}`]
+                            : ''
+                        }
+                        name={`pertanyaan${data.id}`}
+                        className={`border-radius-4 w-full`}
                         placeholder="Pertanyaan"
                         variant="outlined"
                         onChange={handleChange}
                       />
                     </Grid>
                     <Grid item xs={12} sm={6}>
-                      <h1 className="mb-5 fw-500 text-15 text-black">
+                      <h3 className="mb-5 fw-500 text-15 text-black">
                         Jawaban
-                      </h1>
+                      </h3>
                       <TextField
-                        required={true}
                         size="small"
-                        style={{
-                          transform: 'scaleY(1.25)',
-                        }}
-                        inputProps={{
-                          className: classes.input,
-                        }}
-                        value={data.jawaban}
-                        name="jenis_bonus"
-                        className={`${classes.outlined} border-radius-4 w-full`}
+                        value={
+                          state.hasOwnProperty(`jawaban${data.id}`)
+                            ? state[`jawaban${data.id}`]
+                            : ''
+                        }
+                        name={`jawaban${data.id}`}
+                        className={`border-radius-4 w-full`}
                         placeholder="Jawaban"
                         variant="outlined"
                         onChange={handleChange}
@@ -142,10 +214,11 @@ const Faq = () => {
                     </Grid>
                     <Grid item xs={12} sm={1} className="py-auto mt-3">
                       <div
-                        className="border-radius-circle bg-error w-40 h-40"
-                        style={{ padding: '5.5px' }}
+                        className="border-radius-circle bg-error w-35 h-35"
+                        style={{ padding: '8.7px' }}
+                        onClick={() => handleDelete(data.id)}
                       >
-                        <Icon className="" fontSize="large">
+                        <Icon className="" fontSize="medium">
                           delete-outline-icon
                         </Icon>
                       </div>
@@ -155,53 +228,50 @@ const Faq = () => {
               })}
             <Grid
               container
-              className="mt-2"
-              spacing={5}
+              className="mt-3"
+              spacing={4}
               justifyContent="center"
-              alignItems="center"
+              alignItems="flex-end"
             >
               <Grid item xs={12} sm={5}>
-                <h1 className="mb-5 fw-500 text-15 text-black">Pertanyaan</h1>
+                <h3 className="mb-5 fw-500 text-15 text-black">Pertanyaan</h3>
                 <TextField
-                  required={true}
                   size="small"
-                  style={{
-                    transform: 'scaleY(1.25)',
-                  }}
-                  inputProps={{
-                    className: classes.input,
-                  }}
-                  name="jenis_bonus"
-                  className={`${classes.outlined} border-radius-4 w-full`}
+                  name="pertanyaanNew"
+                  className={`border-radius-4 w-full`}
                   placeholder="Pertanyaan"
                   variant="outlined"
+                  value={
+                    state.hasOwnProperty(`pertanyaanNew`)
+                      ? state[`pertanyaanNew`]
+                      : ''
+                  }
                   onChange={handleChange}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
-                <h1 className="mb-5 fw-500 text-15 text-black">Jawaban</h1>
+                <h3 className="mb-5 fw-500 text-15 text-black">Jawaban</h3>
                 <TextField
-                  required={true}
                   size="small"
-                  style={{
-                    transform: 'scaleY(1.25)',
-                  }}
-                  inputProps={{
-                    className: classes.input,
-                  }}
-                  name="jenis_bonus"
-                  className={`${classes.outlined} border-radius-4 w-full`}
+                  name="jawabanNew"
+                  className={`border-radius-4 w-full`}
                   placeholder="Jawaban"
                   variant="outlined"
+                  value={
+                    state.hasOwnProperty(`jawabanNew`)
+                      ? state[`jawabanNew`]
+                      : ''
+                  }
                   onChange={handleChange}
                 />
               </Grid>
-              <Grid item xs={12} sm={1} className="py-auto mt-3 text-white">
+              <Grid item xs={12} sm={1} className="py-auto mt-5 text-white">
                 <div
-                  className="border-radius-circle bg-primary w-40 h-40"
-                  style={{ padding: '5.5px' }}
+                  className="border-radius-circle bg-primary w-35 h-35"
+                  style={{ padding: '8.7px' }}
+                  onClick={handleAdd}
                 >
-                  <Icon className="" fontSize="large">
+                  <Icon className="" fontSize="medium">
                     add-icon
                   </Icon>
                 </div>

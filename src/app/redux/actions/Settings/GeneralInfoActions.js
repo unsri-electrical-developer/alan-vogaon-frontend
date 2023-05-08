@@ -50,10 +50,6 @@ body: {
     ],
     "social_contact" : [
         {
-            "social_contact_code": "twitter",
-            "social_contact_url" : "twitter.com/vogaon"
-        },
-        {
             "social_contact_code": "facebook",
             "social_contact_url" : "facebook.com/vogaon"
         },

@@ -9,8 +9,25 @@ import {
   TableHead,
 } from '@material-ui/core';
 import MenuComponent from '../../components/Menu/MenuComponent';
+import { deletePaymentGateway } from '../../redux/actions/Payment/PaymentGatewayActions';
+import Swal from 'sweetalert2';
 
 const RenderTable = ({ data, state, search, getData }) => {
+  const handleDelete = (id) => {
+    try {
+      deletePaymentGateway(id).then(() => {
+        Swal.fire(
+          'Success!',
+          'Data Payment Gateway berhasil dihapus',
+          'success'
+        );
+        getData();
+      });
+    } catch (e) {
+      Swal.fire('Error!', 'Data Payment Gateway gagal dihapus', 'error');
+    }
+  };
+
   const handleNumbering = () => {
     if (state.rowsPerPage === 5) {
       return state.page * 5;
@@ -27,7 +44,7 @@ const RenderTable = ({ data, state, search, getData }) => {
         state.page * state.rowsPerPage + state.rowsPerPage
       )
       .map((item, index) => (
-        <TableRow hover key={index}>
+        <TableRow hover key={item.pg_code}>
           <TableCell
             align="center"
             className="text-14 pl-3 text-black"
@@ -36,12 +53,12 @@ const RenderTable = ({ data, state, search, getData }) => {
             {index + 1 + handleNumbering()}
           </TableCell>
           <TableCell className="text-14 text-black" colSpan={10}>
-            {item}
+            {item.pg_name}
           </TableCell>
           <TableCell className="pl-3" align="center" colSpan={1}>
             <MenuComponent
-              editPath="payment_gateway/edit"
-              deletePath="detele"
+              editPath={`payment_gateway/${item.pg_code}`}
+              deletePath={() => handleDelete(item.pg_code)}
             />
           </TableCell>
         </TableRow>

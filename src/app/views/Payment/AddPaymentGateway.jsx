@@ -2,14 +2,12 @@ import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Button, TextField, Grid, Card } from '@material-ui/core';
 import Swal from 'sweetalert2';
-import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import { addPaymentGateway } from '../../redux/actions/Payment/PaymentGatewayActions';
 
 const AddPaymentGateway = () => {
-  const dispatch = useDispatch();
-
   const [state, setState] = useState({
-    jenis_bonus: '',
+    pg_name: '',
     scaleY: '0.85',
   });
 
@@ -25,17 +23,18 @@ const AddPaymentGateway = () => {
 
   const handleSubmit = () => {
     try {
-      //   dispatch(
-      //     addJenisBonus({
-      //       jenis: state.jenis_bonus,
-      //     })
-      //   );
-      setTimeout(() => {
-        history.push('/lainnya/bonus');
-        Swal.fire('Success!', 'Data Jenis Bonus berhasil disimpan', 'success');
-      }, 2000);
+      addPaymentGateway({
+        pg_name: state.pg_name,
+      }).then((res) => {
+        history.push('/payment_gateway');
+        Swal.fire(
+          'Success!',
+          'Data Payment Gateway berhasil ditambah',
+          'success'
+        );
+      });
     } catch (e) {
-      Swal.fire('Oopss!', 'Data Jenis Bonus gagal disimpan', 'error');
+      Swal.fire('Oopss!', 'Data Payment Gateway gagal ditambah', 'error');
     }
   };
 
@@ -114,7 +113,7 @@ const AddPaymentGateway = () => {
                       className: classes.input,
                     }}
                     value={state.jenis_bonus}
-                    name="jenis_bonus"
+                    name="pg_name"
                     className={`${classes.outlined} border-radius-4 w-full`}
                     placeholder="Payment Gateway"
                     variant="outlined"

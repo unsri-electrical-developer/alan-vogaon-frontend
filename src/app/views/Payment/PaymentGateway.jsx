@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useLayoutEffect } from 'react';
 import {
   Button,
   TextField,
@@ -12,9 +12,23 @@ import AddIcon from '@material-ui/icons/Add';
 
 import SimpleCard from '../../assets/components/cards/SimpleCard';
 import TablePaymentGateway from './TablePaymentGateway';
-import { dataPaymentGateway } from './DataDummyPayment';
+// import { dataPaymentGateway } from './DataDummyPayment';
+import { useDispatch, useSelector } from 'react-redux';
+import { getPaymentGateway } from '../../redux/actions/Payment/PaymentGatewayActions';
 
 const PaymentGateway = () => {
+  const dispatch = useDispatch();
+  const { dataPaymentGateway } = useSelector((state) => state.payment);
+  console.log(dataPaymentGateway);
+
+  const getData = () => {
+    dispatch(getPaymentGateway());
+  };
+
+  useLayoutEffect(() => {
+    getData();
+  }, []);
+
   const useStyles = makeStyles((theme) => ({
     root: {
       '& .MuiFilledInput-root': {
@@ -54,7 +68,7 @@ const PaymentGateway = () => {
           <TextField
             size="small"
             variant="outlined"
-            className={`w-250 border-radius-4 ${classes.root}`}
+            className={`w-250 border-radius-4`}
             placeholder="Cari Kategori"
             name="search"
             InputProps={{
@@ -66,7 +80,7 @@ const PaymentGateway = () => {
             }}
           />
         </div>
-        <TablePaymentGateway data={dataPaymentGateway} />
+        <TablePaymentGateway data={dataPaymentGateway} getData={getData} />
       </SimpleCard>
     </div>
   );

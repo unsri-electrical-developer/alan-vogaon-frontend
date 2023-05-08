@@ -84,7 +84,7 @@ const Faq = () => {
       });
     });
     console.log(faq);
-    addFaq({ faq: faq.reverse() }).then((res) => {
+    addFaq({ faq }).then((res) => {
       Swal.fire('Success!', 'Data FAQ berhasil ditambah', 'success');
       getData();
       setState({});

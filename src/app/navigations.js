@@ -83,25 +83,25 @@ export const navigations = [
     children: [
       {
         name: 'General Info',
-        path: '/general_info',
+        path: '/settings/general_info',
         auth: authRoles.all,
         exact: true,
       },
       {
         name: 'FAQ',
-        path: '/faq',
+        path: '/settings/faq',
         auth: authRoles.all,
         exact: true,
       },
       {
         name: 'S&K',
-        path: '/404',
+        path: '/settings/snk',
         auth: authRoles.all,
         exact: true,
       },
       {
         name: 'Privacy Policy',
-        path: '/404',
+        path: '/settings/privacy_policy',
         auth: authRoles.all,
         exact: true,
       },

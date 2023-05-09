@@ -4,11 +4,11 @@ import {
   GET_PAYMENT_GATEWAY,
 } from '../../constant.js';
 
-export const getPaymentGateway = () => {
+export const getPaymentGateway = (params) => {
   return (dispatch) => {
     const token = localStorage.getItem('jwt_token');
     setAuthToken(token);
-    API.get(`/payment_gateway`)
+    API.get(`/payment_gateway?search=${params}`)
       .then((res) => {
         dispatch({
           type: GET_PAYMENT_GATEWAY,

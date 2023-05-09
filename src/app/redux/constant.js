@@ -144,3 +144,7 @@ export const GET_DETAIL_PAYMENT_METHOD = 'GET_DETAIL_PAYMENT_METHOD';
 export const GET_GENERAL_INFO = 'GET_GENERAL_INFO';
 
 export const GET_FAQ = 'GET_FAQ';
+
+export const GET_SNK = 'GET_SNK';
+
+export const GET_PRIVACY_POLICY = 'GET_PRIVACY_POLICY';

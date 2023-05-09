@@ -10,7 +10,12 @@ import sertifikatReducer from './SertifikatReducer';
 import UserReducer from './UserReducer';
 import SlidersReducer from './SlidersReducer';
 import PaymentReducer from './PaymentReducer';
-import { FaqReducer, GeneralInfoReducer } from './Settings';
+import {
+  FaqReducer,
+  GeneralInfoReducer,
+  PrivacyPolicyReducer,
+  SnkReducer,
+} from './Settings';
 
 const RootReducer = combineReducers({
   login: LoginReducer,
@@ -25,6 +30,8 @@ const RootReducer = combineReducers({
   payment: PaymentReducer,
   generalInfo: GeneralInfoReducer,
   faq: FaqReducer,
+  snk: SnkReducer,
+  privacyPolicy: PrivacyPolicyReducer,
 });
 
 export default RootReducer;

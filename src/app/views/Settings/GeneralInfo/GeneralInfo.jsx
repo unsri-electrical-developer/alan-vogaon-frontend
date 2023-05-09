@@ -5,15 +5,25 @@ import Swal from 'sweetalert2';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import RichTextEditor from '../../../../matx/components/RichTextEditor';
-import { getGeneralInfo } from '../../../redux/actions/Settings';
+import {
+  addGeneralInfo,
+  getGeneralInfo,
+} from '../../../redux/actions/Settings';
 
 const GeneralInfo = () => {
   const dispatch = useDispatch();
   const { dataGeneralInfo } = useSelector((state) => state.generalInfo);
   console.log(dataGeneralInfo);
-  const [state1, setState] = useState({
-    jenis_bonus: '',
-    content: '',
+
+  const [state, setState] = useState({
+    about: '',
+    contact_whatsapp: '',
+    contact_telegram: '',
+    contact_email: '',
+    contact_message: '',
+    social_contact_instagram: '',
+    social_contact_facebook: '',
+    social_contact_tiktok: '',
   });
 
   const getData = () => {
@@ -24,12 +34,42 @@ const GeneralInfo = () => {
     getData();
   }, []);
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    if (dataGeneralInfo.hasOwnProperty('about')) {
+      const { about, contact, social_contact } = dataGeneralInfo;
+
+      const contactValue = (params) => {
+        const value = contact.filter((data) => data.contact_code === params)[0];
+        console.log(value);
+        return value.contact_url;
+      };
+
+      const socialContactValue = (params) => {
+        const value = social_contact.filter(
+          (data) => data.social_contact_code === params
+        )[0];
+        console.log(value);
+        return value.social_contact_url;
+      };
+
+      setState((prev) => ({
+        ...prev,
+        about,
+        contact_whatsapp: contactValue('whatsapp'),
+        contact_telegram: contactValue('telegram'),
+        contact_email: contactValue('email'),
+        contact_message: contactValue('message'),
+        social_contact_instagram: socialContactValue('instagram'),
+        social_contact_facebook: socialContactValue('facebook'),
+        social_contact_tiktok: socialContactValue('tiktok'),
+      }));
+    }
+  }, [dataGeneralInfo]);
 
   const handleContentChange = (e) => {
     setState((prev) => ({
       ...prev,
-      content: e.target.value,
+      [e.target.name]: e.target.value,
     }));
   };
 
@@ -40,22 +80,60 @@ const GeneralInfo = () => {
       [e.target.name]: e.target.value,
     }));
   };
+  const handleChangeContent = (e) => {
+    setState((prev) => ({
+      ...prev,
+      about: e,
+    }));
+  };
 
   const history = useHistory();
 
   const handleSubmit = () => {
     try {
-      //   dispatch(
-      //     addJenisBonus({
-      //       jenis: state.jenis_bonus,
-      //     })
-      //   );
-      setTimeout(() => {
-        history.push('/lainnya/bonus');
-        Swal.fire('Success!', 'Data Jenis Bonus berhasil disimpan', 'success');
-      }, 2000);
+      const obj = {
+        about: state.about,
+        contact: [
+          {
+            contact_code: 'whatsapp',
+            contact_url: state.contact_whatsapp,
+          },
+          {
+            contact_code: 'telegram',
+            contact_url: state.contact_telegram,
+          },
+          {
+            contact_code: 'email',
+            contact_url: state.contact_email,
+          },
+          {
+            contact_code: 'message',
+            contact_url: state.contact_message,
+          },
+        ],
+        social_contact: [
+          {
+            social_contact_code: 'facebook',
+            social_contact_url: state.social_contact_facebook,
+          },
+          {
+            social_contact_code: 'tiktok',
+            social_contact_url: state.social_contact_tiktok,
+          },
+          {
+            social_contact_code: 'instagram',
+            social_contact_url: state.social_contact_instagram,
+          },
+        ],
+      };
+
+      addGeneralInfo(obj).then((res) => {
+        console.log(res);
+        Swal.fire('Success!', 'Data General Info berhasil disimpan', 'success');
+        getData();
+      });
     } catch (e) {
-      Swal.fire('Oopss!', 'Data Jenis Bonus gagal disimpan', 'error');
+      Swal.fire('Oopss!', 'Data General Info gagal disimpan', 'error');
     }
   };
 
@@ -117,16 +195,20 @@ const GeneralInfo = () => {
                   Tentang Vogaon
                 </h3>
                 <RichTextEditor
-                  content=""
+                  content={
+                    state.about.hasOwnProperty('body')
+                      ? state.about.body
+                      : state.about
+                  }
                   placeholder=""
-                  handleContentChange={handleContentChange}
+                  handleContentChange={handleChangeContent}
                 />
               </Grid>
             </Grid>
           </div>
         </Card>
       </div>
-      {/* <div className="my-8">
+      <div className="my-8">
         <Card className="py-8 bg-white">
           <div className="mx-8 px-10 mb-8 bg-white">
             <Grid
@@ -149,8 +231,8 @@ const GeneralInfo = () => {
                   inputProps={{
                     className: classes.input,
                   }}
-                  value={state.jenis_bonus}
-                  name="jenis_bonus"
+                  value={state.contact_whatsapp}
+                  name="contact_whatsapp"
                   className={`${classes.outlined} border-radius-4 w-full`}
                   placeholder="Whatsapp"
                   variant="outlined"
@@ -168,8 +250,8 @@ const GeneralInfo = () => {
                   inputProps={{
                     className: classes.input,
                   }}
-                  value={state.jenis_bonus}
-                  name="jenis_bonus"
+                  value={state.contact_telegram}
+                  name="contact_telegram"
                   className={`${classes.outlined} border-radius-4 w-full`}
                   placeholder="Telegram"
                   variant="outlined"
@@ -187,8 +269,8 @@ const GeneralInfo = () => {
                   inputProps={{
                     className: classes.input,
                   }}
-                  value={state.jenis_bonus}
-                  name="jenis_bonus"
+                  value={state.contact_email}
+                  name="contact_email"
                   className={`${classes.outlined} border-radius-4 w-full`}
                   placeholder="Email"
                   variant="outlined"
@@ -206,8 +288,8 @@ const GeneralInfo = () => {
                   inputProps={{
                     className: classes.input,
                   }}
-                  value={state.jenis_bonus}
-                  name="jenis_bonus"
+                  value={state.contact_message}
+                  name="contact_message"
                   className={`${classes.outlined} border-radius-4 w-full`}
                   placeholder="Telepon"
                   variant="outlined"
@@ -236,8 +318,8 @@ const GeneralInfo = () => {
                   inputProps={{
                     className: classes.input,
                   }}
-                  value={state.jenis_bonus}
-                  name="jenis_bonus"
+                  value={state.social_contact_instagram}
+                  name="social_contact_instagram"
                   className={`${classes.outlined} border-radius-4 w-full`}
                   placeholder="Instagram"
                   variant="outlined"
@@ -255,15 +337,15 @@ const GeneralInfo = () => {
                   inputProps={{
                     className: classes.input,
                   }}
-                  value={state.jenis_bonus}
-                  name="jenis_bonus"
+                  value={state.social_contact_facebook}
+                  name="social_contact_facebook"
                   className={`${classes.outlined} border-radius-4 w-full`}
                   placeholder="Facebook"
                   variant="outlined"
                   onChange={handleChange}
                 />
               </Grid>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12} sm={12}>
                 <h3 className="mb-5 fw-500 text-15 text-black">TikTok</h3>
                 <TextField
                   required={true}
@@ -274,8 +356,8 @@ const GeneralInfo = () => {
                   inputProps={{
                     className: classes.input,
                   }}
-                  value={state.jenis_bonus}
-                  name="jenis_bonus"
+                  value={state.social_contact_tiktok}
+                  name="social_contact_tiktok"
                   className={`${classes.outlined} border-radius-4 w-full`}
                   placeholder="TikTok"
                   variant="outlined"
@@ -285,7 +367,7 @@ const GeneralInfo = () => {
             </Grid>
           </div>
         </Card>
-      </div> */}
+      </div>
     </div>
   );
 };

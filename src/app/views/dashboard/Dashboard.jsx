@@ -1,36 +1,58 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Card, Grid, Icon } from '@material-ui/core';
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import SimpleCard from '../../assets/components/cards/SimpleCard';
-import { formatRupiah } from '../../../utlis/formatRupiah';
-import ic_topup from '../../assets/components/ic_topup.svg';
+import { Card, Grid, Icon } from "@material-ui/core";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import SimpleCard from "../../assets/components/cards/SimpleCard";
+import { formatRupiah } from "../../../utlis/formatRupiah";
+import ic_topup from "../../assets/components/ic_topup.svg";
 
 import {
   CardChartTotalData,
   CardChartTotalPenghargaan,
-} from '../../components';
-import CardChartUsia from '../../components/cards/CardChartUsia';
+} from "../../components";
+import CardChartUsia from "../../components/cards/CardChartUsia";
 
-import {
-  getChatDashboard,
-  getDashboardData,
-} from '../../redux/actions/AppActions';
+// import {
+//   getChatDashboard,
+//   getDashboardData,
+// } from '../../redux/actions/AppActions';
+
+import { getDashboard } from "../../redux/actions/Dashboard/DashboardAction";
 
 const Dashboard = () => {
   const dispatch = useDispatch();
-  // const { dashboard, loadingPie, pieData, loadingLine, lineData } = useSelector(
-  //   ({ app }) => app
-  // );
+  const { dataDashboard } = useSelector((state) => state.dashboard);
+
   const getData = () => {
-    dispatch(getDashboardData());
-    dispatch(getChatDashboard('CHART_PIE'));
-    dispatch(getChatDashboard('CHART_LINE'));
+    dispatch(getDashboard());
+    // dispatch(getChatDashboard('CHART_PIE'));
+    // dispatch(getChatDashboard('CHART_LINE'));
   };
 
   useEffect(() => {
     getData();
   }, []);
+
+  console.log(dataDashboard);
+
+  const totalpembelianPrice = dataDashboard?.total_pembelian?.nilai
+    ? formatRupiah(dataDashboard?.total_pembelian.nilai)
+    : "Rp 0.000";
+
+  const totalPembelianPercent =
+    dataDashboard?.total_pembelian?.naik_turun === "naik"
+      ? "#51AF77"
+      : "#D55454";
+
+  const JumlahPendaftarPercent =
+    dataDashboard?.jumlah_pendaftar?.naik_turun === "naik"
+      ? "#51AF77"
+      : "#D55454";
+
+  const JumlahTransaksiPercent =
+    dataDashboard?.jumlah_transaksi?.naik_turun === "naik"
+      ? "#51AF77"
+      : "#D55454";
 
   const chartData = [1, 2, 3, 4, 5, 5];
   return (
@@ -50,11 +72,11 @@ const Dashboard = () => {
                 <div className="money-icon">
                   <img src={ic_topup} />
                 </div>
-                <div style={{ paddingLeft: '15px' }}>
-                  <h1>
-                    {/* {formatRupiah(TotalGaji())} */} {formatRupiah(120000)}
-                  </h1>
-                  <h5>45%</h5>
+                <div style={{ paddingLeft: "15px" }}>
+                  <h1>{totalpembelianPrice}</h1>
+                  <h5 style={{ color: totalPembelianPercent }}>
+                    {dataDashboard?.total_pembelian?.percent}%
+                  </h5>
                 </div>
               </Grid>
             </div>
@@ -71,14 +93,20 @@ const Dashboard = () => {
                 <div>
                   <div
                     style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'flex-start',
-                      gap: '5px',
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "flex-start",
+                      gap: "5px",
                     }}
                   >
-                    <h1>200</h1>
-                    <h5>45%</h5>
+                    <h1>
+                      {dataDashboard?.jumlah_pendaftar?.nilai
+                        ? dataDashboard?.jumlah_pendaftar?.nilai
+                        : "0"}
+                    </h1>
+                    <h5 style={{ color: JumlahPendaftarPercent }}>
+                      {dataDashboard?.jumlah_pendaftar?.percent}%
+                    </h5>
                   </div>
                   Pendaftar Pada Bulan Ini
                 </div>
@@ -100,14 +128,20 @@ const Dashboard = () => {
                 <div>
                   <div
                     style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'flex-start',
-                      gap: '5px',
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "flex-start",
+                      gap: "5px",
                     }}
                   >
-                    <h1>200</h1>
-                    <h5>45%</h5>
+                    <h1>
+                      {dataDashboard?.jumlah_transaksi?.nilai
+                        ? dataDashboard?.jumlah_transaksi?.nilai
+                        : "0"}
+                    </h1>
+                    <h5 style={{ color: JumlahTransaksiPercent }}>
+                      {dataDashboard?.jumlah_transaksi?.percent}%
+                    </h5>
                   </div>
                   Checkout Pada Bulan Ini
                 </div>

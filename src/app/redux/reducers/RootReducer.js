@@ -1,16 +1,18 @@
-import { combineReducers } from 'redux';
+import { combineReducers } from "redux";
 
-import adminReducer from './AdminReducer';
-import appReducer from './AppReducer';
-import globalReducer from './GlobalReducer';
-import NavigationReducer from './NavigationReducer';
-import LayoutReducer from './LayoutReducer';
-import LoginReducer from './LoginReducer';
-import sertifikatReducer from './SertifikatReducer';
-import UserReducer from './UserReducer';
-import SlidersReducer from './SlidersReducer';
-import PaymentReducer from './PaymentReducer';
-import { GeneralInfoReducer } from './Settings';
+import adminReducer from "./AdminReducer";
+import appReducer from "./AppReducer";
+import globalReducer from "./GlobalReducer";
+import NavigationReducer from "./NavigationReducer";
+import LayoutReducer from "./LayoutReducer";
+import LoginReducer from "./LoginReducer";
+import sertifikatReducer from "./SertifikatReducer";
+import UserReducer from "./UserReducer";
+import SlidersReducer from "./SlidersReducer";
+import PaymentReducer from "./PaymentReducer";
+import TransactionReducer from "./TransactionReducer";
+import DashboardReducer from "./DashboardReducer";
+import { GeneralInfoReducer } from "./Settings";
 
 const RootReducer = combineReducers({
   login: LoginReducer,
@@ -24,6 +26,8 @@ const RootReducer = combineReducers({
   sliders: SlidersReducer,
   payment: PaymentReducer,
   generalInfo: GeneralInfoReducer,
+  transaction: TransactionReducer,
+  dashboard: DashboardReducer,
 });
 
 export default RootReducer;

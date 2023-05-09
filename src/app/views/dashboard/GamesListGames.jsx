@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   TextField,
   Icon,
@@ -14,6 +13,8 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 // import Button from "@mui/material/Button";
 import ListGamesFilter from './components/ListGamesFilter';
 import GeneralButton from './../../components/buttons/GeneralButton.jsx';
+import { getAllGamesList} from "../../redux/actions/GamesActions";
+import React, { useState, useLayoutEffect } from "react";
 
 const theme = createTheme({
   palette: {
@@ -24,6 +25,27 @@ const theme = createTheme({
 });
 
 const GamesListGames = () => {
+  const [search, setSearch] = useState("");
+  const [state, setState] = useState({
+    listGames: [],
+  });
+
+    const getData = () => {
+      const params = `?search=${search}`;
+      getAllGamesList(params).then((res) => {
+        const data = res.data?.data;
+        console.log(data);
+        setState((prev) => ({
+          ...prev,
+          listGames: data,
+        }));
+      });
+    };
+
+    useLayoutEffect(() => {
+      getData();
+    }, []);
+
   return (
     <div className="m-sm-30">
       <Grid
@@ -36,7 +58,7 @@ const GamesListGames = () => {
         <Grid item xs={12} sm>
           <h1
             className="font-semibold text-25 my-auto"
-            style={{ color: '#0A0A0A' }}
+            style={{ color: "#0A0A0A" }}
           >
             List Games
           </h1>
@@ -46,28 +68,37 @@ const GamesListGames = () => {
           xs={12}
           sm
           className="d-flex mr-8"
-          style={{ justifyContent: 'flex-end' }}
+          style={{ justifyContent: "flex-end" }}
         >
           <Link to="/games/listGames/add">
             <ThemeProvider theme={theme}>
-              <GeneralButton name="Add" icon={<AddIcon/>} variant="contained"/>
+              <GeneralButton
+                name="Add"
+                icon={<AddIcon />}
+                variant="contained"
+              />
             </ThemeProvider>
-
           </Link>
-
         </Grid>
       </Grid>
 
       <SimpleCard title="">
         <div
           className="mt-2 mb-7 d-flex items-center"
-          style={{ justifyContent: 'flex-end' }}
+          style={{ justifyContent: "flex-end" }}
         >
           <TextField
             size="small"
             variant="outlined"
             className="w-250"
-            placeholder="Cari Kategori"
+            placeholder="Cari Games"
+            onChange={(e) => setSearch(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.keyCode == 13) {
+                getData();
+              }
+            }}
+            value={search}
             name="search"
             InputProps={{
               startAdornment: (
@@ -86,7 +117,7 @@ const GamesListGames = () => {
             width="240px"
           /> */}
         </div>
-        <TableGamesListGames />
+        <TableGamesListGames data={state.listGames} getData={getData} />
       </SimpleCard>
     </div>
   );

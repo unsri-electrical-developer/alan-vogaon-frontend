@@ -9,6 +9,7 @@ import VisibilityOutlinedIcon from "@material-ui/icons/VisibilityOutlined";
 // import { deleteLokasiAbsensi } from 'app/redux/actions/AbsenAction';
 import { useDispatch } from "react-redux";
 import React from "react";
+import { delGamesList } from "../../../redux/actions/GamesActions";
 
 export default function MenuCategory({
   item,
@@ -26,19 +27,41 @@ export default function MenuCategory({
     setAnchorEl(null);
   };
 
-  const handleDelete = (params) => {
-    // try {
-    //   dispatch(deleteLokasiAbsensi(params));
-    //   getData();
-    //   handleClose();
-    //   setState((prev) => ({
-    //     ...prev,
-    //     searchTgl: new Date(),
-    //   }));
-    //   Swal.fire('Success!', 'Data Lokasi Absensi berhasil disimpan', 'success');
-    // } catch (e) {
-    //   Swal.fire('Oopss!', 'Data Lokasi Absensi gagal disimpan', 'error');
-    // }
+  const handleDelete = (id) => {
+  Swal.fire({
+    title: "Hapus",
+    text: "Apakah kamu yakin",
+    showCancelButton: true,
+    confirmButtonText: "Yakin",
+    cancelButtonText: "Batal",
+    icon: "warning",
+  }).then((res) => {
+    if (res.isConfirmed) {
+      delGamesList(id)
+        .then((res) => {
+          if (res.data.code == 0) {
+            console.log(res);
+            Swal.fire({
+              title: "Berhasil",
+              text: "Data berhasil dihapus",
+              timer: 2000,
+              icon: "success",
+            });
+          }
+          handleClose();
+        })
+        .catch((err) => {
+          console.log("err", err);
+          Swal.fire({
+            title: "gagal",
+            text: "Data Gagal dihapus",
+            timer: 2000,
+            icon: "error",
+          });
+          handleClose();
+        });
+    }
+  });
   };
 
   return (
@@ -88,7 +111,7 @@ export default function MenuCategory({
 
         <MenuItem
           className=""
-          onClick={() => handleDelete(item.lokasi_absensi_code)}
+          onClick={() => handleDelete(item.game_code)}
         >
           <span className="text-red">
             <DeleteOutlineOutlinedIcon />

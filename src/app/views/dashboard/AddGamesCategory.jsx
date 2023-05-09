@@ -6,6 +6,10 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 // import Button from '@mui/material/Button';
 import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
+import {addCategory} from '../../redux/actions/GamesActions';
+import { useHistory } from 'react-router-dom';
+import Swal from 'sweetalert2';
+import GeneralButton from '../../components/buttons/GeneralButton.jsx';
 
 const theme = createTheme({
   palette: {
@@ -16,9 +20,60 @@ const theme = createTheme({
 });
 
 const AddGamesCategory = () => {
+  const dispatch = useDispatch();
+
+  const [state, setState] = useState({
+    category_name: '',
+  });
+
+  const handleChange = (e) => {
+    e.persist();
+    setState((prevState) => ({
+      ...prevState,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
   useLayoutEffect(() => {
     console.log('uselayouteffect');
   }, []);
+
+  const history = useHistory();
+
+  const handleSubmit = () => {
+    try {
+      dispatch(
+        addCategory({
+          category_name: state.category_name,
+        })
+      );
+      let timerInterval;
+      Swal.fire({
+        title: 'Sedang diproses...',
+        html: 'tunggu dalam waktu <b></b> detik.',
+        timer: 4000,
+        timerProgressBar: true,
+        didOpen: () => {
+          Swal.showLoading();
+          const b = Swal.getHtmlContainer().querySelector('b');
+          setTimeout(() => {
+            clearInterval(timerInterval);
+            history.push('/games/category');
+            Swal.fire(
+              'Success!',
+              'Kategori berhasil disimpan',
+              'success'
+            );
+          }, 4000);
+          timerInterval = setInterval(() => {
+            b.textContent = Swal.getTimerLeft();
+          }, 1000);
+        },
+      });
+    } catch (e) {
+      Swal.fire('Oopss!', 'Data Jenis Tunjangan gagal disimpan', 'error');
+    }
+  };
 
   const useStyles = makeStyles((theme) => ({
     root: {
@@ -52,17 +107,11 @@ const AddGamesCategory = () => {
         className="d-flex mr-8"
         style={{ justifyContent: 'flex-end' }}
       >
-        <Link to="/users">
-          <ThemeProvider theme={theme}>
-            <Button
-              variant="contained"
-              className="px-14 py-3"
-              style={{ textTransform: 'none' }}
-            >
-              <span className="karyawan-btn-span">Save</span>
-            </Button>
-          </ThemeProvider>
-        </Link>
+     
+        <ThemeProvider theme={theme}>
+          <GeneralButton variant = "contained" name="Save" data={handleSubmit}/>
+        </ThemeProvider>
+
       </Grid>
       <Card className="mt-5 py-10 px-10">
         <div className="mx-8 px-10 mt-5 mb-8">
@@ -96,12 +145,12 @@ const AddGamesCategory = () => {
                   style={{
                     transform: 'scaleY(1.25)',
                   }}
-                  // value={state.jenis_bonus}
-                  name="kategori"
+                  value={state.category_name}
+                  name="category_name"
                   className={`${classes.outlined} border-radius-5 w-full`}
                   placeholder="Kategori"
                   variant="outlined"
-                  // onChange={handleChange}
+                  onChange={handleChange}
                 />
               </Grid>
             </Grid>

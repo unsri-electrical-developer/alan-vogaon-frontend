@@ -12,6 +12,7 @@
         "@material-ui/icons": "^4.2.1",
         "@material-ui/lab": "^4.0.0-alpha.56",
         "@material-ui/pickers": "^3.2.2",
+        "@mui/icons-material": "^5.11.16",
         "@mui/material": "^5.12.3",
         "@rpldy/chunked-uploady": "^0.13.6",
         "@rpldy/sender": "^0.13.6",

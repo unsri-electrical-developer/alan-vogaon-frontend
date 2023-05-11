@@ -1,30 +1,20 @@
 import {
   Button,
-  ButtonGroup,
   Grid,
   Icon,
   InputAdornment,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TablePagination,
-  TableRow,
   TextField,
 } from "@material-ui/core";
 import SimpleCard from "../../assets/components/cards/SimpleCard";
-import React, {
-  Component,
-  Fragment,
-  useEffect,
-  useState,
-  useLayoutEffect,
-} from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { connect } from "react-redux";
 import Swal from "sweetalert2";
 import {
   getRiwayatPembelian,
   getTotalPembelian,
+  getRiwayatTopUp,
+  getDetailTopUp,
+  getTotalTopUp,
 } from "../../redux/actions/Transaction/TransactionActions";
 import { Link } from "react-router-dom";
 import ArrowDownwardIcon from "@material-ui/icons/ArrowDownward";
@@ -33,7 +23,6 @@ import AttachMoneyIcon from "@material-ui/icons/AttachMoney";
 import { TableCustom, DatePickerComponent } from "../../components";
 import ic_money from "../../assets/components/ic_money.svg";
 import ic_topup from "../../assets/components/ic_topup.svg";
-
 import { formatRupiah } from "../../../utlis/formatRupiah";
 
 const Transaction = ({
@@ -41,6 +30,10 @@ const Transaction = ({
   totalPembelian,
   getRiwayatPembelian,
   getTotalPembelian,
+  getRiwayatTopUp,
+  getTotalTopUp,
+  dataRiwayatTopup,
+  totalTopup,
 }) => {
   const [state, setState] = useState({
     loading: true,
@@ -95,36 +88,45 @@ const Transaction = ({
   const getDataTotal = () => {
     getTotalPembelian();
   };
+  const getDataTopUp = () => {
+    let params = `?search=${search}&status=${status}`;
+
+    getRiwayatTopUp(params);
+  };
+
+  const getDataTotalTopUp = () => {
+    getTotalTopUp();
+  };
+  // useEffect(() => {
+  //   pembelian ? getData() : getDataTopUp();
+  // }, [search]);
 
   useEffect(() => {
-    getData();
-  }, [status]);
+    setSearch("");
+  }, [pembelian]);
 
   useEffect(() => {
     getData();
     getDataTotal();
+    getDataTopUp();
+    getDataTotalTopUp();
   }, []);
 
-  //   const submitSearch = (e) => {
-  //     if (e.keyCode == 13) {
-  //       getData();
-  //     }
-  //   };
+  const submitSearch = (e) => {
+    if (e.keyCode == 13) {
+      pembelian ? getData() : getDataTopUp();
+    }
+  };
 
   const handleStatus = (e) => {
     setStatus(e.target.value);
   };
-
-  //   const dataFilter = dataRiwayatGaji.filter(
-  //     (item) => typeof item === "object" && item !== null
-  //   );
 
   const [searchTgl, setSearchTgl] = useState(new Date());
 
   const handleDateChange = (date) => {
     setSearchTgl(date);
   };
-  const statusSearch = ["lunas", "belum lunas"];
 
   const tableHeadItems = [
     { name: "No", align: "center", colSpan: 1 },
@@ -136,19 +138,10 @@ const Transaction = ({
   ];
 
   const tableBodyItems = [
-    { key: "nama_pengguna", align: "", colSpan: 4 },
-    { key: "nominal_topup", align: "center", colSpan: 3 },
-    { key: "nomor_transaksi", align: "center", colSpan: 3 },
+    { key: "nama", align: "", colSpan: 4 },
+    { key: "nominal", align: "center", colSpan: 3 },
+    { key: "no_transaksi", align: "center", colSpan: 3 },
     { key: "waktu_transaksi", align: "center", colSpan: 3 },
-  ];
-
-  const tableContents = [
-    {
-      nama_pengguna: "maudy",
-      nominal_topup: 100000,
-      nomor_transaksi: 100,
-      waktu_transaksi: "06/02/2022",
-    },
   ];
 
   const tableHeadItems2 = [
@@ -169,6 +162,8 @@ const Transaction = ({
     { key: "status", align: "center", colSpan: 3 },
   ];
 
+  console.log(dataRiwayatTopup);
+  console.log(dataRiwayatPembelian);
   return (
     <div className="m-sm-30">
       <Grid container spacing={1} justify="space-between" className="my-4 mb-8">
@@ -189,8 +184,33 @@ const Transaction = ({
                     <img src={pembelian ? ic_money : ic_topup} />
                   </div>
                   <div style={{ paddingLeft: "15px" }}>
-                    <h1>{formatRupiah(12000000)}</h1>
-                    <h5>45%</h5>
+                    <h1>
+                      {/* {formatRupiah(TotalGaji())} */}{" "}
+                      {pembelian
+                        ? totalPembelian?.jumlah_pembelian || "Rp 0.000"
+                        : totalTopup?.jumlah_pendapatan || "Rp 0.000"}
+                    </h1>
+                    {pembelian ? (
+                      <h5
+                        style={
+                          totalPembelian?.grafik_pendapatan === "naik"
+                            ? { color: "#51AF77" }
+                            : { color: "#D55454" }
+                        }
+                      >
+                        {totalPembelian?.persentase}%
+                      </h5>
+                    ) : (
+                      <h5
+                        style={
+                          totalTopup?.grafik_pendapatan === "naik"
+                            ? { color: "#51AF77" }
+                            : { color: "#D55454" }
+                        }
+                      >
+                        {totalTopup?.persentase}%
+                      </h5>
+                    )}
                   </div>
                 </Grid>
               </div>
@@ -282,7 +302,7 @@ const Transaction = ({
                   placeholder="Cari Transaksi"
                   onChange={(e) => setSearch(e.target.value)}
                   value={search}
-                  // onKeyDown={submitSearch}
+                  onKeyDown={submitSearch}
                   name="search"
                   InputProps={{
                     startAdornment: (
@@ -307,7 +327,7 @@ const Transaction = ({
         </Fragment>
         <TableCustom
           tableHeadItems={pembelian ? tableHeadItems2 : tableHeadItems}
-          data={pembelian ? dataRiwayatPembelian : tableContents}
+          data={pembelian ? dataRiwayatPembelian : dataRiwayatTopup}
           customColumns={pembelian ? tableBodyItems2 : tableBodyItems}
           aksiSpan={pembelian ? 3 : 4}
           detailLink={
@@ -315,7 +335,7 @@ const Transaction = ({
               ? "/transaction/payment/detail"
               : "/transaction/topup/detail"
           }
-          id={pembelian ? "transaction_code" : "nama_pengguna"}
+          id={pembelian ? "transaction_code" : "no_transaksi"}
         />
       </SimpleCard>
     </div>
@@ -326,12 +346,16 @@ const mapStateToProps = (state) => {
   return {
     dataRiwayatPembelian: state.transaction.dataRiwayatPembelian,
     totalPembelian: state.transaction.totalPembelian,
+    dataRiwayatTopup: state.transaction.dataRiwayatTopup,
+    totalTopUp: state.transaction.totalTopUp,
   };
 };
 const mapDispatchToProps = (dispatch) => {
   return {
     getRiwayatPembelian: (params) => dispatch(getRiwayatPembelian(params)),
     getTotalPembelian: () => dispatch(getTotalPembelian()),
+    getRiwayatTopUp: (params) => dispatch(getRiwayatTopUp(params)),
+    getTotalTopUp: () => dispatch(getTotalTopUp()),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Transaction);

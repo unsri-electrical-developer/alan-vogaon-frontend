@@ -16,6 +16,8 @@ import {
   PrivacyPolicyReducer,
   SnkReducer,
 } from "./Settings";
+import TransactionReducer from "./TransactionReducer";
+import DashboardReducer from "./DashboardReducer";
 
 const RootReducer = combineReducers({
   login: LoginReducer,

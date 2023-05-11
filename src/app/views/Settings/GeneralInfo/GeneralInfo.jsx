@@ -66,13 +66,6 @@ const GeneralInfo = () => {
     }
   }, [dataGeneralInfo]);
 
-  const handleContentChange = (e) => {
-    setState((prev) => ({
-      ...prev,
-      [e.target.name]: e.target.value,
-    }));
-  };
-
   const handleChange = (e) => {
     e.persist();
     setState((prev) => ({

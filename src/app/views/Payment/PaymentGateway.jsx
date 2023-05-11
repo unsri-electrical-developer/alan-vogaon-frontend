@@ -6,38 +6,27 @@ import {
   InputAdornment,
   Grid,
 } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
 import AddIcon from '@material-ui/icons/Add';
 
 import SimpleCard from '../../assets/components/cards/SimpleCard';
 import TablePaymentGateway from './TablePaymentGateway';
-// import { dataPaymentGateway } from './DataDummyPayment';
 import { useDispatch, useSelector } from 'react-redux';
 import { getPaymentGateway } from '../../redux/actions/Payment/PaymentGatewayActions';
 
 const PaymentGateway = () => {
   const dispatch = useDispatch();
   const { dataPaymentGateway } = useSelector((state) => state.payment);
-  console.log(dataPaymentGateway);
+
+  const [search, setSearch] = React.useState('');
 
   const getData = () => {
-    dispatch(getPaymentGateway());
+    dispatch(getPaymentGateway(search));
   };
 
   useLayoutEffect(() => {
     getData();
   }, []);
-
-  const useStyles = makeStyles((theme) => ({
-    root: {
-      '& .MuiFilledInput-root': {
-        background: 'white',
-      },
-    },
-  }));
-
-  const classes = useStyles();
 
   return (
     <div className="m-sm-30">
@@ -77,6 +66,15 @@ const PaymentGateway = () => {
                   <Icon>search</Icon>
                 </InputAdornment>
               ),
+            }}
+            value={search}
+            onChange={(e) => {
+              setSearch(e.target.value);
+            }}
+            onKeyDown={(e) => {
+              if (e.keyCode === 13) {
+                getData();
+              }
             }}
           />
         </div>

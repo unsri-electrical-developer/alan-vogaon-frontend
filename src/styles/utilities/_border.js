@@ -4,6 +4,7 @@ export const borderStyles = makeStyles(({ palette, ...theme }) => ({
   '@global': {
     '.border-radius-0': { borderRadius: '0px !important', overflow: 'hidden' },
     '.border-radius-4': { borderRadius: '4px !important', overflow: 'hidden' },
+    '.border-radius-5': { borderRadius: '5px !important', overflow: 'hidden' },
     '.border-radius-8': { borderRadius: '8px !important', overflow: 'hidden' },
     '.border-radius-12': {
       borderRadius: '12px !important',
@@ -31,6 +32,9 @@ export const borderStyles = makeStyles(({ palette, ...theme }) => ({
     },
     '.border-y-black-1': {
       borderBlock: '1px solid #e6e5e5',
+    },
+    '.border-blue-1': {
+      border: '1px dashed #1253FA',
     },
   },
 }));

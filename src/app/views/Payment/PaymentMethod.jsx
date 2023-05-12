@@ -33,6 +33,12 @@ const PaymentMethod = () => {
           <Grid item xs={6} md={3}>
             <PaymentMethodCard />
           </Grid>
+          <Grid item xs={6} md={3}>
+            <PaymentMethodCard isThereContent />
+          </Grid>
+          <Grid item xs={6} md={3}>
+            <PaymentMethodCard />
+          </Grid>
         </Grid>
       </Card>
     </div>

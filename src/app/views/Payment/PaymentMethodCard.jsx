@@ -2,10 +2,13 @@ import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import { Card, Dialog, Grid, Icon, Switch } from '@material-ui/core';
 import { useDispatch } from 'react-redux';
+
+import MoreVertIcon from '@material-ui/icons/MoreVert';
 import UploadImageWithButton from '../../components/inputs/UploadImageWithButton';
 
 const PaymentMethodCard = ({ isThereContent, preview = '' }) => {
   const dispatch = useDispatch();
+
   const AntSwitch = withStyles((theme) => ({
     root: {
       width: 45,
@@ -17,7 +20,7 @@ const PaymentMethodCard = ({ isThereContent, preview = '' }) => {
       padding: 2,
       color: theme.palette.grey[500],
       '&$checked': {
-        transform: 'translateX(18px)',
+        transform: 'translateX(21px)',
         color: theme.palette.common.white,
         '& + $track': {
           opacity: 1,
@@ -40,9 +43,20 @@ const PaymentMethodCard = ({ isThereContent, preview = '' }) => {
     checked: {},
   }))(Switch);
 
+  const [contentDialog, setContentDialog] = React.useState(false);
+  const [noContentDialog, setNoContentDialog] = React.useState(false);
+  const openContent = () => {
+    console.log('buka ajgg');
+    setContentDialog(true);
+  };
+  const openNoContent = () => {
+    console.log('buka ajg');
+    setNoContentDialog(true);
+  };
+
   const [dialog, setDialog] = React.useState({
     content: false,
-    noContent: false,
+    noContent: true,
   });
 
   const [state, setState] = React.useState({
@@ -69,18 +83,16 @@ const PaymentMethodCard = ({ isThereContent, preview = '' }) => {
   };
 
   return isThereContent ? (
-    <Card className="h-150 p-10 bg-blue-gray border-radius-5 border-blue-1">
+    <Card className="h-150 bg-blue-gray border-radius-5 border-blue-1">
       <Grid
         container
-        spacing={1}
-        alignContent="stretch"
-        alignItems="stretch"
-        justifyContent="stretch"
+        spacing={3}
+        className="d-flex justify-center items-center"
       >
         <Grid
           item
           xs={6}
-          className="text-20 fw-500 d-flex justify-center items-center"
+          className="text-22 fw-500 d-flex text-black justify-center items-center"
         >
           BCA
         </Grid>
@@ -97,6 +109,8 @@ const PaymentMethodCard = ({ isThereContent, preview = '' }) => {
           <AntSwitch
             checked={state.checked}
             onChange={(e) => {
+              console.log(contentDialog);
+              console.log(noContentDialog);
               setState((prev) => ({
                 ...prev,
                 checked: e.target.checked,
@@ -106,55 +120,44 @@ const PaymentMethodCard = ({ isThereContent, preview = '' }) => {
           />
         </Grid>
         <Grid item xs={6} className="d-flex justify-center items-center">
-          <Icon
-            onClick={() => {
-              setDialog((prev) => ({
-                ...prev,
-                content: true,
-              }));
-            }}
-            className="fw-700 bg-white text-black"
-            fontSize="large"
+          <button
+            className="m-0 p-0 border-none bg-transparent"
+            onClick={openContent}
           >
-            more-vert-icon
-          </Icon>
+            <MoreVertIcon
+              className="fw-700 bg-white text-black"
+              fontSize="large"
+            />
+          </button>
         </Grid>
       </Grid>
       <Dialog
-        open={dialog.content}
-        onClose={() =>
-          setDialog((prev) => ({
-            ...prev,
-            content: false,
-          }))
-        }
+        aria-labelledby="max-width-dialog-title"
+        maxWidth="md"
+        open={contentDialog}
+        onClose={() => setContentDialog(false)}
       >
         <Card className="">THERE CONTENT</Card>
       </Dialog>
     </Card>
   ) : (
     <Card className="h-150 bg-blue-gray border-radius-5 border-blue-1 d-flex justify-center items-center">
-      <div
-        className="border-radius-circle bg-primary w-45 h-45 d-flex justify-center items-center"
-        onClick={() =>
-          setDialog((prev) => ({
-            ...prev,
-            noContent: true,
-          }))
+      <button
+        className="border-none border-radius-circle bg-primary w-45 h-45 d-flex justify-center items-center"
+        onClick={openNoContent}
+        onDoubleClick={() =>
+          /* setNoContentDialog(true) */ console.log('buka anjinggg')
         }
       >
         <Icon className="text-white fw-700" fontSize="large">
           add-icon
         </Icon>
-      </div>
+      </button>
       <Dialog
-        open={dialog.noContent}
-        onClose={() =>
-          setDialog((prev) => ({
-            ...prev,
-            noContent: false,
-          }))
-        }
+        aria-labelledby="max-width-dialog-title"
+        maxWidth="md"
+        open={noContentDialog}
+        onClose={() => setNoContentDialog(false)}
       >
         <Card className="p-20">
           <Grid container spacing={2}>

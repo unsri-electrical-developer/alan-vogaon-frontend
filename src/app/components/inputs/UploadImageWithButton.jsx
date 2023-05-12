@@ -17,7 +17,7 @@ const UploadImageWithButton = ({
   isNotFigma,
   state,
   handleDelete = console.log,
-  getData,
+  getData = console.log,
 }) => {
   const [FileName, setFileName] = useState(null);
   //   const [FilePath, setFilePath] = useState(null);

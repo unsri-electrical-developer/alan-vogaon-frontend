@@ -13,6 +13,7 @@ import {delCategory} from '../../../redux/actions/GamesActions';
 export default function MenuCategory({
   item,
   editPath,
+  getData,
 }) {
   const [anchorEl, setAnchorEl] = useState(null);
   const dispatch = useDispatch();
@@ -20,6 +21,7 @@ export default function MenuCategory({
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
+    getData();
     setAnchorEl(null);
   };
 

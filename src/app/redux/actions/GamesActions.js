@@ -8,10 +8,10 @@ export const DELETE_CATEGORY = 'DELETE_CATEGORY';
 export const GET_DETAIL_CATEGORY = 'GET_DETAIL_CATEGORY';
 
 // CATEGORY
-export const getAllCategories = (params) => {
+export const getAllCategories = () => {
   const token = localStorage.getItem('jwt_token');
   setAuthToken(token);
-  return API.get('/category/' + params);
+  return API.get("/category/");
 };
 
 export const getDetailCategory = (id) => {
@@ -54,7 +54,7 @@ export const delCategory = (id) => {
 export const getAllGamesList = (params) => {
   const token = localStorage.getItem("jwt_token");
   setAuthToken(token);
-  return API.get("/games/" + params);
+  return API.get(`/games${params}`);
 };
 
 export const getDetailGamesList = (id) => {

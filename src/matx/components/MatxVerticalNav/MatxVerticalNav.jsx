@@ -16,10 +16,10 @@ const useStyles = makeStyles(({ palette, ...theme }) => ({
         borderColor: "var(--primary)",
         background: "var(--primary)",
       },
-       "&.icon-color": {
-      color: "var(--primary)",
-      backgroundColor: "var(--primary)"
-    },
+      "&.icon-color": {
+        fill: "var(--primary)",
+        backgroundColor: "var(--primary)",
+      },
     },
 
     transition: "all 250ms ease-in-out",
@@ -146,9 +146,10 @@ const MatxVerticalNav = () => {
                       name="child"
                       className="w-full"
                     >
-                     
                       {item?.icon ? (
-                        <Icon className="text-18 align-middle w-36 px-4 icon-color">
+                        <Icon
+                          className={`text-18 align-middle w-36 px-4 ${
+                            item.active ? "active-icon-color" : ""}`}>
                           {item.icon}
                         </Icon>
                       ) : (
@@ -186,7 +187,7 @@ const MatxVerticalNav = () => {
                             classes.itemIcon
                           )}
                         >
-                         {item.badge.value}
+                          {item.badge.value}
                         </div>
                       )}
                     </TouchRipple>

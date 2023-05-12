@@ -42,7 +42,7 @@ const RenderTable = ({ data, state, search, getData }) => {
         <TableCell align="center" colSpan={1}>
           <MenuCategory
             item={item}
-            // getData={getData}
+            getData={getData}
             // setState={setState}
             editPath={`/games/category/edit/${item.category_code}`}
           />

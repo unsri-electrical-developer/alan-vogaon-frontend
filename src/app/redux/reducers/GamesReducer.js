@@ -4,7 +4,7 @@ const initialState = {
     data:[]
 };
 
-const userReducer = function (state = initialState, action) {
+const gamesReducer = function (state = initialState, action) {
     switch (action.type) {
         case GET_ALL_CATEGORIES: {
             return {
@@ -36,4 +36,4 @@ const userReducer = function (state = initialState, action) {
     }
 };
 
-export default userReducer;
+export default gamesReducer;

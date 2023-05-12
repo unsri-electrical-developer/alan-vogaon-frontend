@@ -71,7 +71,7 @@ const AddGamesCategory = () => {
         },
       });
     } catch (e) {
-      Swal.fire('Oopss!', 'Data Jenis Tunjangan gagal disimpan', 'error');
+      Swal.fire('Oopss!', 'Data Kategory gagal disimpan', 'error');
     }
   };
 

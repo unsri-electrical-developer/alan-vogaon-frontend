@@ -1,17 +1,16 @@
 import { Button, Card, Grid, Icon, TextField } from "@material-ui/core";
 import React, { useLayoutEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import "../../../styles/css/DetailUser.css";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { Link } from "react-router-dom";
 import GeneralButton from "../../components/buttons/GeneralButton.jsx";
 import { getDetailGamesList} from "../../redux/actions/GamesActions";
 import { useHistory, useParams } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
-import { UploadImage } from "../../components";
 import DeleteIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import EditIcon from "@mui/icons-material/ModeEditOutlineOutlined";
 import TableDetailListGames from './components/TableDetailListGames';
+import { delGamesList } from "../../redux/actions/GamesActions";
+import Swal from "sweetalert2";
 
 const theme = createTheme({
   palette: {
@@ -20,11 +19,55 @@ const theme = createTheme({
     },
   },
 });
-
+  
 const DetailListGames = () => {
+  const [anchorEl, setAnchorEl] = useState(null);
   const { id } = useParams();
-  console.log(id);
   const history = useHistory();
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleDelete = (id) => {
+    Swal.fire({
+      title: "Hapus",
+      text: "Apakah kamu yakin",
+      showCancelButton: true,
+      confirmButtonText: "Yakin",
+      cancelButtonText: "Batal",
+      icon: "warning",
+    }).then((res) => {
+      if (res.isConfirmed) {
+        delGamesList(id)
+          .then((res) => {
+            if (res.data.code == 0) {
+              console.log(res);
+              Swal.fire({
+                title: "Berhasil",
+                text: "Data berhasil dihapus",
+                timer: 2000,
+                icon: "success",
+              });
+            }
+            handleClose();
+            history.push('/games/ListGames');
+          })
+          .catch((err) => {
+            console.log("err", err);
+            Swal.fire({
+              title: "gagal",
+              text: "Data Gagal dihapus",
+              timer: 2000,
+              icon: "error",
+            });
+            handleClose();
+            history.push("/games/ListGames");
+
+          });
+      }
+    });
+  };
 
   const [state, setState] = useState({
     data: [],
@@ -68,76 +111,6 @@ const DetailListGames = () => {
     });
   }, []);
 
-  // const renderInput = () => {
-  //   const isLastInput = (index) => inputList.length - 1 !== index;
-
-  //   return (
-  //     <>
-  //       {inputList?.map((item, index) => (
-  //         <Grid container justifyContent="space-between" spacing={1}>
-  //           <Grid item xs={6} sm={5}>
-  //             <h5 className="font-semibold text-13">Produk</h5>
-  //             <TextField
-  //               required={true}
-  //               size="small"
-  //               inputProps={{
-  //                 className: classes.input,
-  //               }}
-  //               style={{
-  //                 transform: "scaleY(1.25)",
-  //                 marginTop: "10px",
-  //                 marginBottom: "10px",
-  //               }}
-  //               // value={state.jenis_bonus}
-  //               name="game"
-  //               className={`${classes.outlined} border-radius-5 w-full`}
-  //               placeholder="Produk"
-  //               variant="outlined"
-  //               // onChange={handleChange}
-  //             />
-  //           </Grid>
-
-  //           <Grid Grid item xs={6} sm={5}>
-  //             <h5 className="font-semibold text-13">Harga</h5>
-  //             <TextField
-  //               required={true}
-  //               size="small"
-  //               inputProps={{
-  //                 className: classes.input,
-  //               }}
-  //               style={{
-  //                 transform: "scaleY(1.25)",
-  //                 marginTop: "10px",
-  //                 marginBottom: "10px",
-  //               }}
-  //               // value={state.jenis_bonus}
-  //               name="game"
-  //               className={`${classes.outlined} border-radius-5 w-full`}
-  //               placeholder="Harga"
-  //               variant="outlined"
-  //               // onChange={handleChange}
-  //             />
-  //           </Grid>
-
-  //           {isLastInput(index) ? (
-  //             <div className="delete-button  mt-5">
-  //               <Button onClick={() => handleRemoveInput(index)}>
-  //                 <img src={ic_bin} alt="del" />
-  //               </Button>
-  //             </div>
-  //           ) : (
-  //             <div className="add-button mt-5">
-  //               <Button onClick={() => handleAddInput()} fullWidth>
-  //                 <img src={ic_plus} alt="add" />
-  //               </Button>
-  //             </div>
-  //           )}
-  //         </Grid>
-  //       ))}
-  //     </>
-  //   );
-  // };
-
   return (
     <div className="analytics m-sm-30 mt-7 text-black">
       <Grid
@@ -147,34 +120,31 @@ const DetailListGames = () => {
         alignItems="center"
         className="my-4 d-flex items-center"
       >
-        <Grid item xs={12} sm>
+        <Grid item xs={6}>
           <h1 className="fw-600 m-0">Detail Game</h1>
         </Grid>
-        <Grid
-          item
-          xs={12}
-          sm
-          className="d-flex mr-6 items-center"
-          style={{ justifyContent: "flex-end" }}
-        >
-          <Link to="/users">
-            <GeneralButton
-              icon={<DeleteIcon />}
-              name="Delete"
-              variant="outlined"
-            />
-          </Link>
-        </Grid>
-        <Grid
-          item
-          xs={12}
-          sm
-          className="d-flex mr-6 items-center"
-          style={{ justifyContent: "flex-end" }}
-        >
-          <Link to="/users">
-            <GeneralButton icon={<EditIcon />} name="Edit" variant="outlined" />
-          </Link>
+
+        <Grid item xs={6}>
+          <div style={{ display: "flex", justifyContent: "flex-end" }}>
+
+            <div style={{ marginRight: "10px" }}>
+              <GeneralButton
+                icon={<DeleteIcon />}
+                name="Delete"
+                variant="outlined"
+                color = "error"
+                data={() => handleDelete(state.data.code)}
+              />
+            </div>
+
+            <Link to={`/games/listGames/edit/${state.data.code}`}>
+              <GeneralButton
+                icon={<EditIcon />}
+                name="Edit"
+                variant="outlined"
+              />
+            </Link>
+          </div>
         </Grid>
       </Grid>
 
@@ -203,7 +173,8 @@ const DetailListGames = () => {
                 style={{
                   backgroundImage: `url(${state.data.img})`,
                   backgroundRepeat: "no-repeat",
-                  backgroundSize: "cover",
+                  backgroundSize: "contained",
+                  backgroundPosition: "center",
                   height: "100%",
                 }}
                 className="w-full"

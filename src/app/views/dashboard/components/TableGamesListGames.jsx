@@ -22,6 +22,7 @@ const RenderTable = ({ data, state, search, getData }) => {
       return state.page * 25;
     }
   };
+  
   return data?.length > 0 ? (
     data
       .slice(
@@ -52,12 +53,13 @@ const RenderTable = ({ data, state, search, getData }) => {
               {item.title}
             </div>
           </TableCell>
-          <TableCell colSpan={5}>Mobile Game</TableCell>
+          <TableCell colSpan={5}>{item.category?.category_name}</TableCell>
           <TableCell align="center" colSpan={1}>
             <MenuListGames
               item={item}
+              getData = {getData}
               detailPath={`/games/listGames/detail/${item.game_code}`}
-              editPath={`/games/listGames//${item.game_code}`}
+              editPath={`/games/listGames/edit/${item.game_code}`}
             ></MenuListGames>
           </TableCell>
         </TableRow>

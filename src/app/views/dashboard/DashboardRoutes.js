@@ -8,6 +8,8 @@ import AddGamesCategory from './AddGamesCategory';
 import AddGamesListGames from "./AddGamesListGames";
 import EditGamesCategory from "./EditGamesCategory";
 import DetailListGames from "./DetailListGames";
+import EditListGames from "./EditListGames";
+
 
 const dashboardRoutes = [
   {
@@ -67,7 +69,7 @@ const dashboardRoutes = [
   },
   {
     path: "/games/listGames/edit/:id",
-    component: GamesListGames,
+    component: EditListGames,
     auth: authRoles.all,
     exact: true,
   },

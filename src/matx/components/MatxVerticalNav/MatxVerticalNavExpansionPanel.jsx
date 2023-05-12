@@ -10,29 +10,29 @@ const useStyles = makeStyles(({ palette, ...theme }) => ({
   expandIcon: {
     transition: "transform 0.3s cubic-bezier(0, 0, 0.2, 1) 0ms",
     transform: "rotate(90deg)",
-    },
-    
+  },
+
   collapseIcon: {
     transition: "transform 0.3s cubic-bezier(0, 0, 0.2, 1) 0ms",
     transform: "rotate(0deg)",
-    },
-  
+  },
+
   "expansion-panel": {
     overflow: "hidden",
     transition: "max-height 0.3s cubic-bezier(0, 0, 0.2, 1)",
-    },
-  
+  },
+
   highlight: {
-    background: palette.primary.main,
-    },
-  
+    color: "var(--primary)"
+  },
+
   navItem: {
     "&.active": {
-      background: palette.secondary.main,
+      background: "var(--primary)",
       boxShadow: theme.shadows[3],
     },
-    },
-  
+  },
+
   compactNavItem: {
     width: 44,
     overflow: "hidden",
@@ -44,7 +44,9 @@ const useStyles = makeStyles(({ palette, ...theme }) => ({
       display: "none",
     },
   },
-  itemIcon: {},
+  itemIcon: {
+    fill: "var(--primary)"
+  },
   itemText: {
     fontSize: "0.875rem",
     paddingLeft: "0.8rem",
@@ -97,13 +99,15 @@ const MatxVerticalNavExpansionPanel = ({ item, children, mode }) => {
             "flex justify-between h-44 border-radius-4 mb-2 w-full pr-4 has-submenu compactNavItem whitespace-pre overflow-hidden": true,
             [classes.navItem]: true,
             [classes.compactNavItem]: mode === "compact",
+            [classes.highlight]: !collapsed,
             open: !collapsed,
           })}
           onClick={handleClick}
         >
           <div className="flex items-center">
+            {/* DI SINI */}
             {icon && (
-              <Icon className="align-middle text-18 w-36 px-4" color="green">{icon}</Icon>
+              <Icon className="align-middle text-18 w-36 px-4" color="blue">{icon}</Icon>
             )}
             {iconText && (
               <div className="w-4 h-4 rounded bg-white ml-5 mr-4"></div>

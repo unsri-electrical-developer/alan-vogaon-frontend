@@ -69,14 +69,18 @@ const DetailUser = () => {
               Foto Profile
             </h1>
             <div
-              className="w-full p-2 border-radius-5"
-              style={{ height: "275px", border: "1px dashed #1253FA" }}
+              className="w-full p-5 border-radius-5"
+              style={{
+                height: "275px",
+                border: "1px dashed #1253FA",
+              }}
             >
               <div
                 style={{
                   backgroundImage: `url(${state.users_profile_pic})`,
                   backgroundRepeat: "no-repeat",
-                  backgroundSize: "cover",
+                  backgroundSize: "contain",
+                  backgroundPosition: "center",
                   height: "100%",
                 }}
                 className="w-full"

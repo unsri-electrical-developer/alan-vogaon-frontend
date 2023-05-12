@@ -1,4 +1,4 @@
-import { Card, CircularProgress } from "@material-ui/core";
+import { Card, CircularProgress, Grid } from "@material-ui/core";
 import {
   BarElement,
   CategoryScale,
@@ -32,17 +32,17 @@ export const options = {
   maintainAspectRatio: false,
 };
 
-const CardChartUsia = ({ loading, chart }) => {
-  let labels = chart?.usia || "asdasd";
+const CardChartUsia = ({ loading, chart, filter }) => {
+  let labels = chart?.label || ["Lords Mobile", "Stardew Valley 7 Online"];
 
   let data = {
     labels,
     datasets: [
       {
-        label: "Jumlah Penduduk Pria",
+        label: "Jumlah Penjualan",
         // data: chart?.laki || ["aasdas", "asdasd"],
         // backgroundColor: chart?.bgLaki || "#6FBD44",
-        data: [1, 2, 3, 4, 5, 6, 7],
+        data: [15000, 20000],
         backgroundColor: "#1253FA",
       },
       //   {
@@ -56,7 +56,19 @@ const CardChartUsia = ({ loading, chart }) => {
   };
   return (
     <Card className="border-0 py-4 px-5 mb-3" elevation={0}>
-      <h5 className="fw-bold mb-3 text-left">Penduduk Berdasarkan Usia</h5>
+      <Grid
+        container
+        spacing={3}
+        justifyContent="space-between"
+        className="mb-3 mt-3"
+      >
+        <Grid item sm={6} xs={12} md={8} spacing={3}>
+          <h5 className="fw-bold mb-3 text-left">Statistik Penjualan Game</h5>
+        </Grid>
+        <Grid item sm={6} xs={12} md={4} spacing={3}>
+          {filter}
+        </Grid>
+      </Grid>
       {loading ? (
         <div className="text-center">
           <CircularProgress color="secondary" size={35} />

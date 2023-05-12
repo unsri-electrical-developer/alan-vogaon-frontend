@@ -34,6 +34,12 @@ a:hover {
   color: var(--primary);
 }
 
+.active-icon-color {
+  fill: var(--primary); /* Change the fill color of an SVG icon */
+  color: #ff0000; /* Change the color of a font-based icon */
+  /* Add any other desired styles for the active icon */
+}
+
 * {
   font-family: 'Poppins', sans-serif;
 }

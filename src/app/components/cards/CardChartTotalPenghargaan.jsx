@@ -1,4 +1,4 @@
-import { Card, CircularProgress } from "@material-ui/core";
+import { Card, CircularProgress, Grid } from "@material-ui/core";
 import {
   CategoryScale,
   Chart as ChartJS,
@@ -44,7 +44,14 @@ const options = {
   },
 };
 
-const CardChartTotalPenghargaan = ({ loading, chart }) => {
+const CardChartTotalPenghargaan = ({
+  loading,
+  chart,
+  title,
+  borderColor = "#1253FA",
+  number,
+  filter,
+}) => {
   const chartRef = useRef();
   const labels = chart?.label;
   const [data, setdata] = useState({
@@ -55,6 +62,14 @@ const CardChartTotalPenghargaan = ({ loading, chart }) => {
     gradient.addColorStop(0, "#FFFFFF");
     gradient.addColorStop(0.5, "#EFF7FD");
     gradient.addColorStop(1, "#D1E9FA");
+    return gradient;
+  }
+
+  function createGradient2(ctx, area) {
+    const gradient = ctx.createLinearGradient(0, area.bottom, 0, area.top);
+    gradient.addColorStop(0, "#FFFFFF");
+    gradient.addColorStop(0.5, "rgba(251, 244, 229, 0.99)");
+    gradient.addColorStop(1, "rgb(252, 238, 206)");
     return gradient;
   }
 
@@ -73,8 +88,10 @@ const CardChartTotalPenghargaan = ({ loading, chart }) => {
             fill: true,
             label: "Penghargaan",
             data: chart?.data,
-            borderColor: "rgb(53, 162, 235)",
-            backgroundColor: createGradient(refChart?.ctx, refChart?.chartArea),
+            borderColor: borderColor,
+            backgroundColor: number
+              ? createGradient2(refChart?.ctx, refChart?.chartArea)
+              : createGradient(refChart?.ctx, refChart?.chartArea),
             lineTension: 0.5,
           },
         ],
@@ -86,7 +103,19 @@ const CardChartTotalPenghargaan = ({ loading, chart }) => {
   }, [labels, chart.data]);
   return (
     <Card className="border-0 p-5 card-chart-pendidikan h-full" elevation={0}>
-      <h4 className="fw-bold mb-4 w-full text-left">Total Penghargaan</h4>
+      <Grid
+        container
+        spacing={3}
+        justifyContent="space-between"
+        className="mb-3 mt-3"
+      >
+        <Grid item sm={6} xs={12} md={9} spacing={3}>
+          <h4 className="fw-bold mb-4 w-full text-left">{title}</h4>
+        </Grid>
+        <Grid item sm={6} xs={12} md={3} spacing={3}>
+          {filter}
+        </Grid>
+      </Grid>
       {loading ? (
         <div className="text-center">
           <CircularProgress color="primary" size={35} />

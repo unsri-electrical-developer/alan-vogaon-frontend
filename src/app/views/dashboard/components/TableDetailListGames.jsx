@@ -35,19 +35,13 @@ const RenderTable = ({ data, state, search, getData }) => {
             style={{ color: "#0A0A0A" }}
             colSpan={2}
           >
-            1
+            {index+1}
           </TableCell>
           <TableCell colSpan={5}>
             <div
               className=" z-100 text-14 d-flex items-center"
               style={{ gap: "16px" }}
             >
-              {/* <Avatar
-                variant="square"
-                src={`https://ui-avatars.com/api/?name=nurlestari&background=97CB72&color=ffffff`}
-                width={"50px"}
-                style={{ borderRadius: "5px" }}
-              /> */}
               {item.title}
             </div>
           </TableCell>
@@ -57,61 +51,9 @@ const RenderTable = ({ data, state, search, getData }) => {
   ) : (
     <>
       <TableRow hover style={{ borderBottom: "1px #e6e5e5 solid" }}>
-        {/* <TableCell colSpan={12} align="center">
+        <TableCell colSpan={12} align="center">
         Data kosong
-      </TableCell> */}
-        <TableCell
-          className="text-14 pl-3"
-          align="center"
-          style={{ color: "#0A0A0A" }}
-          colSpan={2}
-        >
-          1
-        </TableCell>
-        <TableCell colSpan={5}>
-          <div
-            className=" z-100 text-14 d-flex items-center"
-            style={{ gap: "16px" }}
-          >
-            <Avatar
-              variant="square"
-              src={`https://ui-avatars.com/api/?name=nurlestari&background=97CB72&color=ffffff`}
-              width={"50px"}
-              style={{ borderRadius: "5px" }}
-            />
-            Free Fire
-          </div>
-        </TableCell>
-        <TableCell colSpan={5}>Mobile Game</TableCell>
-      </TableRow>
-
-      <TableRow hover>
-        {/* <TableCell colSpan={12} align="center">
-        Data kosong
-      </TableCell> */}
-        <TableCell
-          className="text-14 pl-3"
-          align="center"
-          style={{ color: "#0A0A0A" }}
-          colSpan={2}
-        >
-          2
-        </TableCell>
-        <TableCell colSpan={5}>
-          {" "}
-          <div
-            className=" z-100 text-14 d-flex items-center"
-            style={{ gap: "16px" }}
-          >
-            <Avatar
-              variant="square"
-              src={`https://ui-avatars.com/api/?name=nurlestari&background=97CB72&color=ffffff`}
-              width={"50px"}
-            />
-            Free Fire
-          </div>
-        </TableCell>
-        <TableCell colSpan={5}>Entertainment</TableCell>
+      </TableCell>
       </TableRow>
     </>
   );

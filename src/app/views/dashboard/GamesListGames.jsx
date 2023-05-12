@@ -13,8 +13,8 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 // import Button from "@mui/material/Button";
 import ListGamesFilter from './components/ListGamesFilter';
 import GeneralButton from './../../components/buttons/GeneralButton.jsx';
-import { getAllGamesList} from "../../redux/actions/GamesActions";
-import React, { useState, useLayoutEffect } from "react";
+import { getAllGamesList, getAllCategories } from "../../redux/actions/GamesActions";
+import React, { useState, useLayoutEffect, useEffect } from "react";
 
 const theme = createTheme({
   palette: {
@@ -26,25 +26,39 @@ const theme = createTheme({
 
 const GamesListGames = () => {
   const [search, setSearch] = useState("");
+  const [filter, setFilter] = useState("");
+
   const [state, setState] = useState({
     listGames: [],
+    categories_filter: [],
   });
 
-    const getData = () => {
-      const params = `?search=${search}`;
-      getAllGamesList(params).then((res) => {
-        const data = res.data?.data;
-        console.log(data);
-        setState((prev) => ({
-          ...prev,
-          listGames: data,
-        }));
-      });
-    };
+  const getData = () => {
+    const params = `?search=${search}&category_code=${filter}`;
 
-    useLayoutEffect(() => {
-      getData();
-    }, []);
+    getAllGamesList(params).then((res) => {
+      const data = res.data?.data;
+      setState((prev) => ({
+        ...prev,
+        listGames: data,
+      }));
+    });
+  };
+
+
+
+  useEffect(() => {
+    getData();
+  }, [filter]);
+
+  useLayoutEffect(() => {
+    getData();
+    // getDataCategories();
+  }, []);
+
+  const handleFilter = (e) => {
+    setFilter(e.target.value);
+  };
 
   return (
     <div className="m-sm-30">
@@ -84,7 +98,7 @@ const GamesListGames = () => {
 
       <SimpleCard title="">
         <div
-          className="mt-2 mb-7 d-flex items-center"
+          className="mt-2 mb-7 d-flex items-center "
           style={{ justifyContent: "flex-end" }}
         >
           <TextField
@@ -108,14 +122,17 @@ const GamesListGames = () => {
               ),
             }}
           />
-          {/* <ListGamesFilter
-            dataSelect={this.state.list_unit_kerja}
-            state={this.state}
-            setState={this.setState.bind(this)}
-            label="Unit Kerja"
-            name="unit_kerja"
-            width="240px"
-          /> */}
+
+          <div className="ml-3">
+            <ListGamesFilter
+              value={filter}
+              label="Kategori"
+              name="kategori"
+              width="240px"
+              handleChange={handleFilter}
+              search
+            />
+          </div>
         </div>
         <TableGamesListGames data={state.listGames} getData={getData} />
       </SimpleCard>

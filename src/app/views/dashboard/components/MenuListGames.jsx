@@ -24,6 +24,7 @@ export default function MenuCategory({
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
+    getData();
     setAnchorEl(null);
   };
 

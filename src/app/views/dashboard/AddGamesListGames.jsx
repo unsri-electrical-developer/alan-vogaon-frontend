@@ -10,6 +10,11 @@ import { UploadImage } from '../../components';
 import SimpleCard from '../../assets/components/cards/SimpleCard';
 import ic_plus from '../../assets/components/icons/ic_plus.svg';
 import ic_bin from '../../assets/components/icons/ic_bin.svg';
+import { addGamesList } from "../../redux/actions/GamesActions";
+import Swal from "sweetalert2";
+import { useHistory } from "react-router-dom";
+import GeneralButton from "../../components/buttons/GeneralButton.jsx";
+import ListGamesFilter from "./components/ListGamesFilter";
 
 const theme = createTheme({
   palette: {
@@ -19,17 +24,76 @@ const theme = createTheme({
   },
 });
 
-const AddGamesCategory = () => {
+const AddGamesListGames = () => {
+  
+  const dispatch = useDispatch();
+
+  const history = useHistory();
+
+  const [state, setState] = useState({
+    foto: "",
+    title: "",
+  });
+
+  const [category, setCategory] = useState("");
+  
+  const handleCategory = (e) => {
+    setCategory(e.target.value);
+    console.log(category);
+  };
+
+  const handleChange = (e) => {
+    e.persist();
+    setState((prevState) => ({
+      ...prevState,
+      [e.target.name]: e.target.value,
+    }));
+
+    console.log(state);
+  };
+
+  const handleSubmit = () => {
+    try {
+      dispatch(
+        addGamesList({
+          img: state.foto,
+          title: state.title,
+          category_code: category,
+          games_item: inputList
+        })
+      );
+
+      let timerInterval;
+      Swal.fire({
+        title: "Sedang diproses...",
+        html: "tunggu dalam waktu <b></b> detik.",
+        timer: 4000,
+        timerProgressBar: true,
+        didOpen: () => {
+          Swal.showLoading();
+          const b = Swal.getHtmlContainer().querySelector("b");
+          setTimeout(() => {
+            clearInterval(timerInterval);
+            history.push("/games/listGames");
+            Swal.fire("Success!", "List Games berhasil disimpan", "success");
+          }, 4000);
+          timerInterval = setInterval(() => {
+            b.textContent = Swal.getTimerLeft();
+          }, 1000);
+        },
+      });
+    } catch (e) {
+      Swal.fire("Oopss!", "Data List Games gagal disimpan", "error");
+    }
+  };
+
+
   // table input
   const [inputList, setInputList] = useState([
     {
-      nama: '',
-      harga: '',
-    },
-    {
-      nama: '',
-      harga: '',
-    },
+      title: '',
+      price: '',
+    }
   ]);
 
   const handleInputChange = (index, field) => (e) => {
@@ -38,19 +102,22 @@ const AddGamesCategory = () => {
     updatedList[index][field] = e.target.value;
 
     setInputList(updatedList);
+
+    console.log(updatedList);
   };
 
   const handleAddInput = () => {
     setInputList([
       ...inputList,
       {
-        nama: '',
-        harga: '',
+        title: '',
+        price: '',
       },
     ]);
   };
 
   const handleRemoveInput = (index) => {
+    console.log(index);
     const updatedList = [...inputList];
     updatedList.splice(index, 1);
     setInputList(updatedList);
@@ -58,9 +125,11 @@ const AddGamesCategory = () => {
 
   const renderInput = () => {
     const isLastInput = (index) => inputList.length - 1 !== index;
+    const onlyOne = () => inputList.length == 1;
 
     return (
       <>
+        {inputList.length}
         {inputList?.map((item, index) => (
           <Grid container justifyContent="space-between" spacing={1}>
             <Grid item xs={6} sm={5}>
@@ -72,16 +141,16 @@ const AddGamesCategory = () => {
                   className: classes.input,
                 }}
                 style={{
-                  transform: 'scaleY(1.25)',
-                  marginTop: '10px',
-                  marginBottom: '10px',
+                  transform: "scaleY(1.25)",
+                  marginTop: "10px",
+                  marginBottom: "10px",
                 }}
-                // value={state.jenis_bonus}
-                name="game"
+                name="title"
                 className={`${classes.outlined} border-radius-5 w-full`}
                 placeholder="Produk"
                 variant="outlined"
-                // onChange={handleChange}
+                onChange={handleInputChange(index, "title")}
+                value={item.title}
               />
             </Grid>
 
@@ -94,31 +163,53 @@ const AddGamesCategory = () => {
                   className: classes.input,
                 }}
                 style={{
-                  transform: 'scaleY(1.25)',
-                  marginTop: '10px',
-                  marginBottom: '10px',
+                  transform: "scaleY(1.25)",
+                  marginTop: "10px",
+                  marginBottom: "10px",
                 }}
-                // value={state.jenis_bonus}
-                name="game"
+                name="price"
                 className={`${classes.outlined} border-radius-5 w-full`}
                 placeholder="Harga"
                 variant="outlined"
-                // onChange={handleChange}
+                onChange={handleInputChange(index, "price")}
+                value={item.price}
               />
             </Grid>
 
-            {isLastInput(index) ? (
-              <div className="delete-button  mt-5">
-                <Button onClick={() => handleRemoveInput(index)}>
-                  <img src={ic_bin} alt="del" />
-                </Button>
-              </div>
-            ) : (
-              <div className="add-button mt-5">
+            {onlyOne() ? (
+              <div className="mt-5">
                 <Button onClick={() => handleAddInput()} fullWidth>
                   <img src={ic_plus} alt="add" />
                 </Button>
               </div>
+            ) : isLastInput(index) ? (
+              <>
+                {index}
+                <div className="mt-5">
+                  <Button onClick={() => handleRemoveInput(index)}>
+                    <img src={ic_bin} alt="del" />
+                  </Button>
+                </div>
+                <div className="mt-5">
+                  <Button>
+                    <img src={ic_plus} alt="add" style={{ display: "none" }} />
+                  </Button>
+                </div>
+              </>
+            ) : (
+              <>
+                {index}
+                <div className="ml-3 mr-0 mt-5">
+                  <Button onClick={() => handleRemoveInput(index)}>
+                    <img src={ic_bin} alt="del" />
+                  </Button>
+                </div>
+                <div className="mt-5">
+                  <Button onClick={() => handleAddInput()} fullWidth>
+                    <img src={ic_plus} alt="add" />
+                  </Button>
+                </div>
+              </>
             )}
           </Grid>
         ))}
@@ -126,9 +217,7 @@ const AddGamesCategory = () => {
     );
   };
 
-  const [state, setState] = useState({
-    preview: '',
-  });
+ // end of tableInput
 
   const handleChangePhoto1 = (file, path) => {
     setState({
@@ -137,10 +226,6 @@ const AddGamesCategory = () => {
       preview: path,
     });
   };
-
-  useLayoutEffect(() => {
-    console.log('uselayouteffect');
-  }, []);
 
   const useStyles = makeStyles((theme) => ({
     root: {
@@ -165,26 +250,20 @@ const AddGamesCategory = () => {
   const classes = useStyles();
 
   return (
+
     <div className="analytics m-sm-30 mt-7 text-black">
+
       <h1 className="fw-600 m-0">Add Games</h1>
       <Grid
         item
         xs={12}
         sm
         className="d-flex mr-8"
-        style={{ justifyContent: 'flex-end' }}
+        style={{ justifyContent: "flex-end" }}
       >
-        <Link to="/users">
-          <ThemeProvider theme={theme}>
-            <Button
-              variant="contained"
-              className="px-13 py-3"
-              style={{ textTransform: 'none' }}
-            >
-              <span className="karyawan-btn-span">Save</span>
-            </Button>
-          </ThemeProvider>
-        </Link>
+        <ThemeProvider theme={theme}>
+          <GeneralButton variant="contained" name="Save" data={handleSubmit} />
+        </ThemeProvider>
       </Grid>
 
       <Card className="mt-5 py-10 px-10">
@@ -192,7 +271,7 @@ const AddGamesCategory = () => {
           <Grid item xs={12} sm={6}>
             <h3
               className="text-20 font-medium mb-5"
-              style={{ color: '#0A0A0A' }}
+              style={{ color: "#0A0A0A" }}
             >
               Games
             </h3>
@@ -200,14 +279,14 @@ const AddGamesCategory = () => {
           <Grid item xs={12} sm={6}>
             <h1
               className="font-semimedium text-14"
-              style={{ color: '#0a0a0a' }}
+              style={{ color: "#0a0a0a" }}
             >
               Unggah Foto
             </h1>
             <UploadImage
               uploadFoto={handleChangePhoto1}
               label="Banner"
-              preview={state.preview1}
+              preview={state.preview}
               formatIcon={false}
             />
           </Grid>
@@ -216,7 +295,7 @@ const AddGamesCategory = () => {
             <Grid item xs={12} sm={6}>
               <h1
                 className="mb-5 font-semimedium text-14"
-                style={{ color: '#0a0a0a' }}
+                style={{ color: "#0a0a0a" }}
               >
                 Game
               </h1>
@@ -227,76 +306,43 @@ const AddGamesCategory = () => {
                   className: classes.input,
                 }}
                 style={{
-                  transform: 'scaleY(1.25)',
+                  transform: "scaleY(1.25)",
                 }}
-                // value={state.jenis_bonus}
-                name="game"
+                value={state.title}
+                name="title"
                 className={`${classes.outlined} border-radius-5 w-full`}
                 placeholder="Games"
                 variant="outlined"
-                // onChange={handleChange}
+                onChange={handleChange}
               />
             </Grid>
 
             <Grid item xs={12} sm={6}>
               <h1
                 className="mb-5 font-semimedium text-14"
-                style={{ color: '#0a0a0a' }}
-              >
-                Kategori
-              </h1>
-              <TextField
-                required={true}
-                size="small"
-                inputProps={{
-                  className: classes.input,
-                }}
-                style={{
-                  transform: 'scaleY(1.25)',
-                }}
-                // value={state.jenis_bonus}
-                name="game"
-                className={`${classes.outlined} border-radius-5 w-full`}
-                placeholder="Kategori"
-                variant="outlined"
-                // onChange={handleChange}
+                style={{ color: "#0a0a0a" }}
+              >Kategori</h1>
+              <ListGamesFilter
+                value={category}
+                label="Kategori"
+                name="category"
+                handleChange={handleCategory}
               />
             </Grid>
           </Grid>
         </div>
       </Card>
+
       {/* Second card */}
       <Card className="mt-5 py-10 px-10">
         <div className="mx-8 px-10 mt-5 mb-8">
           <Grid item xs={12} sm={6}>
             <h3
               className="text-20 font-medium mb-5"
-              style={{ color: '#0A0A0A' }}
+              style={{ color: "#0A0A0A" }}
             >
               Product
             </h3>
-            <h1
-              className="mb-5 font-semimedium text-14"
-              style={{ color: '#0a0a0a' }}
-            >
-              Nama
-            </h1>
-            <TextField
-              required={true}
-              size="small"
-              inputProps={{
-                className: classes.input,
-              }}
-              style={{
-                transform: 'scaleY(1.25)',
-              }}
-              // value={state.jenis_bonus}
-              name="game"
-              className={`${classes.outlined} border-radius-5 w-full`}
-              placeholder="Nama"
-              variant="outlined"
-              // onChange={handleChange}
-            />
           </Grid>
           <div className="mt-5">{renderInput()}</div>
         </div>
@@ -305,4 +351,4 @@ const AddGamesCategory = () => {
   );
 };
 
-export default AddGamesCategory;
+export default AddGamesListGames;

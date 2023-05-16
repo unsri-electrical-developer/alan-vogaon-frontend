@@ -11,7 +11,8 @@ const UploadImageWithButton = ({
   preview,
   required,
   aspectRatio,
-  maxHeight,
+  maxHeight = '16.5rem',
+  minHeight = '16rem',
   note,
   formatIcon,
   isNotFigma,
@@ -107,7 +108,13 @@ const UploadImageWithButton = ({
           {required ? <span className="text-danger"> *</span> : null}
         </label>
       )}
-      <Card className="card-input-image position-relative shadow-none border-radius-4">
+      <Card
+        className="card-input-image position-relative shadow-none border-radius-4"
+        style={{
+          maxHeight,
+          minHeight,
+        }}
+      >
         {preview && (
           <div className="h-full w-full position-absolute">
             <img
@@ -125,9 +132,8 @@ const UploadImageWithButton = ({
           {preview ? (
             <div className="d-flex flex-row justify-between gap-11">
               <div
-                className="border-radius-circle w-40 h-40 btn-hover-circle"
+                className="d-flex justify-center items-center border-radius-circle w-40 h-40 btn-hover-circle"
                 style={{
-                  padding: '6px',
                   background: 'rgb(210, 210, 210, 0.85',
                 }}
                 onClick={() => {
@@ -142,9 +148,8 @@ const UploadImageWithButton = ({
                 </Icon>
               </div>
               <div
-                className="border-radius-circle w-40 h-40 btn-hover-circle"
+                className="d-flex justify-center items-center border-radius-circle w-40 h-40 btn-hover-circle"
                 style={{
-                  padding: '6px',
                   background: 'rgb(210, 210, 210, 0.85',
                 }}
                 onClick={(e) => {

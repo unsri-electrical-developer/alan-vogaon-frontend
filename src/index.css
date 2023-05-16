@@ -1,7 +1,7 @@
 @import '~perfect-scrollbar/css/perfect-scrollbar.css';
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 :root {
-  --primary: #1253FA !important;
+  --primary: #1253fa !important;
   --light-primary: #0084e232 !important;
   --dark-primary: #0d6fa7 !important;
   --secondary: #6fbd44 !important;
@@ -312,8 +312,6 @@ a:hover {
   background: #fbfbfb;
   transition: 0.3s;
   overflow: hidden;
-  min-height: 18rem;
-  max-height: 18.5rem;
   border-radius: 0px;
 }
 .card-input-image-mini {

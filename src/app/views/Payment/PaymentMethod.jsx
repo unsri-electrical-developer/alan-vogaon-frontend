@@ -4,10 +4,13 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import PaymentMethodCard from './PaymentMethodCard';
 import { getPaymentMethod } from '../../redux/actions/Payment/PaymentMethodActions';
+import { getPaymentGateway } from '../../redux/actions/Payment/PaymentGatewayActions';
 
 const PaymentMethod = () => {
   const dispatch = useDispatch();
-  const { dataPaymentMethod } = useSelector((state) => state.payment);
+  const { dataPaymentMethod, dataPaymentGateway } = useSelector(
+    (state) => state.payment
+  );
 
   console.log(dataPaymentMethod);
 
@@ -16,6 +19,7 @@ const PaymentMethod = () => {
   };
 
   React.useLayoutEffect(() => {
+    dispatch(getPaymentGateway(''));
     getData();
   }, []);
 
@@ -37,16 +41,20 @@ const PaymentMethod = () => {
         {dataPaymentMethod.length > 0 ? (
           <Grid container spacing={3}>
             {dataPaymentMethod.map((data) => (
-              <Grid item xs={6} md={3} key={data}>
+              <Grid item xs={6} md={3} key={data.pm_code}>
                 <PaymentMethodCard
                   isThereContent
                   data={data}
                   getData={getData}
+                  dataPaymentGateway={dataPaymentGateway}
                 />
               </Grid>
             ))}
-            <Grid item xs={6} md={3}>
-              <PaymentMethodCard getData={getData} />
+            <Grid item xs={12} sm={6} md={3}>
+              <PaymentMethodCard
+                getData={getData}
+                dataPaymentGateway={dataPaymentGateway}
+              />
             </Grid>
           </Grid>
         ) : (

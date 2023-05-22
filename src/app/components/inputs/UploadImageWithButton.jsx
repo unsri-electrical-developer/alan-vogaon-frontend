@@ -19,6 +19,7 @@ const UploadImageWithButton = ({
   state,
   handleDelete = console.log,
   getData = console.log,
+  autoCall = true,
 }) => {
   const [FileName, setFileName] = useState(null);
   //   const [FilePath, setFilePath] = useState(null);
@@ -137,10 +138,14 @@ const UploadImageWithButton = ({
                   background: 'rgb(210, 210, 210, 0.85',
                 }}
                 onClick={() => {
-                  handleDelete(state.id).then((res) => {
-                    console.log(res);
-                    getData();
-                  });
+                  if (autoCall) {
+                    handleDelete(state.id).then((res) => {
+                      console.log(res);
+                      getData();
+                    });
+                  } else {
+                    handleDelete();
+                  }
                 }}
               >
                 <Icon className="text-error" fontSize="large">

@@ -29,7 +29,8 @@ export const addPaymentMethod = (body) => {
   setAuthToken(token);
   return API.post('/payment_method', body);
   /*
-    -body:  pm_title: JAGO
+    -body: 
+      pm_title: JAGO
 			pm_code: jago-3
 			pm_logo: base64
 			from: PG-2346278892 : payment gateway code

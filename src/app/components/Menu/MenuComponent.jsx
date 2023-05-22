@@ -8,7 +8,12 @@ import DeleteOutlineOutlinedIcon from '@material-ui/icons/DeleteOutlineOutlined'
 
 import { useDispatch } from 'react-redux';
 
-export default function MenuComponent({ editPath = '', deletePath = '' }) {
+export default function MenuComponent({
+  icon = <MoreHorizIcon />,
+  editPath,
+  editAction,
+  deletePath,
+}) {
   const [anchorEl, setAnchorEl] = useState(null);
   const dispatch = useDispatch();
   const handleClick = (event) => {
@@ -19,11 +24,6 @@ export default function MenuComponent({ editPath = '', deletePath = '' }) {
     setAnchorEl(null);
   };
 
-  const handleDelete = () => {
-    deletePath();
-    handleClose();
-  };
-
   return (
     <div>
       <Button
@@ -32,7 +32,7 @@ export default function MenuComponent({ editPath = '', deletePath = '' }) {
         onClick={handleClick}
         className="elevation-z0"
       >
-        <MoreHorizIcon />
+        {icon}
       </Button>
       <Menu
         id="simple-menu"
@@ -55,8 +55,28 @@ export default function MenuComponent({ editPath = '', deletePath = '' }) {
             </MenuItem>
           </Link>
         )}
+        {editAction && (
+          <MenuItem
+            className="mb-3 text-primary"
+            onClick={() => {
+              editAction();
+              handleClose();
+            }}
+          >
+            <span className="">
+              <CreateOutlinedIcon />
+            </span>
+            <span className="pl-3 ">Edit Data</span>
+          </MenuItem>
+        )}
         {deletePath && (
-          <MenuItem className="" onClick={handleDelete}>
+          <MenuItem
+            className=""
+            onClick={() => {
+              deletePath();
+              handleClose();
+            }}
+          >
             <span className="text-error">
               <DeleteOutlineOutlinedIcon />
             </span>

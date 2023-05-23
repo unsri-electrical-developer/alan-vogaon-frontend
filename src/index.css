@@ -314,6 +314,17 @@ a:hover {
   overflow: hidden;
   border-radius: 0px;
 }
+
+.card-input-image-without-button {
+  border: 1px dashed var(--primary);
+  background: #fbfbfb;
+  transition: 0.3s;
+  overflow: hidden;
+  min-height: 17.5rem;
+  max-height: 18rem;
+  border-radius: 0px;
+}
+
 .card-input-image-mini {
   border: 1px dashed var(--primary);
   background: #fbfbfb;
@@ -332,6 +343,10 @@ a:hover {
   object-fit: contain;
   object-position: center;
 }
+.card-input-image-without-button .preview {
+  object-fit: contain;
+  object-position: center;
+}
 
 .card-input-image .has-preview {
   background-color: rgba(0, 0, 0, 0.5);
@@ -347,6 +362,12 @@ a:hover {
   position: absolute;
 }
 .card-input-image-mini input {
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+}
+.card-input-image-without-button input {
   opacity: 0;
   width: 100%;
   height: 100%;

@@ -3,6 +3,7 @@ import { AddPhotoAlternateOutlined } from '@material-ui/icons';
 import React, { useState, useRef } from 'react';
 import { Card } from 'react-bootstrap';
 import Swal from 'sweetalert2';
+import { IconAddButton } from '../../assets/components/exportIcons';
 
 const UploadImageWithButton = ({
   uploadFoto,
@@ -167,17 +168,29 @@ const UploadImageWithButton = ({
               </div>
             </div>
           ) : (
-            <AddPhotoAlternateOutlined
-              style={{
-                transform: 'scale(1.5)',
-                marginBottom: '8px',
-              }}
-              fontSize="large"
-              color="primary"
-            />
+            <div
+              className={`w-full h-full p-5 position-absolute d-flex align-items-center justify-content-center flex-column ${
+                preview ? 'has-preview' : null
+              }`}
+            >
+              <IconAddButton
+                style={{
+                  transform: 'scale(1.5)',
+                  marginBottom: '8px',
+                }}
+                fontSize="large"
+                color="primary"
+              />
+              <h5 className={'m-0 text-center mt-5'}>
+                {FileName ? FileName : 'Taruh foto disini atau'}
+              </h5>
+              <h5 className="m-0 text-center mt-2 text-primary cursor-pointer">
+                <u>Klik Disini</u>
+              </h5>
+            </div>
           )}
 
-          <p className="m-0 text-center mt-2">
+          {/* <p className="m-0 text-center mt-2">
             {preview
               ? ''
               : FileName
@@ -185,7 +198,7 @@ const UploadImageWithButton = ({
               : isNotFigma
               ? 'Seret foto ke area ini atau tekan tombol unggah dibawah ini. Pastikan foto memiliki kualitas yang baik.'
               : 'Taruh foto disini atau klik disini'}
-          </p>
+          </p> */}
           {preview
             ? ''
             : isNotFigma && (

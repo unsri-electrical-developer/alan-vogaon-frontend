@@ -13,8 +13,11 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 // import Button from "@mui/material/Button";
 import ListGamesFilter from './components/ListGamesFilter';
 import GeneralButton from './../../components/buttons/GeneralButton.jsx';
-import { getAllGamesList, getAllCategories } from "../../redux/actions/GamesActions";
-import React, { useState, useLayoutEffect, useEffect } from "react";
+import {
+  getAllGamesList,
+  getAllCategories,
+} from '../../redux/actions/GamesActions';
+import React, { useState, useLayoutEffect, useEffect } from 'react';
 
 const theme = createTheme({
   palette: {
@@ -25,8 +28,8 @@ const theme = createTheme({
 });
 
 const GamesListGames = () => {
-  const [search, setSearch] = useState("");
-  const [filter, setFilter] = useState("");
+  const [search, setSearch] = useState('');
+  const [filter, setFilter] = useState('');
 
   const [state, setState] = useState({
     listGames: [],
@@ -44,8 +47,6 @@ const GamesListGames = () => {
       }));
     });
   };
-
-
 
   useEffect(() => {
     getData();
@@ -70,10 +71,7 @@ const GamesListGames = () => {
         className="my-4 d-flex items-center"
       >
         <Grid item xs={12} sm>
-          <h1
-            className="font-semibold text-25 my-auto"
-            style={{ color: "#0A0A0A" }}
-          >
+          <h1 className="text-black font-semibold text-25 my-auto">
             List Games
           </h1>
         </Grid>
@@ -82,7 +80,7 @@ const GamesListGames = () => {
           xs={12}
           sm
           className="d-flex mr-8"
-          style={{ justifyContent: "flex-end" }}
+          style={{ justifyContent: 'flex-end' }}
         >
           <Link to="/games/listGames/add">
             <ThemeProvider theme={theme}>
@@ -99,7 +97,7 @@ const GamesListGames = () => {
       <SimpleCard title="">
         <div
           className="mt-2 mb-7 d-flex items-center "
-          style={{ justifyContent: "flex-end" }}
+          style={{ justifyContent: 'flex-end' }}
         >
           <TextField
             size="small"

@@ -1,17 +1,17 @@
-import React from 'react';
-import { Redirect } from 'react-router-dom';
+import React from "react";
+import { Redirect } from "react-router-dom";
 
-import dashboardRoutes from './views/dashboard/DashboardRoutes';
-import profileRoutes from './views/Profile/ProfileRoutes';
-import setifikatRoute from './views/Manajemen/Sertifikat/SertifikatRoutes';
-import SlidersRoutes from './views/Sliders/SlidersRoutes';
-import PaymentRoutes from './views/Payment/PaymentRoutes';
-import SettingsRoutes from './views/Settings/SettingsRoutes';
-import transactionRoutes from './views/transaction/TransactionRoutes';
+import dashboardRoutes from "./views/dashboard/DashboardRoutes";
+import profileRoutes from "./views/Profile/ProfileRoutes";
+import setifikatRoute from "./views/Manajemen/Sertifikat/SertifikatRoutes";
+import SlidersRoutes from "./views/Sliders/SlidersRoutes";
+import PaymentRoutes from "./views/Payment/PaymentRoutes";
+import SettingsRoutes from "./views/Settings/SettingsRoutes";
+import transactionRoutes from "./views/transaction/TransactionRoutes";
 
 const redirectRoute = [
   {
-    path: '/',
+    path: "/",
     exact: true,
     component: () => <Redirect to="/home" />,
   },
@@ -31,7 +31,6 @@ const routes = [
   ...setifikatRoute,
   ...profileRoutes,
   ...transactionRoutes,
-
   ...redirectRoute,
   ...errorRoute,
 ];

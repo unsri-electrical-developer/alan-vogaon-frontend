@@ -1,4 +1,4 @@
-import { authRoles } from './auth/authRoles';
+import { authRoles } from "./auth/authRoles";
 import {
   ic_dashboard,
   ic_games,
@@ -7,101 +7,101 @@ import {
   ic_slider,
   ic_transaction,
   ic_user,
-} from './assets/components/exportIcons';
+} from "./assets/components/exportIcons";
 
 export const navigations = [
   {
-    name: 'Dashboard',
-    path: '/dashboard',
+    name: "Dashboard",
+    path: "/dashboard",
     icon: ic_dashboard(),
     auth: authRoles.all,
     exact: true,
   },
   {
-    name: 'Users',
-    path: '/users',
+    name: "Users",
+    path: "/users",
     icon: ic_user(),
     auth: authRoles.all,
     exact: true,
   },
   {
-    name: 'Games',
+    name: "Games",
     icon: ic_games(),
     auth: authRoles.all,
     children: [
       {
-        name: 'Category',
-        path: '/games/category',
+        name: "Category",
+        path: "/games/category",
         auth: authRoles.all,
         exact: true,
       },
       {
-        name: 'List Games',
-        path: '/games/listGames',
+        name: "List Games",
+        path: "/games/listGames",
         auth: authRoles.all,
         exact: true,
       },
     ],
   },
   {
-    name: 'Sliders',
-    path: '/sliders',
+    name: "Sliders",
+    path: "/sliders",
     icon: ic_slider(),
     auth: authRoles.all,
     exact: true,
   },
   {
-    name: 'Payment Method',
+    name: "Payment Method",
     icon: ic_payment(),
     auth: authRoles.all,
     children: [
       {
-        name: 'Gateway',
-        path: '/payment_gateway',
+        name: "Gateway",
+        path: "/payment_gateway",
         auth: authRoles.all,
         exact: true,
       },
       {
-        name: 'Method',
-        path: '/payment_method',
+        name: "Method",
+        path: "/payment_method",
         auth: authRoles.all,
         exact: true,
       },
     ],
   },
   {
-    name: 'Transaction',
-    path: '/transaction',
+    name: "Transaction",
+    path: "/transaction",
     icon: ic_transaction(),
     auth: authRoles.all,
     exact: true,
   },
   {
-    name: 'Settings',
+    name: "Settings",
     icon: ic_setting(),
     auth: authRoles.all,
     children: [
       {
-        name: 'General Info',
-        path: '/settings/general_info',
+        name: "General Info",
+        path: "/settings/general_info",
         auth: authRoles.all,
         exact: true,
       },
       {
-        name: 'FAQ',
-        path: '/settings/faq',
+        name: "FAQ",
+        path: "/settings/faq",
         auth: authRoles.all,
         exact: true,
       },
       {
-        name: 'S&K',
-        path: '/settings/snk',
+        name: "S&K",
+        path: "/settings/snk",
         auth: authRoles.all,
         exact: true,
       },
       {
-        name: 'Privacy Policy',
-        path: '/settings/privacy_policy',
+        name: "Privacy Policy",
+        path: "/settings/privacy_policy",
         auth: authRoles.all,
         exact: true,
       },

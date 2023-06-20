@@ -3,6 +3,7 @@ import { AddPhotoAlternateOutlined } from '@material-ui/icons';
 import React, { useState, useRef } from 'react';
 import { Card } from 'react-bootstrap';
 import Swal from 'sweetalert2';
+import { IconAddButton } from '../../assets/components/exportIcons';
 
 const UploadImageWithButton = ({
   uploadFoto,
@@ -11,13 +12,15 @@ const UploadImageWithButton = ({
   preview,
   required,
   aspectRatio,
-  maxHeight,
+  maxHeight = '16.5rem',
+  minHeight = '16rem',
   note,
   formatIcon,
   isNotFigma,
   state,
   handleDelete = console.log,
-  getData,
+  getData = console.log,
+  autoCall = true,
 }) => {
   const [FileName, setFileName] = useState(null);
   //   const [FilePath, setFilePath] = useState(null);
@@ -107,7 +110,13 @@ const UploadImageWithButton = ({
           {required ? <span className="text-danger"> *</span> : null}
         </label>
       )}
-      <Card className="card-input-image position-relative shadow-none border-radius-4">
+      <Card
+        className="card-input-image position-relative shadow-none border-radius-4"
+        style={{
+          maxHeight,
+          minHeight,
+        }}
+      >
         {preview && (
           <div className="h-full w-full position-absolute">
             <img
@@ -125,16 +134,19 @@ const UploadImageWithButton = ({
           {preview ? (
             <div className="d-flex flex-row justify-between gap-11">
               <div
-                className="border-radius-circle w-40 h-40 btn-hover-circle"
+                className="d-flex justify-center items-center border-radius-circle w-40 h-40 btn-hover-circle"
                 style={{
-                  padding: '6px',
                   background: 'rgb(210, 210, 210, 0.85',
                 }}
                 onClick={() => {
-                  handleDelete(state.id).then((res) => {
-                    console.log(res);
-                    getData();
-                  });
+                  if (autoCall) {
+                    handleDelete(state.id).then((res) => {
+                      console.log(res);
+                      getData();
+                    });
+                  } else {
+                    handleDelete();
+                  }
                 }}
               >
                 <Icon className="text-error" fontSize="large">
@@ -142,9 +154,8 @@ const UploadImageWithButton = ({
                 </Icon>
               </div>
               <div
-                className="border-radius-circle w-40 h-40 btn-hover-circle"
+                className="d-flex justify-center items-center border-radius-circle w-40 h-40 btn-hover-circle"
                 style={{
-                  padding: '6px',
                   background: 'rgb(210, 210, 210, 0.85',
                 }}
                 onClick={(e) => {
@@ -157,17 +168,29 @@ const UploadImageWithButton = ({
               </div>
             </div>
           ) : (
-            <AddPhotoAlternateOutlined
-              style={{
-                transform: 'scale(1.5)',
-                marginBottom: '8px',
-              }}
-              fontSize="large"
-              color="primary"
-            />
+            <div
+              className={`w-full h-full p-5 position-absolute d-flex align-items-center justify-content-center flex-column ${
+                preview ? 'has-preview' : null
+              }`}
+            >
+              <IconAddButton
+                style={{
+                  transform: 'scale(1.5)',
+                  marginBottom: '8px',
+                }}
+                fontSize="large"
+                color="primary"
+              />
+              <h5 className={'m-0 text-center mt-5'}>
+                {FileName ? FileName : 'Taruh foto disini atau'}
+              </h5>
+              <h5 className="m-0 text-center mt-2 text-primary cursor-pointer">
+                <u>Klik Disini</u>
+              </h5>
+            </div>
           )}
 
-          <p className="m-0 text-center mt-2">
+          {/* <p className="m-0 text-center mt-2">
             {preview
               ? ''
               : FileName
@@ -175,7 +198,7 @@ const UploadImageWithButton = ({
               : isNotFigma
               ? 'Seret foto ke area ini atau tekan tombol unggah dibawah ini. Pastikan foto memiliki kualitas yang baik.'
               : 'Taruh foto disini atau klik disini'}
-          </p>
+          </p> */}
           {preview
             ? ''
             : isNotFigma && (

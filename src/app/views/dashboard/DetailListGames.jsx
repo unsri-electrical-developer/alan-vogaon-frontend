@@ -1,29 +1,40 @@
 import { Button, Card, Grid, Icon, TextField } from "@material-ui/core";
 import React, { useLayoutEffect, useState } from "react";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { Link } from "react-router-dom";
 import GeneralButton from "../../components/buttons/GeneralButton.jsx";
-import { getDetailGamesList} from "../../redux/actions/GamesActions";
+import { getDetailGamesList } from "../../redux/actions/GamesActions";
 import { useHistory, useParams } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import DeleteIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import EditIcon from "@mui/icons-material/ModeEditOutlineOutlined";
-import TableDetailListGames from './components/TableDetailListGames';
+import TableDetailListGames from "./components/TableDetailListGames";
 import { delGamesList } from "../../redux/actions/GamesActions";
 import Swal from "sweetalert2";
 
-const theme = createTheme({
-  palette: {
-    primary: {
-      main: "#1253FA",
-    },
-  },
-});
-  
 const DetailListGames = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const { id } = useParams();
   const history = useHistory();
+  const useStyles = makeStyles((theme) => ({
+    root: {
+      display: "flex",
+      alignItems: "center",
+      width: "100%",
+      flexWrap: "wrap",
+      "& > *": {
+        margin: theme.spacing(0.5),
+      },
+    },
+    "& .MuiOutlinedInput-root": {
+      "& fieldset": {
+        border: "1px solid #e6e9ed",
+      },
+    },
+    input: {
+      marginBlock: "auto",
+    },
+  }));
+  const classes = useStyles();
 
   const handleClose = () => {
     setAnchorEl(null);
@@ -51,7 +62,7 @@ const DetailListGames = () => {
               });
             }
             handleClose();
-            history.push('/games/ListGames');
+            history.push("/games/ListGames");
           })
           .catch((err) => {
             console.log("err", err);
@@ -63,7 +74,6 @@ const DetailListGames = () => {
             });
             handleClose();
             history.push("/games/ListGames");
-
           });
       }
     });
@@ -71,32 +81,9 @@ const DetailListGames = () => {
 
   const [state, setState] = useState({
     data: [],
-    games_item: []
+    games_item: [],
   });
 
-  const useStyles = makeStyles((theme) => ({
-    root: {
-      display: "flex",
-      alignItems: "center",
-      width: "100%",
-      flexWrap: "wrap",
-      "& > *": {
-        margin: theme.spacing(0.5),
-      },
-    },
-    "& .MuiOutlinedInput-root": {
-      "& fieldset": {
-        border: "1px solid #e6e9ed",
-      },
-    },
-    input: {
-      transform: "scaleY(0.88)",
-      marginBlock: "auto",
-    },
-  }));
-  const classes = useStyles();
-  
-  console.log(state.data);
   useLayoutEffect(() => {
     getDetailGamesList(id).then((res) => {
       let data = res.data?.data;
@@ -104,10 +91,10 @@ const DetailListGames = () => {
       setState((prev) => ({
         ...prev,
         data: data,
-        games_item: data.games_item
+        games_item: data.games_item,
+        fields: data.fields,
       }));
-    console.log(state.data);
-
+      console.log(state.data);
     });
   }, []);
 
@@ -126,13 +113,12 @@ const DetailListGames = () => {
 
         <Grid item xs={6}>
           <div style={{ display: "flex", justifyContent: "flex-end" }}>
-
             <div style={{ marginRight: "10px" }}>
               <GeneralButton
                 icon={<DeleteIcon />}
                 name="Delete"
                 variant="outlined"
-                color = "error"
+                color="error"
                 data={() => handleDelete(state.data.code)}
               />
             </div>
@@ -191,7 +177,6 @@ const DetailListGames = () => {
                 {state.data.title}
               </p>
             </Grid>
-
             <Grid item xs={12} sm={6}>
               <h1 className="text-muted text-14 font-medium mb-2 font-500 h4">
                 Kategori
@@ -200,10 +185,18 @@ const DetailListGames = () => {
                 {state.data.category?.category_name}
               </p>
             </Grid>
+            <Grid item xs={12} sm={6}>
+              <h1 className="text-muted text-14 font-medium mb-2 font-500 h4">
+                Kode Game
+              </h1>
+              <p className="text-16 font-medium" style={{ color: "#0A0A0A" }}>
+                {state.data?.code}
+              </p>
+            </Grid>
           </Grid>
         </div>
       </Card>
-      {/* Second card */}
+
       <Card className="mt-5 py-10 px-10">
         <div className="mx-8 px-10 mt-5 mb-8">
           <Grid item xs={12} sm={6}>
@@ -211,12 +204,98 @@ const DetailListGames = () => {
               className="text-20 font-medium mb-5"
               style={{ color: "#0A0A0A" }}
             >
-              Product
+              Fields
             </h3>
           </Grid>
-          <TableDetailListGames data={state.games_item} />
+          <TableDetailListGames data={state.fields} />
         </div>
       </Card>
+
+      {state.games_item?.length > 0 &&
+        state.games_item.map((data, index) => (
+          <Card className="mt-5 py-10 px-10" key={data.code}>
+            <div className="mx-8 px-10 mt-5 mb-8">
+              <Grid item xs={12} sm={6}>
+                <h3
+                  className="text-20 font-medium mb-5"
+                  style={{ color: "#0A0A0A" }}
+                >
+                  Products {index + 1}
+                </h3>
+              </Grid>
+              <Grid container className="mt-2" spacing={5}>
+                <Grid item xs={12} sm={6}>
+                  <h1 className="text-muted text-14 font-medium mb-2 font-500 h4">
+                    Nama
+                  </h1>
+                  <p
+                    className="text-16 font-medium"
+                    style={{ color: "#0A0A0A" }}
+                  >
+                    {data?.title}
+                  </p>
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <h1 className="text-muted text-14 font-medium mb-2 font-500 h4">
+                    Status Produk
+                  </h1>
+                  <p
+                    className="text-16 font-medium"
+                    style={{ color: "#0A0A0A" }}
+                  >
+                    {Number(data?.isActive) === 1 ? "Aktif" : "Tidak Aktif"}
+                  </p>
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <h1 className="text-muted text-14 font-medium mb-2 font-500 h4">
+                    Asal Produk
+                  </h1>
+                  <p
+                    className="text-16 font-medium"
+                    style={{ color: "#0A0A0A" }}
+                  >
+                    {data?.from?.charAt(0).toUpperCase() + data?.from?.slice(1)}
+                  </p>
+                </Grid>
+                {data?.from?.toLowerCase() === "unipin" && (
+                  <Grid item xs={12} sm={6}>
+                    <h1 className="text-muted text-14 font-medium mb-2 font-500 h4">
+                      Denomination ID
+                    </h1>
+                    <p
+                      className="text-16 font-medium"
+                      style={{ color: "#0A0A0A" }}
+                    >
+                      {data?.denomination_id}
+                    </p>
+                  </Grid>
+                )}
+                <Grid item xs={12} sm={6}>
+                  <h1 className="text-muted text-14 font-medium mb-2 font-500 h4">
+                    Harga Member
+                  </h1>
+                  <p
+                    className="text-16 font-medium"
+                    style={{ color: "#0A0A0A" }}
+                  >
+                    {data?.price}
+                  </p>
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <h1 className="text-muted text-14 font-medium mb-2 font-500 h4">
+                    Harga Non Member
+                  </h1>
+                  <p
+                    className="text-16 font-medium"
+                    style={{ color: "#0A0A0A" }}
+                  >
+                    {data?.price_not_member}
+                  </p>
+                </Grid>
+              </Grid>
+            </div>
+          </Card>
+        ))}
     </div>
   );
 };

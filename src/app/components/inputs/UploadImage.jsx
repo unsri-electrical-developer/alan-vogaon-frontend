@@ -10,6 +10,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import ic_input from '../../assets/components/ic_input.svg';
 import ic_delete from '../../assets/components/ic_delete.svg';
 import ModalCrop from '../modals/ModalCrop';
+import { IconAddButton } from '../../assets/components/exportIcons';
 
 const UploadImage = ({
   uploadFoto,
@@ -155,7 +156,7 @@ const UploadImage = ({
               {required ? <span className="text-danger"> *</span> : null}
             </label>
           )}
-          <Card className="card-input-image position-relative shadow-none">
+          <Card className="card-input-image-without-button position-relative shadow-none">
             {preview && (
               <div className="h-full w-full position-absolute">
                 <img
@@ -165,7 +166,7 @@ const UploadImage = ({
                 />
               </div>
             )}
-            <div
+            {/* <div
               className={`w-full h-full p-5 position-absolute d-flex align-items-center justify-content-center flex-column ${
                 preview ? 'has-preview' : null
               }`}
@@ -192,6 +193,26 @@ const UploadImage = ({
                   Unggah Foto
                 </Button>
               )}
+            </div> */}
+            <div
+              className={`w-full h-full p-5 position-absolute d-flex align-items-center justify-content-center flex-column ${
+                preview ? 'has-preview' : null
+              }`}
+            >
+              <IconAddButton
+                style={{
+                  transform: 'scale(1.5)',
+                  marginBottom: '8px',
+                }}
+                fontSize="large"
+                color="primary"
+              />
+              <h5 className={'m-0 text-center mt-5'}>
+                {FileName ? FileName : 'Taruh foto disini atau'}
+              </h5>
+              <h5 className="m-0 text-center mt-2 text-primary cursor-pointer">
+                <u>Klik Disini</u>
+              </h5>
             </div>
             <input
               type="file"

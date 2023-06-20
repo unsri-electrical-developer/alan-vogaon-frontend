@@ -1,5 +1,5 @@
-import { useState } from "react";
-import React from "react";
+import { useState } from 'react';
+import React from 'react';
 import {
   TablePagination,
   Table,
@@ -7,10 +7,27 @@ import {
   TableRow,
   TableBody,
   TableHead,
-  Avatar,
-} from "@material-ui/core";
+} from '@material-ui/core';
+import MenuComponent from '../../components/Menu/MenuComponent';
+import { deletePaymentGateway } from '../../redux/actions/Payment/PaymentGatewayActions';
+import Swal from 'sweetalert2';
 
 const RenderTable = ({ data, state, search, getData }) => {
+  const handleDelete = (id) => {
+    try {
+      deletePaymentGateway(id).then(() => {
+        Swal.fire(
+          'Success!',
+          'Data Payment Gateway berhasil dihapus',
+          'success'
+        );
+        getData();
+      });
+    } catch (e) {
+      Swal.fire('Error!', 'Data Payment Gateway gagal dihapus', 'error');
+    }
+  };
+
   const handleNumbering = () => {
     if (state.rowsPerPage === 5) {
       return state.page * 5;
@@ -20,7 +37,6 @@ const RenderTable = ({ data, state, search, getData }) => {
       return state.page * 25;
     }
   };
-
   return data?.length > 0 ? (
     data
       .slice(
@@ -28,39 +44,39 @@ const RenderTable = ({ data, state, search, getData }) => {
         state.page * state.rowsPerPage + state.rowsPerPage
       )
       .map((item, index) => (
-        <TableRow hover key={index}>
+        <TableRow hover key={item.pg_code}>
           <TableCell
-            className="text-14 pl-3"
-            style={{ color: "#0A0A0A" }}
+            align="center"
+            className="text-14 pl-3 text-black"
             colSpan={1}
           >
-            {index + 1}
+            {index + 1 + handleNumbering()}
           </TableCell>
-          <TableCell colSpan={6}>
-            <div
-              className=" z-100 text-14 d-flex items-center"
-              style={{ gap: "16px" }}
-            >
-              {item.name}
-            </div>
+          <TableCell className="text-14 text-black" colSpan={10}>
+            {item.pg_name}
           </TableCell>
-          <TableCell align="right" colSpan={5}>
-            <div className="text-center">{item.type}</div>
+          <TableCell className="pl-3" align="center" colSpan={1}>
+            <MenuComponent
+              editPath={`payment_gateway/${item.pg_code}`}
+              deletePath={() => handleDelete(item.pg_code)}
+            />
           </TableCell>
         </TableRow>
       ))
   ) : (
-    <>
-      <TableRow hover style={{ borderBottom: "1px #e6e5e5 solid" }}>
-        <TableCell colSpan={12} align="center">
-          Data kosong
-        </TableCell>
-      </TableRow>
-    </>
+    <TableRow hover>
+      <TableCell
+        className="font-medium text-12 line-height-28 text-body"
+        colSpan={12}
+        align="center"
+      >
+        Data kosong
+      </TableCell>
+    </TableRow>
   );
 };
 
-const TableDetailListGames = ({ search, data, getData }) => {
+const TablePaymentGateway = ({ search, data, getData }) => {
   const [state, setState] = useState({
     page: 0,
     rowsPerPage: 10,
@@ -85,37 +101,26 @@ const TableDetailListGames = ({ search, data, getData }) => {
   };
 
   return (
-    <div className="w-full overflow-auto bg-white izincuti-tabs-slide">
-      <Table
-        className="buku-kas-table"
-        style={{
-          borderTop: "1px #e6e5e5 solid",
-          marginTop: "20px",
-        }}
-      >
+    <div className="w-full overflow-auto bg-white">
+      <Table className="buku-kas-table mt-10 border-y-black-1">
         <TableHead>
-          <TableRow style={{ borderBottom: "1px #e6e5e5 solid" }}>
+          <TableRow className="border-y-black-1">
             <TableCell
               colSpan={1}
-              className="font-medium text-15"
-              style={{ color: "#0a0a0a" }}
+              className="font-medium text-15 text-black"
+              align="center"
             >
               No
             </TableCell>
-            <TableCell
-              colSpan={6}
-              className="font-medium text-15"
-              style={{ color: "#0a0a0a" }}
-            >
-              Nama
+            <TableCell colSpan={10} className="font-medium text-15 text-black">
+              Payment Gateway
             </TableCell>
             <TableCell
-              colSpan={5}
-              align="right"
-              className="font-medium text-15"
-              style={{ color: "#0a0a0a" }}
+              colSpan={1}
+              className="font-medium text-15 text-black"
+              align="center"
             >
-              <div className="text-center">Tipe</div>
+              Aksi
             </TableCell>
           </TableRow>
         </TableHead>
@@ -130,18 +135,18 @@ const TableDetailListGames = ({ search, data, getData }) => {
       </Table>
 
       <TablePagination
-        className="px-16 my-7"
+        className="px-10 my-7"
         rowsPerPageOptions={[5, 10, 25]}
         component="div"
         count={data?.length ? data?.length : 0}
         rowsPerPage={state.rowsPerPage}
-        labelRowsPerPage={"From"}
+        labelRowsPerPage={'From'}
         page={state.page}
         backIconButtonProps={{
-          "aria-label": "Previous page",
+          'aria-label': 'Previous page',
         }}
         nextIconButtonProps={{
-          "aria-label": "Next page",
+          'aria-label': 'Next page',
         }}
         backIconButtonText="Previous page"
         nextIconButtonText="Next page"
@@ -152,4 +157,4 @@ const TableDetailListGames = ({ search, data, getData }) => {
   );
 };
 
-export default TableDetailListGames;
+export default TablePaymentGateway;

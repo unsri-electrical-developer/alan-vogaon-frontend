@@ -1,7 +1,7 @@
 @import '~perfect-scrollbar/css/perfect-scrollbar.css';
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 :root {
-  --primary: #1253FA !important;
+  --primary: #1253fa !important;
   --light-primary: #0084e232 !important;
   --dark-primary: #0d6fa7 !important;
   --secondary: #6fbd44 !important;
@@ -312,10 +312,19 @@ a:hover {
   background: #fbfbfb;
   transition: 0.3s;
   overflow: hidden;
-  min-height: 18rem;
-  max-height: 18.5rem;
   border-radius: 0px;
 }
+
+.card-input-image-without-button {
+  border: 1px dashed var(--primary);
+  background: #fbfbfb;
+  transition: 0.3s;
+  overflow: hidden;
+  min-height: 17.5rem;
+  max-height: 18rem;
+  border-radius: 0px;
+}
+
 .card-input-image-mini {
   border: 1px dashed var(--primary);
   background: #fbfbfb;
@@ -334,6 +343,10 @@ a:hover {
   object-fit: contain;
   object-position: center;
 }
+.card-input-image-without-button .preview {
+  object-fit: contain;
+  object-position: center;
+}
 
 .card-input-image .has-preview {
   background-color: rgba(0, 0, 0, 0.5);
@@ -349,6 +362,12 @@ a:hover {
   position: absolute;
 }
 .card-input-image-mini input {
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+}
+.card-input-image-without-button input {
   opacity: 0;
   width: 100%;
   height: 100%;

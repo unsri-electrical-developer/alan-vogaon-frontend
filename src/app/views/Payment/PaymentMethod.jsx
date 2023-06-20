@@ -1,14 +1,26 @@
 import { Card, Grid, Icon } from '@material-ui/core';
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import PaymentMethodCard from './PaymentMethodCard';
+import { getPaymentMethod } from '../../redux/actions/Payment/PaymentMethodActions';
+import { getPaymentGateway } from '../../redux/actions/Payment/PaymentGatewayActions';
 
 const PaymentMethod = () => {
   const dispatch = useDispatch();
+  const { dataPaymentMethod, dataPaymentGateway } = useSelector(
+    (state) => state.payment
+  );
+
+  console.log(dataPaymentMethod);
+
+  const getData = () => {
+    dispatch(getPaymentMethod());
+  };
 
   React.useLayoutEffect(() => {
-    console.log('uselayouteffect');
+    dispatch(getPaymentGateway(''));
+    getData();
   }, []);
 
   return (
@@ -26,14 +38,36 @@ const PaymentMethod = () => {
       </Grid>
 
       <Card className="mt-5 py-10 px-10">
-        <Grid container spacing={3}>
-          <Grid item xs={6} md={3}>
-            <PaymentMethodCard isThereContent />
+        {dataPaymentMethod.length > 0 ? (
+          <Grid container spacing={3}>
+            {dataPaymentMethod.map((data) => (
+              <Grid item xs={6} md={3} key={data.pm_code}>
+                <PaymentMethodCard
+                  isThereContent
+                  data={data}
+                  getData={getData}
+                  dataPaymentGateway={dataPaymentGateway}
+                />
+              </Grid>
+            ))}
+            <Grid item xs={12} sm={6} md={3}>
+              <PaymentMethodCard
+                getData={getData}
+                dataPaymentGateway={dataPaymentGateway}
+              />
+            </Grid>
           </Grid>
-          <Grid item xs={6} md={3}>
-            <PaymentMethodCard />
+        ) : (
+          <Grid container spacing={8}>
+            <Grid
+              item
+              xs={12}
+              className="d-flex justify-center my-25 text-20 items-center"
+            >
+              Data Payment Method Kosong
+            </Grid>
           </Grid>
-        </Grid>
+        )}
       </Card>
     </div>
   );

@@ -80,8 +80,15 @@ const Transaction = ({
   const [pembelian, setPembelian] = useState(false);
 
   const getData = () => {
-    let params = `?search=${search}&status=${status}`;
+    var dateFormat = JSON.stringify(searchTgl);
+    dateFormat = dateFormat.slice(1, 8);
+    dateFormat = dateFormat.split("-").reverse().join("-");
+    dateFormat = `?bulan_tahun=${dateFormat}`;
 
+    let params =
+      search === ""
+        ? dateFormat
+        : `?search=${search}&${dateFormat.slice(1, 20)}`;
     getRiwayatPembelian(params);
   };
 
@@ -89,7 +96,15 @@ const Transaction = ({
     getTotalPembelian();
   };
   const getDataTopUp = () => {
-    let params = `?search=${search}&status=${status}`;
+    var dateFormat = JSON.stringify(searchTgl);
+    dateFormat = dateFormat.slice(1, 8);
+    dateFormat = dateFormat.split("-").reverse().join("-");
+    dateFormat = `?bulan_tahun=${dateFormat}`;
+
+    let params =
+      search === ""
+        ? dateFormat
+        : `?search=${search}&${dateFormat.slice(1, 20)}`;
 
     getRiwayatTopUp(params);
   };
@@ -103,6 +118,7 @@ const Transaction = ({
 
   useEffect(() => {
     setSearch("");
+    setSearchTgl(new Date());
   }, [pembelian]);
 
   useEffect(() => {
@@ -122,6 +138,10 @@ const Transaction = ({
     setStatus(e.target.value);
   };
 
+  useEffect(() => {
+    pembelian ? getData() : getDataTopUp();
+  }, [searchTgl]);
+
   const [searchTgl, setSearchTgl] = useState(new Date());
 
   const handleDateChange = (date) => {
@@ -139,7 +159,7 @@ const Transaction = ({
 
   const tableBodyItems = [
     { key: "nama", align: "", colSpan: 4 },
-    { key: "nominal", align: "center", colSpan: 3 },
+    { key: "nominal", align: "center", colSpan: 3, type: "price" },
     { key: "no_transaksi", align: "center", colSpan: 3 },
     { key: "waktu_transaksi", align: "center", colSpan: 3 },
   ];
@@ -147,7 +167,6 @@ const Transaction = ({
   const tableHeadItems2 = [
     { name: "No", align: "center", colSpan: 1 },
     { name: "Nama Pengguna", align: "", colSpan: 4 },
-    { name: "Nama Produk", align: "center", colSpan: 3 },
     { name: "Harga", align: "center", colSpan: 3 },
     { name: "Waktu Transaksi", align: "center", colSpan: 3 },
     { name: "Status", align: "center", colSpan: 3 },
@@ -156,8 +175,7 @@ const Transaction = ({
 
   const tableBodyItems2 = [
     { key: "name", align: "", colSpan: 4 },
-    { key: "nama_produk", align: "center", colSpan: 3 },
-    { key: "price", align: "center", colSpan: 3 },
+    { key: "total_amount", align: "center", colSpan: 3, type: "price" },
     { key: "waktu_transaksi", align: "center", colSpan: 3 },
     { key: "status", align: "center", colSpan: 3 },
   ];

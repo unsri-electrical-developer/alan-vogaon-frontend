@@ -2,13 +2,15 @@ import { Button, Card, Grid, Icon, TextField } from "@material-ui/core";
 import React, { useLayoutEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import GeneralButton from "../../components/buttons/GeneralButton.jsx";
-import { getDetailGamesList } from "../../redux/actions/GamesActions";
 import { useHistory, useParams } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import DeleteIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import EditIcon from "@mui/icons-material/ModeEditOutlineOutlined";
 import TableDetailListGames from "./components/TableDetailListGames";
-import { delGamesList } from "../../redux/actions/GamesActions";
+import {
+  delGamesList,
+  getDetailGamesList,
+} from "../../redux/actions/GamesActions";
 import Swal from "sweetalert2";
 
 const DetailListGames = () => {
@@ -82,6 +84,7 @@ const DetailListGames = () => {
   const [state, setState] = useState({
     data: [],
     games_item: [],
+    fields: [],
   });
 
   useLayoutEffect(() => {

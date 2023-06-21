@@ -18,6 +18,7 @@ import {
 } from "./Settings";
 import TransactionReducer from "./TransactionReducer";
 import DashboardReducer from "./DashboardReducer";
+import PromoReducer from "./PromoReducer";
 
 const RootReducer = combineReducers({
   login: LoginReducer,
@@ -35,6 +36,7 @@ const RootReducer = combineReducers({
   dashboard: DashboardReducer,
   faq: FaqReducer,
   snk: SnkReducer,
+  promo: PromoReducer,
   privacyPolicy: PrivacyPolicyReducer,
 });
 

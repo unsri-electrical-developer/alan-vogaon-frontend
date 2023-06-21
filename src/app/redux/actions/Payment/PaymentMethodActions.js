@@ -4,11 +4,11 @@ import {
   GET_DETAIL_PAYMENT_METHOD,
 } from '../../constant.js';
 
-export const getPaymentMethod = () => {
+export const getPaymentMethod = (query = '') => {
   return (dispatch) => {
     const token = localStorage.getItem('jwt_token');
     setAuthToken(token);
-    API.get(`/payment_method`)
+    API.get(`/payment_method`+query)
       .then((res) => {
         dispatch({
           type: GET_PAYMENT_METHOD,

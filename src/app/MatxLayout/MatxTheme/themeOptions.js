@@ -118,7 +118,7 @@ const themeOptions = {
           borderColor: "#E6E9ED",
         },
         "&$focused $notchedOutline": {
-          borderColor: "#0083E2",
+          borderColor: "#1253FA",
         },
         "&:hover $notchedOutline": {
           borderColor: "#d4d4d4",
@@ -136,10 +136,10 @@ const themeOptions = {
       },
       root: {
         "&$active": {
-          color: "#0083E2",
+          color: "#1253FA",
         },
         "&$completed": {
-          color: "#0083E2",
+          color: "#1253FA",
         },
       },
     },

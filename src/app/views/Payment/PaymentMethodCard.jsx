@@ -79,7 +79,7 @@ const PaymentMethodCard = ({
   }))(Switch);
 
   const [state, setState] = React.useState({
-    checked: Boolean(data.isActive) || false,
+    checked: Boolean(data.isActive) || data.status || false,
     pm_logo: data.pm_logo || '',
     pm_code: data.pm_code || '',
     from: data.from || '',

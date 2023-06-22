@@ -1,24 +1,24 @@
-import React, { useLayoutEffect } from 'react';
+import React, { useLayoutEffect } from "react";
 import {
   Button,
   TextField,
   Icon,
   InputAdornment,
   Grid,
-} from '@material-ui/core';
-import { Link } from 'react-router-dom';
-import AddIcon from '@material-ui/icons/Add';
+} from "@material-ui/core";
+import { Link } from "react-router-dom";
+import AddIcon from "@material-ui/icons/Add";
 
-import SimpleCard from '../../assets/components/cards/SimpleCard';
-import TablePaymentGateway from './TablePaymentGateway';
-import { useDispatch, useSelector } from 'react-redux';
-import { getPaymentGateway } from '../../redux/actions/Payment/PaymentGatewayActions';
+import SimpleCard from "../../assets/components/cards/SimpleCard";
+import TablePaymentGateway from "./TablePaymentGateway";
+import { useDispatch, useSelector } from "react-redux";
+import { getPaymentGateway } from "../../redux/actions/Payment/PaymentGatewayActions";
 
 const PaymentGateway = () => {
   const dispatch = useDispatch();
   const { dataPaymentGateway } = useSelector((state) => state.payment);
 
-  const [search, setSearch] = React.useState('');
+  const [search, setSearch] = React.useState("");
 
   const getData = () => {
     dispatch(getPaymentGateway(search));
@@ -57,7 +57,7 @@ const PaymentGateway = () => {
           <TextField
             size="small"
             variant="outlined"
-            className={`w-250 border-radius-4`}
+            className="w-250"
             placeholder="Cari Kategori"
             name="search"
             InputProps={{
@@ -66,6 +66,10 @@ const PaymentGateway = () => {
                   <Icon>search</Icon>
                 </InputAdornment>
               ),
+              style: {
+                borderRadius: 5,
+                minHeight: 30,
+              },
             }}
             value={search}
             onChange={(e) => {

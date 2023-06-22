@@ -1,13 +1,12 @@
-import React, { useLayoutEffect, useEffect, useState } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import { Button, TextField, Grid, Card } from '@material-ui/core';
-import Swal from 'sweetalert2';
-import { useDispatch, useSelector } from 'react-redux';
-import { useHistory, useParams } from 'react-router-dom';
+import React, { useLayoutEffect, useEffect, useState } from "react";
+import { Button, TextField, Grid, Card } from "@material-ui/core";
+import Swal from "sweetalert2";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory, useParams } from "react-router-dom";
 import {
   getDetailPaymentGateway,
   updatePaymentGateway,
-} from '../../redux/actions/Payment/PaymentGatewayActions';
+} from "../../redux/actions/Payment/PaymentGatewayActions";
 
 const EditPaymentGateway = () => {
   const dispatch = useDispatch();
@@ -19,7 +18,7 @@ const EditPaymentGateway = () => {
   };
 
   const [state, setState] = useState({
-    pg_name: '',
+    pg_name: "",
   });
 
   useLayoutEffect(() => {
@@ -27,7 +26,7 @@ const EditPaymentGateway = () => {
   }, []);
 
   useEffect(() => {
-    if (detailPaymentGateway.hasOwnProperty('pg_name')) {
+    if (detailPaymentGateway.hasOwnProperty("pg_name")) {
       setState((prev) => ({
         ...prev,
         pg_name: detailPaymentGateway.pg_name,
@@ -50,39 +49,18 @@ const EditPaymentGateway = () => {
       updatePaymentGateway(id, {
         pg_name: state.pg_name,
       }).then((res) => {
-        history.push('/payment_gateway');
+        history.push("/payment_gateway");
         Swal.fire(
-          'Success!',
-          'Data Payment Gateway berhasil diubah',
-          'success'
+          "Success!",
+          "Data Payment Gateway berhasil diubah",
+          "success"
         );
       });
     } catch (e) {
-      Swal.fire('Oopss!', 'Data Payment Gateway gagal diubah', 'error');
+      Swal.fire("Oopss!", "Data Payment Gateway gagal diubah", "error");
     }
   };
 
-  const useStyles = makeStyles((theme) => ({
-    root: {
-      display: 'flex',
-      alignItems: 'center',
-      width: '100%',
-      flexWrap: 'wrap',
-      '& > *': {
-        margin: theme.spacing(0.5),
-      },
-    },
-    '& .MuiOutlinedInput-root': {
-      '& fieldset': {
-        border: '1px solid #e6e9ed',
-      },
-    },
-    input: {
-      transform: 'scaleY(0.88)',
-      marginBlock: 'auto',
-    },
-  }));
-  const classes = useStyles();
   return (
     <div className="m-sm-30">
       <Grid
@@ -130,15 +108,15 @@ const EditPaymentGateway = () => {
                   <TextField
                     required={true}
                     size="small"
-                    style={{
-                      transform: 'scaleY(1.25)',
+                    InputProps={{
+                      style: {
+                        borderRadius: 5,
+                        minHeight: 46,
+                      },
                     }}
-                    inputProps={{
-                      className: classes.input,
-                    }}
+                    className="w-full"
                     value={state.pg_name}
                     name="pg_name"
-                    className={`${classes.outlined} border-radius-4 w-full`}
                     placeholder="Payment Gateway"
                     variant="outlined"
                     onChange={handleChange}

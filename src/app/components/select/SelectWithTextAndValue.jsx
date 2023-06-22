@@ -31,29 +31,46 @@ export default function SelectWithTextAndValue({
   };
 
   const useStyles = makeStyles((theme) => ({
-    input: {
-      transform: "scaleY(0.88)",
+    root: {
+      width: width,
+      "& .MuiOutlinedInput-root": {
+        backgroundColor: "#fbfbfb ",
+        height: "42px",
+      },
+      "& .MuiOutlinedInput-notchedOutline": {
+        borderColor: "#e6e9ed",
+        borderWidth: "1px",
+      },
+      "& .MuiSelect-select": {
+        fontWeight: "400",
+        fontSize: "14px",
+        color: "#0A0A0A",
+      },
+      "& .MuiInputLabel-outlined": {
+        color: "#9196ab",
+        fontSize: "14px",
+        top: "10px",
+        left: "14px",
+        transform: "translate(0, 1px) scale(1)",
+        '&[data-shrink="true"]': {
+          top: "-6px",
+          fontSize: "12px",
+          fontWeight: "400",
+          color: "#6B7280",
+          transform: "translate(0, 0) scale(1)",
+        },
+      },
     },
   }));
 
-  const handleClasses = () => {
-    if (scaleY === "1.25") {
-      return classes.input;
-    } else {
-      return "";
-    }
-  };
-
-  console.log(dataSelect);
-
   const classes = useStyles();
+
   return (
     <div>
       <FormControl
         size={size}
         variant="outlined"
-        className="bg-white rounded-lg"
-        style={{ width }}
+        className={`${classes.root} bg-white rounded-lg`}
         required={required}
       >
         <InputLabel htmlFor="outlined-age-native-simple">
@@ -69,7 +86,6 @@ export default function SelectWithTextAndValue({
           value={state[name]}
           inputProps={{
             name,
-            className: handleClasses(),
           }}
           size={size}
           className="bg-white"

@@ -1,14 +1,14 @@
-import React, { useEffect, useLayoutEffect, useState } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import { Button, TextField, Grid, Card } from '@material-ui/core';
-import Swal from 'sweetalert2';
-import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
-import RichTextEditor from '../../../../matx/components/RichTextEditor';
+import React, { useEffect, useLayoutEffect, useState } from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import { Button, TextField, Grid, Card } from "@material-ui/core";
+import Swal from "sweetalert2";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
+import RichTextEditor from "../../../../matx/components/RichTextEditor";
 import {
   addGeneralInfo,
   getGeneralInfo,
-} from '../../../redux/actions/Settings';
+} from "../../../redux/actions/Settings";
 
 const GeneralInfo = () => {
   const dispatch = useDispatch();
@@ -16,14 +16,14 @@ const GeneralInfo = () => {
   console.log(dataGeneralInfo);
 
   const [state, setState] = useState({
-    about: '',
-    contact_whatsapp: '',
-    contact_telegram: '',
-    contact_email: '',
-    contact_message: '',
-    social_contact_instagram: '',
-    social_contact_facebook: '',
-    social_contact_tiktok: '',
+    about: "",
+    contact_whatsapp: "",
+    contact_telegram: "",
+    contact_email: "",
+    contact_message: "",
+    social_contact_instagram: "",
+    social_contact_facebook: "",
+    social_contact_tiktok: "",
   });
 
   const getData = () => {
@@ -35,33 +35,35 @@ const GeneralInfo = () => {
   }, []);
 
   useEffect(() => {
-    if (dataGeneralInfo.hasOwnProperty('about')) {
+    if (dataGeneralInfo.hasOwnProperty("about")) {
       const { about, contact, social_contact } = dataGeneralInfo;
 
       const contactValue = (params) => {
-        const value = contact.filter((data) => data.contact_code === params)[0];
+        const value = contact.filter(
+          (data) => data?.contact_code === params
+        )[0];
         console.log(value);
-        return value.contact_url;
+        return value?.contact_url;
       };
 
       const socialContactValue = (params) => {
         const value = social_contact.filter(
-          (data) => data.social_contact_code === params
+          (data) => data?.social_contact_code === params
         )[0];
         console.log(value);
-        return value.social_contact_url;
+        return value?.social_contact_url;
       };
 
       setState((prev) => ({
         ...prev,
         about,
-        contact_whatsapp: contactValue('whatsapp'),
-        contact_telegram: contactValue('telegram'),
-        contact_email: contactValue('email'),
-        contact_message: contactValue('message'),
-        social_contact_instagram: socialContactValue('instagram'),
-        social_contact_facebook: socialContactValue('facebook'),
-        social_contact_tiktok: socialContactValue('tiktok'),
+        contact_whatsapp: contactValue("whatsapp"),
+        contact_telegram: contactValue("telegram"),
+        contact_email: contactValue("email"),
+        contact_message: contactValue("message"),
+        social_contact_instagram: socialContactValue("instagram"),
+        social_contact_facebook: socialContactValue("facebook"),
+        social_contact_tiktok: socialContactValue("tiktok"),
       }));
     }
   }, [dataGeneralInfo]);
@@ -88,33 +90,33 @@ const GeneralInfo = () => {
         about: state.about,
         contact: [
           {
-            contact_code: 'whatsapp',
+            contact_code: "whatsapp",
             contact_url: state.contact_whatsapp,
           },
           {
-            contact_code: 'telegram',
+            contact_code: "telegram",
             contact_url: state.contact_telegram,
           },
           {
-            contact_code: 'email',
+            contact_code: "email",
             contact_url: state.contact_email,
           },
           {
-            contact_code: 'message',
+            contact_code: "message",
             contact_url: state.contact_message,
           },
         ],
         social_contact: [
           {
-            social_contact_code: 'facebook',
+            social_contact_code: "facebook",
             social_contact_url: state.social_contact_facebook,
           },
           {
-            social_contact_code: 'tiktok',
+            social_contact_code: "tiktok",
             social_contact_url: state.social_contact_tiktok,
           },
           {
-            social_contact_code: 'instagram',
+            social_contact_code: "instagram",
             social_contact_url: state.social_contact_instagram,
           },
         ],
@@ -122,32 +124,32 @@ const GeneralInfo = () => {
 
       addGeneralInfo(obj).then((res) => {
         console.log(res);
-        Swal.fire('Success!', 'Data General Info berhasil disimpan', 'success');
+        Swal.fire("Success!", "Data General Info berhasil disimpan", "success");
         getData();
       });
     } catch (e) {
-      Swal.fire('Oopss!', 'Data General Info gagal disimpan', 'error');
+      Swal.fire("Oopss!", "Data General Info gagal disimpan", "error");
     }
   };
 
   const useStyles = makeStyles((theme) => ({
     root: {
-      display: 'flex',
-      alignItems: 'center',
-      width: '100%',
-      flexWrap: 'wrap',
-      '& > *': {
+      display: "flex",
+      alignItems: "center",
+      width: "100%",
+      flexWrap: "wrap",
+      "& > *": {
         margin: theme.spacing(0.5),
       },
     },
-    '& .MuiOutlinedInput-root': {
-      '& fieldset': {
-        border: '1px solid #e6e9ed',
+    "& .MuiOutlinedInput-root": {
+      "& fieldset": {
+        border: "1px solid #e6e9ed",
       },
     },
     input: {
-      transform: 'scaleY(0.88)',
-      marginBlock: 'auto',
+      transform: "scaleY(0.88)",
+      marginBlock: "auto",
     },
   }));
   const classes = useStyles();
@@ -189,7 +191,7 @@ const GeneralInfo = () => {
                 </h3>
                 <RichTextEditor
                   content={
-                    state.about.hasOwnProperty('body')
+                    state.about.hasOwnProperty("body")
                       ? state.about.body
                       : state.about
                   }
@@ -219,7 +221,7 @@ const GeneralInfo = () => {
                   required={true}
                   size="small"
                   style={{
-                    transform: 'scaleY(1.25)',
+                    transform: "scaleY(1.25)",
                   }}
                   inputProps={{
                     className: classes.input,
@@ -238,7 +240,7 @@ const GeneralInfo = () => {
                   required={true}
                   size="small"
                   style={{
-                    transform: 'scaleY(1.25)',
+                    transform: "scaleY(1.25)",
                   }}
                   inputProps={{
                     className: classes.input,
@@ -257,7 +259,7 @@ const GeneralInfo = () => {
                   required={true}
                   size="small"
                   style={{
-                    transform: 'scaleY(1.25)',
+                    transform: "scaleY(1.25)",
                   }}
                   inputProps={{
                     className: classes.input,
@@ -276,7 +278,7 @@ const GeneralInfo = () => {
                   required={true}
                   size="small"
                   style={{
-                    transform: 'scaleY(1.25)',
+                    transform: "scaleY(1.25)",
                   }}
                   inputProps={{
                     className: classes.input,
@@ -306,7 +308,7 @@ const GeneralInfo = () => {
                   required={true}
                   size="small"
                   style={{
-                    transform: 'scaleY(1.25)',
+                    transform: "scaleY(1.25)",
                   }}
                   inputProps={{
                     className: classes.input,
@@ -325,7 +327,7 @@ const GeneralInfo = () => {
                   required={true}
                   size="small"
                   style={{
-                    transform: 'scaleY(1.25)',
+                    transform: "scaleY(1.25)",
                   }}
                   inputProps={{
                     className: classes.input,
@@ -344,7 +346,7 @@ const GeneralInfo = () => {
                   required={true}
                   size="small"
                   style={{
-                    transform: 'scaleY(1.25)',
+                    transform: "scaleY(1.25)",
                   }}
                   inputProps={{
                     className: classes.input,

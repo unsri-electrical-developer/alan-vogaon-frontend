@@ -22,6 +22,7 @@ export default function SelectWithTextAndValue({
   index,
   scaleY = "1",
   menuItemFontSize = "text-14",
+  onChange
 }) {
   const handleChange = (id, e) => {
     const newArray = state.map((arr, index) => {
@@ -70,9 +71,8 @@ export default function SelectWithTextAndValue({
           IconComponent={() => (
             <KeyboardArrowDownIcon size="medium" style={{ fontWeight: 700 }} />
           )}
-          onChange={(e) => {
-            handleChange(index, e);
-          }}
+          onChange={onChange ? onChange : (e) => handleChange(index, e)}
+
           value={state[index][name]}
           inputProps={{
             name,

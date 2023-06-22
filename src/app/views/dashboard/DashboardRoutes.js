@@ -26,7 +26,7 @@ const dashboardRoutes = [
     exact: true,
   },
   {
-    path: "/games/redeem-list-code",
+    path: "/games/redeem-list-code/:id",
     component: RedeemListCode,
     auth: authRoles.all,
     exact: true,

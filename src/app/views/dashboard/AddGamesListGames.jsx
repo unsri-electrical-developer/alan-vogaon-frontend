@@ -51,7 +51,6 @@ const AddGamesListGames = () => {
   }));
   const classes = useStyles();
   const goToTop = () => {
-    console.log("keatas co");
     global.scrollTo({
       top: 0,
       behavior: "smooth",
@@ -77,10 +76,6 @@ const AddGamesListGames = () => {
       [e.target.name]: e.target.value,
     }));
   };
-
-  console.log(fieldList);
-  console.log(productList);
-  console.log(state);
 
   const handleSubmit = () => {
     try {
@@ -119,32 +114,39 @@ const AddGamesListGames = () => {
         kode_game: state.kode_game,
         fieldList,
         productList,
-        // games_item: inputList,
-      }).then((res) => {
-        if (res.code == 2) {
-          throw new Error(res.message);
-        }
-      });
+      })
+        .then((res) => {
+          if (res.code == 2 || res.code == 1) {
+            throw new Error(res.message);
+          }
 
-      let timerInterval;
-      Swal.fire({
-        title: "Sedang diproses...",
-        html: "tunggu dalam waktu <b></b> detik.",
-        timer: 4000,
-        timerProgressBar: true,
-        didOpen: () => {
-          Swal.showLoading();
-          const b = Swal.getHtmlContainer().querySelector("b");
-          setTimeout(() => {
-            clearInterval(timerInterval);
-            history.push("/games/listGames");
-            Swal.fire("Success!", "List Games berhasil disimpan", "success");
-          }, 4000);
-          timerInterval = setInterval(() => {
-            b.textContent = Swal.getTimerLeft();
-          }, 1000);
-        },
-      });
+          let timerInterval;
+          Swal.fire({
+            title: "Sedang diproses...",
+            html: "tunggu dalam waktu <b></b> detik.",
+            timer: 4000,
+            timerProgressBar: true,
+            didOpen: () => {
+              Swal.showLoading();
+              const b = Swal.getHtmlContainer().querySelector("b");
+              setTimeout(() => {
+                clearInterval(timerInterval);
+                history.push("/games/listGames");
+                Swal.fire(
+                  "Success!",
+                  "List Games berhasil disimpan",
+                  "success"
+                );
+              }, 4000);
+              timerInterval = setInterval(() => {
+                b.textContent = Swal.getTimerLeft();
+              }, 1000);
+            },
+          });
+        })
+        .catch((e) => {
+          Swal.fire("Oopss!", e.message, "error");
+        });
     } catch (e) {
       Swal.fire("Oopss!", e.message, "error");
     }
@@ -201,18 +203,25 @@ const AddGamesListGames = () => {
               >
                 Tipe
               </h1>
-              <TextField
-                required={true}
+              <SelectOfArray
+                dataSelect={[
+                  {
+                    text: "String",
+                    value: "string",
+                  },
+                  {
+                    text: "Number",
+                    value: "number",
+                  },
+                ]}
+                state={fieldList}
+                setState={setFieldList}
                 size="small"
-                inputProps={{
-                  className: classes.input,
-                }}
-                value={fieldList[index].tipe}
+                label="Tipe"
+                width="100%"
                 name="tipe"
-                className={`${classes.outlined} border-radius-5 w-full`}
-                placeholder="Tipe"
-                variant="outlined"
-                onChange={handleFieldChange(index, "tipe")}
+                index={index}
+                menuItemFontSize="text-14"
               />
             </Grid>
 
@@ -348,18 +357,33 @@ const AddGamesListGames = () => {
                   </Button>
                 </Grid>
               ) : (
-                <Grid item className="mt-5">
-                  <Button
-                    variant="contained"
-                    className="bg-primary text-white border-radius-4 p-2"
-                    onClick={() => handleAddProduct()}
-                    fullWidth
-                  >
-                    <Icon className="mr-1" fontSize="medium">
-                      add-icon
-                    </Icon>
-                    Add Product
-                  </Button>
+                <Grid item container justifyContent="flex-end" spacing={2}>
+                  <Grid item className="mt-5">
+                    <Button
+                      variant="contained"
+                      className="bg-primary text-white border-radius-4 p-2"
+                      onClick={() => handleAddProduct()}
+                      fullWidth
+                    >
+                      <Icon className="mr-1" fontSize="medium">
+                        add-icon
+                      </Icon>
+                      Add Product
+                    </Button>
+                  </Grid>
+                  <Grid item className="mt-5">
+                    <Button
+                      variant="outlined"
+                      onClick={() => handleRemoveProduct(index)}
+                      fullWidth
+                      className="border-error border-radius-4 p-2 text-error"
+                    >
+                      <Icon className="mr-1" fontSize="medium">
+                        delete-outline-icon
+                      </Icon>
+                      Delete
+                    </Button>
+                  </Grid>
                 </Grid>
               )}
             </Grid>

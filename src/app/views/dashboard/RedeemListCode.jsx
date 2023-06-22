@@ -70,10 +70,10 @@ const getDataItems = () => {
         const key = item.code;
         transformedData[key] = [{
           redeem_code: "",
-          status: "",
+          voucher_status: "",
         },{
           redeem_code: "",
-          status: "",
+          voucher_status: "",
         }];
       });
 
@@ -91,24 +91,22 @@ const getDataItems = () => {
 
 
   useEffect(() => {
+                  getDataItems();
+
     getData();
+
     }, []);
 
     useEffect(() => {
-        if (gameVoucher){
+        if (gameVoucher && Object.keys(gameVoucher).length > 0){
             setFieldList(gameVoucher);
-
-        }else {
-    getDataItems();
-
         }
-        
+
+
     }, [gameVoucher]);
 
-    console.log(gameVoucher)
 
 
-console.log('fieldList', fieldList)
 
 
  
@@ -165,7 +163,6 @@ await dispatch(addGamesVoucher({
   
   const handleFieldChange = (state, setState, parentKey, childIndex, name) => (e) => {
   const updatedField = { ...state };
-  console.log( updatedField)
   updatedField[parentKey][childIndex] = {
     ...updatedField[parentKey][childIndex],
     [name]: e.target.value,
@@ -180,7 +177,7 @@ const handleAddField = (setStateFunction, parentKey) => {
       ...updatedField[parentKey],
       {
         redeem_code: "",
-        status: "",
+        voucher_status: "",
       },
     ];
     return updatedField;
@@ -203,7 +200,6 @@ const renderFields = (object, setState) => {
     <>
       {Object.entries(object)?.map(([key, group], groupIndex) => {
         const onlyOne = group.length === 1;
-        console.log('group', group)
         
         return (
           <Card className="mt-5 py-10 px-10" key={groupIndex}>
@@ -258,21 +254,21 @@ const renderFields = (object, setState) => {
                         dataSelect={[
                           {
                             text: "Aktif",
-                            value: "active",
+                            value: "1",
                           },
                           {
                             text: "Tidak Aktif",
-                            value: "inactive",
+                            value: "0",
                           },
                         ]}
                         state={group}
-                                                onChange={handleFieldChange(object, setState, key, itemIndex, "status")}
+                                                onChange={handleFieldChange(object, setState, key, itemIndex, "voucher_status")}
 
                         setState={setState}
                         size="small"
                         label="Status"
                         width="100%"
-                        name="status"
+                        name="voucher_status"
                         index={itemIndex}
                         menuItemFontSize="text-14"
                       />
@@ -290,6 +286,15 @@ const renderFields = (object, setState) => {
                     ) : isLastGroup && itemIndex === group.length - 1 ? (
                       
                       <Grid item className="mt-8" sm={2}>
+                        <div style={{display: "flex", gap: "15px"}}>
+                        
+                         <div
+                          className="border-radius-circle bg-error w-35 h-35"
+                          style={{ display: "flex", alignItems: "center", justifyContent: "center" }}
+                          onClick={() => handleRemoveField( setState, key, itemIndex)}
+                        >
+                          <Icon fontSize="medium">delete-outline-icon</Icon>
+                        </div>
                         <div
                           className="border-radius-circle bg-primary w-35 h-35 text-white"
                           style={{ display: "flex", alignItems: "center", justifyContent: "center" }}
@@ -297,9 +302,13 @@ const renderFields = (object, setState) => {
                         >
                           <Icon fontSize="medium">add-icon</Icon>
                         </div>
+                        </div>
+                        
                       </Grid>
+                      
+                     
                     ) : (
-                      <Grid item className="mt-10" sm={2}>
+                      <Grid item className="mt-8" sm={2}>
                         <div
                           className="border-radius-circle bg-error w-35 h-35"
                           style={{ display: "flex", alignItems: "center", justifyContent: "center" }}
@@ -309,6 +318,10 @@ const renderFields = (object, setState) => {
                         </div>
                       </Grid>
                     )}
+
+                   
+
+
                   </Grid>
                 </div>
               )})}

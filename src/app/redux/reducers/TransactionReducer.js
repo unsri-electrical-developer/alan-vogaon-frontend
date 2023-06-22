@@ -13,7 +13,7 @@ const initialState = {
   dataRiwayatTopup: [],
   totalTopup: {},
   detailTopup: {},
-  detailTPembelian: {},
+  detailPembelian: {},
 };
 
 const TransactionReducer = function (state = initialState, action) {
@@ -51,7 +51,7 @@ const TransactionReducer = function (state = initialState, action) {
     case GET_DETAIL_PEMBELIAN: {
       return {
         ...state,
-        detailTPembelian: action.payload,
+        detailPembelian: action.payload,
       };
     }
     default: {

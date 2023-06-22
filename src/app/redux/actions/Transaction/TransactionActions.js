@@ -73,7 +73,7 @@ export const getDetailPembelian = (params) => {
     const token = localStorage.getItem("jwt_token");
     setAuthToken(token);
     API.get(`/transaction/detail_pembelian/` + params)
-      .then((res) => {
+    .then((res) => {
         dispatch({
           type: GET_DETAIL_PEMBELIAN,
           payload: res.data.data || [],
@@ -87,6 +87,7 @@ export const getDetailPembelian = (params) => {
       });
   };
 };
+
 export const getTotalPembelian = () => {
   return (dispatch) => {
     const token = localStorage.getItem("jwt_token");
@@ -120,6 +121,26 @@ export const getTotalTopUp = () => {
       .catch(() => {
         dispatch({
           type: GET_TOTAL_TOPUP,
+          payload: [],
+        });
+      });
+  };
+};
+
+export const getDetailTotalPembelian = (params) => {
+  return (dispatch) => {
+    const token = localStorage.getItem("jwt_token");
+    setAuthToken(token);
+    API.get(`/transaction/detail_pembelian/` + params)
+    .then((res) => {
+        dispatch({
+          type: GET_DETAIL_PEMBELIAN,
+          payload: res.data.data || [],
+        });
+      })
+      .catch(() => {
+        dispatch({
+          type: GET_DETAIL_PEMBELIAN,
           payload: [],
         });
       });

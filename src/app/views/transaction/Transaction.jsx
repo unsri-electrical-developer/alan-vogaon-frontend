@@ -162,8 +162,6 @@ const Transaction = ({
     { key: "status", align: "center", colSpan: 3 },
   ];
 
-  console.log(dataRiwayatTopup);
-  console.log(dataRiwayatPembelian);
   return (
     <div className="m-sm-30">
       <Grid container spacing={1} justify="space-between" className="my-4 mb-8">

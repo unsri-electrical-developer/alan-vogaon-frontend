@@ -10,7 +10,7 @@ import { makeStyles } from "@material-ui/core/styles";
 
 import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
 
-export default function SelectWithTextAndValue({
+export default function SelectOfArray({
   dataSelect = [],
   state = "",
   required = false,

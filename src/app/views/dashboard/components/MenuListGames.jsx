@@ -10,13 +10,15 @@ import VisibilityOutlinedIcon from "@material-ui/icons/VisibilityOutlined";
 import { useDispatch } from "react-redux";
 import React from "react";
 import { delGamesList } from "../../../redux/actions/GamesActions";
-
+import FormatListBulletedIcon from '@material-ui/icons/FormatListBulleted';
 export default function MenuCategory({
   item,
   editPath,
   detailPath,
   setState,
   getData,
+  category,
+  redeemPath
 }) {
   const [anchorEl, setAnchorEl] = useState(null);
   const dispatch = useDispatch();
@@ -75,6 +77,8 @@ export default function MenuCategory({
       >
         <MoreHorizIcon />
       </Button>
+
+      
       <Menu
         id="simple-menu"
         anchorEl={anchorEl}
@@ -82,6 +86,24 @@ export default function MenuCategory({
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
+{ category === "VG" && (
+  <Link
+          to={{
+            pathname: redeemPath,
+          }}
+        >
+          <MenuItem className="mb-3" onClick={() => handleClose}>
+            <span className="">
+              <FormatListBulletedIcon style={{ color: "#FF9C41" }} />
+            </span>
+            <span className="pl-3" style={{ color: "#FF9C41" }}>
+              List Redeem Code
+            </span>
+          </MenuItem>
+        </Link>
+)}
+
+
         <Link
           to={{
             pathname: detailPath,

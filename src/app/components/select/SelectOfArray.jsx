@@ -10,7 +10,7 @@ import { makeStyles } from "@material-ui/core/styles";
 
 import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
 
-export default function SelectWithTextAndValue({
+export default function SelectOfArray({
   dataSelect = [],
   state = "",
   required = false,
@@ -19,15 +19,23 @@ export default function SelectWithTextAndValue({
   label = "",
   width = "171px",
   name = "",
+  index,
   scaleY = "1",
   menuItemFontSize = "text-14",
+  onChange
 }) {
-  const handleChange = (e) => {
-    setState({
-      ...state,
-      [e.target.name]: e.target.value,
+  const handleChange = (id, e) => {
+    const newArray = state.map((arr, index) => {
+      if (id == index) {
+        return {
+          ...arr,
+          [name]: e.target.value,
+        };
+      } else {
+        return arr;
+      }
     });
-    console.log(state);
+    setState(newArray);
   };
 
   const useStyles = makeStyles((theme) => ({
@@ -43,8 +51,6 @@ export default function SelectWithTextAndValue({
       return "";
     }
   };
-
-  console.log(dataSelect);
 
   const classes = useStyles();
   return (
@@ -65,8 +71,9 @@ export default function SelectWithTextAndValue({
           IconComponent={() => (
             <KeyboardArrowDownIcon size="medium" style={{ fontWeight: 700 }} />
           )}
-          onChange={handleChange}
-          value={state[name]}
+          onChange={onChange ? onChange : (e) => handleChange(index, e)}
+
+          value={state[index][name]}
           inputProps={{
             name,
             className: handleClasses(),

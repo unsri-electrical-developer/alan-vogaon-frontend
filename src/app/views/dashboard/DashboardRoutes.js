@@ -1,15 +1,15 @@
-import { authRoles } from '../../auth/authRoles';
-import Dashboard from './Dashboard';
-import Users from './Users';
+import { authRoles } from "../../auth/authRoles";
+import Dashboard from "./Dashboard";
+import Users from "./Users";
 import DetailUser from "./DetailUser";
-import GamesCategory from './GamesCategory';
+import GamesCategory from "./GamesCategory";
 import GamesListGames from "./GamesListGames";
-import AddGamesCategory from './AddGamesCategory';
+import AddGamesCategory from "./AddGamesCategory";
 import AddGamesListGames from "./AddGamesListGames";
 import EditGamesCategory from "./EditGamesCategory";
 import DetailListGames from "./DetailListGames";
 import EditListGames from "./EditListGames";
-
+import RedeemListCode from "./RedeemListCode";
 
 const dashboardRoutes = [
   {
@@ -22,6 +22,12 @@ const dashboardRoutes = [
   {
     path: "/users",
     component: Users,
+    auth: authRoles.all,
+    exact: true,
+  },
+  {
+    path: "/games/redeem-list-code/:id",
+    component: RedeemListCode,
     auth: authRoles.all,
     exact: true,
   },

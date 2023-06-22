@@ -19,8 +19,8 @@ const RenderTable = ({ data, state, search, getData }) => {
     } else if (state.rowsPerPage === 25) {
       return state.page * 25;
     }
-    };
-    
+  };
+
   return data?.length > 0 ? (
     data
       .slice(
@@ -31,29 +31,30 @@ const RenderTable = ({ data, state, search, getData }) => {
         <TableRow hover key={index}>
           <TableCell
             className="text-14 pl-3"
-            align="center"
             style={{ color: "#0A0A0A" }}
-            colSpan={2}
+            colSpan={1}
           >
-            {index+1}
+            {index + 1}
           </TableCell>
-          <TableCell colSpan={5}>
+          <TableCell colSpan={6}>
             <div
               className=" z-100 text-14 d-flex items-center"
               style={{ gap: "16px" }}
             >
-              {item.title}
+              {item.name}
             </div>
           </TableCell>
-          <TableCell colSpan={5}>{item.price}</TableCell>
+          <TableCell align="right" colSpan={5}>
+            <div className="text-center">{item.type}</div>
+          </TableCell>
         </TableRow>
       ))
   ) : (
     <>
       <TableRow hover style={{ borderBottom: "1px #e6e5e5 solid" }}>
         <TableCell colSpan={12} align="center">
-        Data kosong
-      </TableCell>
+          Data kosong
+        </TableCell>
       </TableRow>
     </>
   );
@@ -95,26 +96,26 @@ const TableDetailListGames = ({ search, data, getData }) => {
         <TableHead>
           <TableRow style={{ borderBottom: "1px #e6e5e5 solid" }}>
             <TableCell
-              colSpan={2}
+              colSpan={1}
               className="font-medium text-15"
               style={{ color: "#0a0a0a" }}
-              align="center"
             >
               No
             </TableCell>
             <TableCell
-              colSpan={5}
+              colSpan={6}
               className="font-medium text-15"
               style={{ color: "#0a0a0a" }}
             >
-              Nama Produk
+              Nama
             </TableCell>
             <TableCell
               colSpan={5}
+              align="right"
               className="font-medium text-15"
               style={{ color: "#0a0a0a" }}
             >
-              Harga Produk
+              <div className="text-center">Tipe</div>
             </TableCell>
           </TableRow>
         </TableHead>

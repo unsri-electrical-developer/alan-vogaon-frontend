@@ -180,17 +180,15 @@ const Transaction = ({
     { key: "status", align: "center", colSpan: 3 },
   ];
 
-  console.log(dataRiwayatTopup);
-  console.log(dataRiwayatPembelian);
   return (
     <div className="m-sm-30">
-      <Grid container spacing={1} justify="space-between" className="my-4 mb-8">
+      <Grid container spacing={1} className="my-4 mb-8">
         <h1 className="mt-4 font-semibold text-25 mx-2 ">Transaction</h1>
       </Grid>
 
       <div style={{ marginBottom: "30px" }}>
-        <Grid container spacing={4} justify="space-between">
-          <Grid item sm={6} xs={12} spacing={3}>
+        <Grid container spacing={4}>
+          <Grid item sm={6} xs={12}>
             <SimpleCard loading={false} heightInput={150}>
               <div className="mt-4 riwayat-gaji-card">
                 <Grid container spacing={2} alignItems="flex-start">
@@ -234,7 +232,7 @@ const Transaction = ({
               </div>
             </SimpleCard>
           </Grid>
-          <Grid item sm={6} xs={12} spacing={3}>
+          <Grid item sm={6} xs={12}>
             <SimpleCard loading={false} heightInput={150}>
               <div className="mt-4 riwayat-gaji-card">
                 <Grid container spacing={2} alignItems="flex-start">
@@ -307,8 +305,6 @@ const Transaction = ({
             <Grid
               container
               spacing={3}
-              xs={12}
-              sm={8}
               className="d-flex align-items-end"
             >
               <Grid item sm={7} xs={12}>

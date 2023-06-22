@@ -58,8 +58,9 @@ const RenderTable = ({
           >
             {index + 1 + handleNumbering()}
           </TableCell>
-          {customColumns?.map((column) => (
+          {customColumns?.map((column, index) => (
             <TableCell
+              key={index}
               className="text-14 pl-2"
               style={{ color: "#0A0A0A" }}
               colSpan={column.colSpan}

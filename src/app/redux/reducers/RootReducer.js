@@ -10,6 +10,7 @@ import sertifikatReducer from "./SertifikatReducer";
 import UserReducer from "./UserReducer";
 import SlidersReducer from "./SlidersReducer";
 import PaymentReducer from "./PaymentReducer";
+import gamesReducer from "./GamesReducer";
 import {
   FaqReducer,
   GeneralInfoReducer,
@@ -18,6 +19,7 @@ import {
 } from "./Settings";
 import TransactionReducer from "./TransactionReducer";
 import DashboardReducer from "./DashboardReducer";
+import PromoReducer from "./PromoReducer";
 
 const RootReducer = combineReducers({
   login: LoginReducer,
@@ -35,6 +37,8 @@ const RootReducer = combineReducers({
   dashboard: DashboardReducer,
   faq: FaqReducer,
   snk: SnkReducer,
+  game: gamesReducer,
+  promo: PromoReducer,
   privacyPolicy: PrivacyPolicyReducer,
 });
 

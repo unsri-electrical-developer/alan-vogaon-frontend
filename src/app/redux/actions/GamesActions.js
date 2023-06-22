@@ -6,12 +6,18 @@ import apiAuthService from "../../services/apiAuthService";
 export const GET_ALL_CATEGORIES = "GET_ALL_CATEGORIES";
 export const DELETE_CATEGORY = "DELETE_CATEGORY";
 export const GET_DETAIL_CATEGORY = "GET_DETAIL_CATEGORY";
-
+export const GET_GAMES_VOUCHER = "GET_GAMES_VOUCHER";
 // CATEGORY
 export const getAllCategories = () => {
   const token = localStorage.getItem("jwt_token");
   setAuthToken(token);
   return API.get("/category/");
+};
+
+export const getGameItems = (id) => {
+  const token = localStorage.getItem("jwt_token");
+  setAuthToken(token);
+  return API.get(`/games_item/${id}/products`);
 };
 
 export const getDetailCategory = (id) => {
@@ -46,6 +52,53 @@ export const editCategory = (data) => {
     return res.data;
   };
 };
+
+export const getGamesVoucher = (params) => {
+  return (dispatch) => {
+    const token = localStorage.getItem("jwt_token");
+    setAuthToken(token);
+    API.get(`/game_voucher/` + params)
+      .then((res) => {
+        dispatch({
+          type: GET_GAMES_VOUCHER,
+          payload: res.data.data || [],
+        });
+      })
+      .catch(() => {
+        dispatch({
+          type: GET_GAMES_VOUCHER,
+          payload: [],
+        });
+      });
+  };
+};
+
+export const addGamesVoucher = (params, id) => {
+  return async (dispatch) => {
+    const token = await localStorage.getItem("jwt_token");
+    setAuthToken(token);
+    API.defaults.headers.common["Content-Type"] = "multipart/form-data";
+    const res = await API.post(`/game_voucher/${id}`, params).catch((err) => {
+      return Promise.reject(err);
+    });
+
+    return res.data;
+  };
+};
+
+export const editGamesVoucher = (params, id) => {
+  return async (dispatch) => {
+    const token = await localStorage.getItem("jwt_token");
+    setAuthToken(token);
+    API.defaults.headers.common["Content-Type"] = "multipart/form-data";
+    const res = await API.patch(`/game_voucher/${id}`, params).catch((err) => {
+      return Promise.reject(err);
+    });
+
+    return res.data;
+  };
+};
+
 export const delCategory = (id) => {
   const token = localStorage.getItem("jwt_token");
   setAuthToken(token);

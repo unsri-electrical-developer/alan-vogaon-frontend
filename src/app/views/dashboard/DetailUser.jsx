@@ -1,4 +1,4 @@
-import { Button, Card, Grid, Icon } from '@material-ui/core';
+import { Button, Card, Chip, Grid, Icon } from '@material-ui/core';
 import React, { useLayoutEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import '../../../styles/css/DetailUser.css';
@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import GeneralButton from './../../components/buttons/GeneralButton.jsx';
 import {getDetailUser} from '../../redux/actions/UserActions';
 import { useHistory, useParams} from 'react-router-dom';
+import { formatRupiah } from '../../../utlis/formatRupiah';
 
 const theme = createTheme({
   palette: {
@@ -77,7 +78,7 @@ const DetailUser = () => {
             >
               <div
                 style={{
-                  backgroundImage: `url(${state.users_profile_pic})`,
+                  backgroundImage: `url(${state?.users_profile_pic})`,
                   backgroundRepeat: "no-repeat",
                   backgroundSize: "contain",
                   backgroundPosition: "center",
@@ -93,7 +94,7 @@ const DetailUser = () => {
               Name
             </h1>
             <p className="text-16 font-medium" style={{ color: "#0A0A0A" }}>
-              {state.name}
+              {state?.name}
             </p>
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -101,7 +102,7 @@ const DetailUser = () => {
               No. Handphone
             </h1>
             <p className="text-16 font-medium" style={{ color: "#0A0A0A" }}>
-              {state.no_telp}
+              {state?.no_telp}
             </p>
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -109,15 +110,15 @@ const DetailUser = () => {
               Email
             </h1>
             <p className="text-16 font-medium" style={{ color: "#0A0A0A" }}>
-              {state.email}
+              {state?.email}
             </p>
           </Grid>
           <Grid item xs={12} sm={6}>
             <h1 className="text-muted text-14 font-medium mb-2 font-500 h4">
-              User ID
+              Saldo Terakhir
             </h1>
             <p className="text-16 font-medium" style={{ color: "#0A0A0A" }}>
-              {state.users_code}
+              {formatRupiah(state?.saldo || 0)}
             </p>
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -125,7 +126,15 @@ const DetailUser = () => {
               Tanggal Daftar
             </h1>
             <p className="text-16 font-medium" style={{ color: "#0A0A0A" }}>
-              {state.created_at}
+              {state?.created_at}
+            </p>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <h1 className="text-muted text-14 font-medium mb-2 font-500 h4">
+              Status Akun
+            </h1>
+            <p className="text-16 font-medium" style={{ color: "#0A0A0A" }}>
+              <Chip className='text-white' label={state?.isSuspend ? "Terkunci" : "Aktif"} color={state?.isSuspend ? "default" : "primary"} />
             </p>
           </Grid>
         </Grid>

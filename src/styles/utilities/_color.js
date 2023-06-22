@@ -25,7 +25,7 @@ export const colorStyles = makeStyles(({ palette, ...theme }) => ({
       backgroundColor: `${palette.primary.main} !important`,
       fallbacks: [{ color: "white !important" }],
     },
-    ".bg-blue-gray": { background: "##F9FAFE !important" },
+    ".bg-blue-gray": { background: "#F9FAFE !important" },
     '.hover-bg-primary:hover [class^="MuiSvgIcon-"]': {
       fill: "white !important",
     },

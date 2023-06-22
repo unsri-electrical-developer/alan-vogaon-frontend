@@ -207,7 +207,7 @@ a:hover {
   border-radius: 6px !important;
 }
 .border-6 {
-  border-radius: 6px;
+  border-radius: 6px !important;
 }
 .display-produk {
   aspect-ratio: 4/3;

@@ -125,16 +125,11 @@ export const addGamesList = async (params) => {
   return API.post("/games", params);
 };
 
-export const editGamesList = (params) => {
-  return async (dispatch) => {
-    const token = await localStorage.getItem("jwt_token");
-    setAuthToken(token);
-    API.defaults.headers.common["Content-Type"] = "multipart/form-data";
-    const res = await API.patch("/games/" + params.id, params).catch((err) => {
-      return Promise.reject(err);
-    });
-    return res.data;
-  };
+export const editGamesList = async (params) => {
+  const token = await localStorage.getItem("jwt_token");
+  setAuthToken(token);
+  API.defaults.headers.common["Content-Type"] = "multipart/form-data";
+  return API.patch("/games/" + params.id, params);
 };
 
 export const delGamesList = (id) => {

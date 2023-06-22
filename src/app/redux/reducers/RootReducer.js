@@ -19,6 +19,7 @@ import {
 } from "./Settings";
 import TransactionReducer from "./TransactionReducer";
 import DashboardReducer from "./DashboardReducer";
+import PromoReducer from "./PromoReducer";
 
 const RootReducer = combineReducers({
   login: LoginReducer,
@@ -37,6 +38,7 @@ const RootReducer = combineReducers({
   faq: FaqReducer,
   snk: SnkReducer,
   game: gamesReducer,
+  promo: PromoReducer,
   privacyPolicy: PrivacyPolicyReducer,
 });
 

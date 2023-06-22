@@ -1,5 +1,5 @@
 import { useState } from "react";
-import React from 'react';
+import React from "react";
 // import MenuDenda from "./MenuDenda";
 import {
   TablePagination,
@@ -7,13 +7,16 @@ import {
   TableCell,
   TableRow,
   TableBody,
-    TableHead,
-  Avatar
+  TableHead,
+  Avatar,
+  Chip,
+  Button,
 } from "@material-ui/core";
-import Aksieye from "../../../assets/components/icons/Aksieye.svg"
+import Aksieye from "../../../assets/components/icons/Aksieye.svg";
 import { Link } from "react-router-dom";
+import ModalEditPin from "../../../components/modals/ModalEditPin";
 
-const RenderTable = ({ data, state, search, getData }) => {
+const RenderTable = ({ data, state, handleModalEditPin }) => {
   const handleNumbering = () => {
     if (state.rowsPerPage === 5) {
       return state.page * 5;
@@ -52,7 +55,19 @@ const RenderTable = ({ data, state, search, getData }) => {
                 width={"50px"}
                 style={{ borderRadius: "5px" }}
               />
-              {item.name}
+              <div>
+                <p className="mb-0">{item.name}</p>
+                {item.isSuspend ? (
+                  <Chip
+                    size="small"
+                    className="text-white"
+                    label={"Terkunci"}
+                    style={{ backgroundColor: "#C2C2C2" }}
+                  />
+                ) : (
+                  ""
+                )}
+              </div>
             </div>
           </TableCell>
           <TableCell align="center" style={{ color: "#0A0A0A" }} colSpan={3}>
@@ -72,6 +87,20 @@ const RenderTable = ({ data, state, search, getData }) => {
             >
               <img src={Aksieye} alt="eye" />
             </Link>
+            {item.isSuspend ? (
+              <Button
+                size="small"
+                color="primary"
+                variant="contained"
+                disableElevation
+                className="text-white ml-2 border-6"
+                onClick={() => handleModalEditPin(item)}
+              >
+                Ganti PIN
+              </Button>
+            ) : (
+              ""
+            )}
           </TableCell>
         </TableRow>
       ))
@@ -80,48 +109,6 @@ const RenderTable = ({ data, state, search, getData }) => {
       <TableCell colSpan={12} align="center">
         Data kosong
       </TableCell>
-
-      {/* <TableRow hover>
-        <TableCell colSpan={12} align="center">
-        Data kosong
-      </TableCell>
-        <TableCell
-          className="text-14 pl-3"
-          align="center"
-          style={{ color: "#0A0A0A" }}
-          colSpan={1}
-        >
-          2
-        </TableCell>
-        <TableCell style={{ color: "#0A0A0A" }} colSpan={3}>
-          <div
-            className=" z-100 text-14 d-flex items-center"
-            style={{ gap: "16px" }}
-          >
-            <Avatar
-              variant="square"
-              src={`https://ui-avatars.com/api/?name=nurlestari&background=97CB72&color=ffffff`}
-              width={"50px"}
-              style={{ borderRadius: "5px" }}
-            />
-            Nur Lestari
-          </div>
-        </TableCell>
-        <TableCell align="center" style={{ color: "#0A0A0A" }} colSpan={3}>
-          nur@gmail.com
-        </TableCell>
-        <TableCell align="center" colSpan={3}>
-          1234567
-        </TableCell>
-        <TableCell align="center" colSpan={3}>
-          06/12/2022
-        </TableCell>
-        <TableCell align="center" colSpan={2}>
-          <Link to="/users/detail">
-            <img src={Aksieye} alt="eye" />
-          </Link>
-        </TableCell>
-      </TableRow> */}
     </>
   );
 };
@@ -130,7 +117,9 @@ const TableUsers = ({ search, data, getData }) => {
   const [state, setState] = useState({
     page: 0,
     rowsPerPage: 10,
+    showEditPin: false,
   });
+  const [usersToPin, setUsersToPin] = useState({});
 
   const setPage = (page) => {
     setState({
@@ -148,6 +137,16 @@ const TableUsers = ({ search, data, getData }) => {
       ...state,
       rowsPerPage: event.target.value,
     });
+  };
+
+  const handleModalEditPin = (item) => {
+    setUsersToPin(item)
+    setState({ ...state, showEditPin: !state.showEditPin });
+  };
+
+  const handleCloseModalEditPin = (item) => {
+    getData();
+    setState({ ...state, showEditPin: false });
   };
 
   return (
@@ -216,6 +215,7 @@ const TableUsers = ({ search, data, getData }) => {
             state={state}
             getData={getData}
             search={search}
+            handleModalEditPin={handleModalEditPin}
           />
         </TableBody>
       </Table>
@@ -239,6 +239,8 @@ const TableUsers = ({ search, data, getData }) => {
         onPageChange={handleChangePage}
         onRowsPerPageChange={setRowsPerPage}
       />
+
+      <ModalEditPin handleClose={handleCloseModalEditPin} open={state.showEditPin} data={usersToPin} />
     </div>
   );
 };

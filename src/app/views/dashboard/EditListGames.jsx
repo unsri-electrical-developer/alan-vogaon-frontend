@@ -1,23 +1,21 @@
 import { Card, Grid, Icon, TextField, Button } from "@material-ui/core";
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import React, { useState, useLayoutEffect } from "react";
 import "../../../styles/css/DetailUser.css";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
 
-import AddIcon from "@material-ui/icons/Add";
-import { Link } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
-import { UploadImage } from "../../components";
-import SimpleCard from "../../assets/components/cards/SimpleCard";
-import ic_plus from "../../assets/components/icons/ic_plus.svg";
-import ic_bin from "../../assets/components/icons/ic_bin.svg";
-import { addGamesList } from "../../redux/actions/GamesActions";
+import { UploadImageWithButton } from "../../components";
+import {
+  editGamesList,
+  getAllCategories,
+  getDetailGamesList,
+} from "../../redux/actions/GamesActions";
 import Swal from "sweetalert2";
-import { useHistory } from "react-router-dom";
 import GeneralButton from "../../components/buttons/GeneralButton.jsx";
 import ListGamesFilter from "./components/ListGamesFilter";
 import SelectOfArray from "../../components/select/SelectOfArray";
+import SelectWithTextAndValue from "../../components/select/SelectWithTextAndValue";
 
 const theme = createTheme({
   palette: {
@@ -28,8 +26,8 @@ const theme = createTheme({
 });
 
 const EditListGames = () => {
-  const dispatch = useDispatch();
   const history = useHistory();
+  const { id } = useParams();
   const useStyles = makeStyles((theme) => ({
     root: {
       display: "flex",
@@ -62,13 +60,39 @@ const EditListGames = () => {
     foto: "",
     title: "",
     kode_game: "",
+    category_code: "",
+    categoryList: [],
   });
 
-  const [category, setCategory] = useState("");
+  useLayoutEffect(() => {
+    getDetailGamesList(id).then((res) => {
+      let data = res.data?.data;
+      console.log(data);
+      setState((prev) => ({
+        ...prev,
+        foto: data.img,
+        title: data.title,
+        kode_game: data.code,
+        category_code: data.category?.category_code,
+      }));
 
-  const handleCategory = (e) => {
-    setCategory(e.target.value);
-  };
+      setFieldList(data.fields);
+
+      setProductList(data.games_item);
+    });
+
+    getAllCategories().then((res) => {
+      const data = res?.data?.data;
+
+      setState((prev) => ({
+        ...prev,
+        categoryList: data.map((item) => ({
+          text: item.category_name,
+          value: item.category_code,
+        })),
+      }));
+    });
+  }, []);
 
   const handleChange = (e) => {
     e.persist();
@@ -85,19 +109,19 @@ const EditListGames = () => {
   const handleSubmit = () => {
     try {
       fieldList.forEach((obj) => {
-        if (!obj.nama && !obj.tipe) {
+        if (!obj.name && !obj.type) {
           throw new Error("data isian Field tidak lengkap");
         }
       });
 
       productList.forEach((obj) => {
         if (
-          !obj.nama &&
-          !obj.status_produk &&
-          !obj.asal_produk &&
+          !obj.title &&
+          !obj.isActive &&
+          !obj.from &&
           !obj.denomination_id &&
-          !obj.harga_member &&
-          !obj.harga_non_member
+          !obj.price &&
+          !obj.price_not_member
         ) {
           throw new Error("data isian Product tidak lengkap");
         }
@@ -112,14 +136,14 @@ const EditListGames = () => {
         throw new Error("data isian Game tidak lengkap");
       }
 
-      addGamesList({
+      editGamesList({
         img: state.foto,
+        id: state.kode_game,
         title: state.title,
-        category_code: category,
+        category_code: state.category_code,
         kode_game: state.kode_game,
         fieldList,
         productList,
-        // games_item: inputList,
       }).then((res) => {
         if (res.code == 2) {
           throw new Error(res.message);
@@ -129,7 +153,7 @@ const EditListGames = () => {
       let timerInterval;
       Swal.fire({
         title: "Sedang diproses...",
-        html: "tunggu dalam waktu <b></b> detik.",
+        html: "tunggu dalam waktu <b></b>.",
         timer: 4000,
         timerProgressBar: true,
         didOpen: () => {
@@ -150,11 +174,10 @@ const EditListGames = () => {
     }
   };
 
-  // FIELDS
   const [fieldList, setFieldList] = useState([
     {
-      nama: "",
-      tipe: "",
+      name: "",
+      type: "",
     },
   ]);
 
@@ -186,12 +209,12 @@ const EditListGames = () => {
                 inputProps={{
                   className: classes.input,
                 }}
-                value={fieldList[index].nama}
-                name="nama"
+                value={fieldList[index].name}
+                name="name"
                 className={`${classes.outlined} border-radius-5 w-full`}
                 placeholder="Nama"
                 variant="outlined"
-                onChange={handleFieldChange(index, "nama")}
+                onChange={handleFieldChange(index, "name")}
               />
             </Grid>
             <Grid item sm={5}>
@@ -207,12 +230,12 @@ const EditListGames = () => {
                 inputProps={{
                   className: classes.input,
                 }}
-                value={fieldList[index].tipe}
-                name="tipe"
+                value={fieldList[index].type}
+                name="type"
                 className={`${classes.outlined} border-radius-5 w-full`}
                 placeholder="Tipe"
                 variant="outlined"
-                onChange={handleFieldChange(index, "tipe")}
+                onChange={handleFieldChange(index, "type")}
               />
             </Grid>
 
@@ -271,8 +294,7 @@ const EditListGames = () => {
     setFieldList((prev) => [
       ...prev,
       {
-        nama: "",
-        tipe: "",
+        name: "",
       },
     ]);
   };
@@ -283,15 +305,15 @@ const EditListGames = () => {
     setFieldList(updatedField);
   };
 
-  // PRODUK
   const [productList, setProductList] = useState([
     {
-      nama: "",
-      status_produk: "",
-      asal_produk: "",
+      code: "",
+      title: "",
+      isActive: "",
+      from: "",
       denomination_id: "",
-      harga_member: "",
-      harga_non_member: "",
+      price: "",
+      price_not_member: "",
     },
   ]);
 
@@ -376,12 +398,12 @@ const EditListGames = () => {
                 inputProps={{
                   className: classes.input,
                 }}
-                value={productList[index].nama}
-                name="nama"
+                value={productList[index].title}
+                name="title"
                 className={`${classes.outlined} border-radius-5 w-full`}
                 placeholder="Nama"
                 variant="outlined"
-                onChange={handleProductChange(index, "nama")}
+                onChange={handleProductChange(index, "title")}
               />
             </Grid>
             <Grid item sm={6}>
@@ -407,7 +429,7 @@ const EditListGames = () => {
                 size="small"
                 label="Status Produk"
                 width="100%"
-                name="status_produk"
+                name="isActive"
                 index={index}
                 menuItemFontSize="text-14"
               />
@@ -439,13 +461,13 @@ const EditListGames = () => {
                 size="small"
                 label="Asal Produk"
                 width="100%"
-                name="asal_produk"
+                name="from"
                 index={index}
                 menuItemFontSize="text-14"
               />
             </Grid>
 
-            {productList[index]?.asal_produk?.toLowerCase() === "unipin" ? (
+            {productList[index]?.from?.toLowerCase() === "unipin" ? (
               <Grid item sm={6}>
                 <h1
                   className="mb-5 font-semimedium text-14"
@@ -484,12 +506,12 @@ const EditListGames = () => {
                 inputProps={{
                   className: classes.input,
                 }}
-                value={productList[index].harga_member}
-                name="harga_member"
+                value={productList[index].price}
+                name="price"
                 className={`${classes.outlined} border-radius-5 w-full`}
                 placeholder="Harga Member"
                 variant="outlined"
-                onChange={handleProductChange(index, "harga_member")}
+                onChange={handleProductChange(index, "price")}
               />
             </Grid>
             <Grid item sm={6}>
@@ -505,12 +527,12 @@ const EditListGames = () => {
                 inputProps={{
                   className: classes.input,
                 }}
-                value={productList[index].harga_non_member}
-                name="harga_non_member"
+                value={productList[index].price_not_member}
+                name="price_not_member"
                 className={`${classes.outlined} border-radius-5 w-full`}
                 placeholder="Harga Non Member"
                 variant="outlined"
-                onChange={handleProductChange(index, "harga_non_member")}
+                onChange={handleProductChange(index, "price_not_member")}
               />
             </Grid>
           </Grid>
@@ -531,8 +553,7 @@ const EditListGames = () => {
     setProductList((prev) => [
       ...prev,
       {
-        asal_produk: "",
-        tipe: "",
+        title: "",
       },
     ]);
   };
@@ -543,12 +564,12 @@ const EditListGames = () => {
     setProductList(updatedField);
   };
 
-  const handleChangePhoto1 = (file, path) => {
-    setState({
-      ...state,
-      foto: file,
-      preview: path,
-    });
+  const handleChangePhoto = (foto, path, id) => {
+    setState((prev) => ({
+      ...prev,
+      foto,
+      path,
+    }));
   };
 
   return (
@@ -582,14 +603,21 @@ const EditListGames = () => {
             >
               Unggah Foto
             </h1>
-            <UploadImage
-              uploadFoto={handleChangePhoto1}
-              label="Banner"
-              preview={state.preview}
+            <UploadImageWithButton
+              uploadFoto={handleChangePhoto}
+              preview={state.foto}
               formatIcon={false}
+              state={{ index: 5, id: 5 }}
+              autoCall={false}
+              handleDelete={() => {
+                setState((prev) => ({
+                  ...prev,
+                  foto: "",
+                }));
+              }}
             />
           </Grid>
-          <Grid container className="mt-2" spacing={2}>
+          <Grid container className="mt-4" spacing={2}>
             <Grid item xs={12} sm={6}>
               <h1
                 className="mb-5 font-semimedium text-14"
@@ -618,11 +646,15 @@ const EditListGames = () => {
               >
                 Kategori
               </h1>
-              <ListGamesFilter
-                value={category}
+              <SelectWithTextAndValue
+                dataSelect={state.categoryList}
+                state={state}
+                required={false}
+                setState={setState}
+                size="small"
                 label="Kategori"
-                name="category"
-                handleChange={handleCategory}
+                width="100%"
+                name="category_code"
               />
             </Grid>
             <Grid item xs={12} sm={6}>

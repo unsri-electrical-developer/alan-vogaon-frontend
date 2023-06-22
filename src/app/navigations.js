@@ -77,6 +77,13 @@ export const navigations = [
     exact: true,
   },
   {
+    name: "Kode Promo",
+    path: "/kode_promo",
+    icon: 'discount',
+    auth: authRoles.all,
+    exact: true,
+  },
+  {
     name: "Settings",
     icon: ic_setting(),
     auth: authRoles.all,

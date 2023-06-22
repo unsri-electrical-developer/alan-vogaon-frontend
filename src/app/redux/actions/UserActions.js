@@ -77,3 +77,9 @@ export const getDetailUser = (id) => {
   setAuthToken(token);
   return API.get('/users/' + id);
 };
+
+export const changePin = async (params) => {
+  const token = localStorage.getItem('jwt_token');
+  setAuthToken(token);
+  return await API.post('users/pin/change', params);
+};

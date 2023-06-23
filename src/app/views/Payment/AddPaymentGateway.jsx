@@ -1,14 +1,12 @@
-import React, { useState } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import { Button, TextField, Grid, Card } from '@material-ui/core';
-import Swal from 'sweetalert2';
-import { useHistory } from 'react-router-dom';
-import { addPaymentGateway } from '../../redux/actions/Payment/PaymentGatewayActions';
+import React, { useState } from "react";
+import { Button, TextField, Grid, Card } from "@material-ui/core";
+import Swal from "sweetalert2";
+import { useHistory } from "react-router-dom";
+import { addPaymentGateway } from "../../redux/actions/Payment/PaymentGatewayActions";
 
 const AddPaymentGateway = () => {
   const [state, setState] = useState({
-    pg_name: '',
-    scaleY: '0.85',
+    pg_name: "",
   });
 
   const handleChange = (e) => {
@@ -26,39 +24,18 @@ const AddPaymentGateway = () => {
       addPaymentGateway({
         pg_name: state.pg_name,
       }).then((res) => {
-        history.push('/payment_gateway');
+        history.push("/payment_gateway");
         Swal.fire(
-          'Success!',
-          'Data Payment Gateway berhasil ditambah',
-          'success'
+          "Success!",
+          "Data Payment Gateway berhasil ditambah",
+          "success"
         );
       });
     } catch (e) {
-      Swal.fire('Oopss!', 'Data Payment Gateway gagal ditambah', 'error');
+      Swal.fire("Oopss!", "Data Payment Gateway gagal ditambah", "error");
     }
   };
 
-  const useStyles = makeStyles((theme) => ({
-    root: {
-      display: 'flex',
-      alignItems: 'center',
-      width: '100%',
-      flexWrap: 'wrap',
-      '& > *': {
-        margin: theme.spacing(0.5),
-      },
-    },
-    '& .MuiOutlinedInput-root': {
-      '& fieldset': {
-        border: '1px solid #e6e9ed',
-      },
-    },
-    input: {
-      transform: 'scaleY(0.88)',
-      marginBlock: 'auto',
-    },
-  }));
-  const classes = useStyles();
   return (
     <div className="m-sm-30">
       <Grid
@@ -106,15 +83,15 @@ const AddPaymentGateway = () => {
                   <TextField
                     required={true}
                     size="small"
-                    style={{
-                      transform: 'scaleY(1.25)',
+                    InputProps={{
+                      style: {
+                        borderRadius: 5,
+                        minHeight: 46,
+                      },
                     }}
-                    inputProps={{
-                      className: classes.input,
-                    }}
+                    className="w-full"
                     value={state.jenis_bonus}
                     name="pg_name"
-                    className={`${classes.outlined} border-radius-4 w-full`}
                     placeholder="Payment Gateway"
                     variant="outlined"
                     onChange={handleChange}

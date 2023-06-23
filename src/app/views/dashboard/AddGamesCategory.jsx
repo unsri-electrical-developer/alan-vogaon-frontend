@@ -1,20 +1,19 @@
-import { Card, Grid, Icon, TextField, Button } from '@material-ui/core';
-import React, { useLayoutEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import '../../../styles/css/DetailUser.css';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { Card, Grid, Icon, TextField, Button } from "@material-ui/core";
+import React, { useLayoutEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import "../../../styles/css/DetailUser.css";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 // import Button from '@mui/material/Button';
-import { Link } from 'react-router-dom';
-import { makeStyles } from '@material-ui/core/styles';
-import {addCategory} from '../../redux/actions/GamesActions';
-import { useHistory } from 'react-router-dom';
-import Swal from 'sweetalert2';
-import GeneralButton from '../../components/buttons/GeneralButton.jsx';
+import { Link } from "react-router-dom";
+import { addCategory } from "../../redux/actions/GamesActions";
+import { useHistory } from "react-router-dom";
+import Swal from "sweetalert2";
+import GeneralButton from "../../components/buttons/GeneralButton.jsx";
 
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#1253FA',
+      main: "#1253FA",
     },
   },
 });
@@ -23,7 +22,7 @@ const AddGamesCategory = () => {
   const dispatch = useDispatch();
 
   const [state, setState] = useState({
-    category_name: '',
+    category_name: "",
   });
 
   const handleChange = (e) => {
@@ -35,7 +34,7 @@ const AddGamesCategory = () => {
   };
 
   useLayoutEffect(() => {
-    console.log('uselayouteffect');
+    console.log("uselayouteffect");
   }, []);
 
   const history = useHistory();
@@ -49,21 +48,17 @@ const AddGamesCategory = () => {
       );
       let timerInterval;
       Swal.fire({
-        title: 'Sedang diproses...',
-        html: 'tunggu dalam waktu <b></b> detik.',
+        title: "Sedang diproses...",
+        html: "tunggu dalam waktu <b></b> detik.",
         timer: 4000,
         timerProgressBar: true,
         didOpen: () => {
           Swal.showLoading();
-          const b = Swal.getHtmlContainer().querySelector('b');
+          const b = Swal.getHtmlContainer().querySelector("b");
           setTimeout(() => {
             clearInterval(timerInterval);
-            history.push('/games/category');
-            Swal.fire(
-              'Success!',
-              'Kategori berhasil disimpan',
-              'success'
-            );
+            history.push("/games/category");
+            Swal.fire("Success!", "Kategori berhasil disimpan", "success");
           }, 4000);
           timerInterval = setInterval(() => {
             b.textContent = Swal.getTimerLeft();
@@ -71,31 +66,9 @@ const AddGamesCategory = () => {
         },
       });
     } catch (e) {
-      Swal.fire('Oopss!', 'Data Kategory gagal disimpan', 'error');
+      Swal.fire("Oopss!", "Data Kategory gagal disimpan", "error");
     }
   };
-
-  const useStyles = makeStyles((theme) => ({
-    root: {
-      display: 'flex',
-      alignItems: 'center',
-      width: '100%',
-      flexWrap: 'wrap',
-      '& > *': {
-        margin: theme.spacing(0.5),
-      },
-    },
-    '& .MuiOutlinedInput-root': {
-      '& fieldset': {
-        border: '1px solid #e6e9ed',
-      },
-    },
-    input: {
-      transform: 'scaleY(0.88)',
-      marginBlock: 'auto',
-    },
-  }));
-  const classes = useStyles();
 
   return (
     <div className="analytics m-sm-30 mt-7 text-black">
@@ -105,13 +78,11 @@ const AddGamesCategory = () => {
         xs={12}
         sm
         className="d-flex mr-8"
-        style={{ justifyContent: 'flex-end' }}
+        style={{ justifyContent: "flex-end" }}
       >
-     
         <ThemeProvider theme={theme}>
-          <GeneralButton variant = "contained" name="Save" data={handleSubmit}/>
+          <GeneralButton variant="contained" name="Save" data={handleSubmit} />
         </ThemeProvider>
-
       </Grid>
       <Card className="mt-5 py-10 px-10">
         <div className="mx-8 px-10 mt-5 mb-8">
@@ -132,22 +103,22 @@ const AddGamesCategory = () => {
               <Grid item xs={12} sm>
                 <h1
                   className="mb-5 font-semimedium text-14"
-                  style={{ color: '#0a0a0a' }}
+                  style={{ color: "#0a0a0a" }}
                 >
                   Kategori
                 </h1>
                 <TextField
                   required={true}
                   size="small"
-                  inputProps={{
-                    className: classes.input,
+                  InputProps={{
+                    style: {
+                      borderRadius: 5,
+                      minHeight: 46,
+                    },
                   }}
-                  style={{
-                    transform: 'scaleY(1.25)',
-                  }}
+                  className="w-full"
                   value={state.category_name}
                   name="category_name"
-                  className={`${classes.outlined} border-radius-5 w-full`}
                   placeholder="Kategori"
                   variant="outlined"
                   onChange={handleChange}

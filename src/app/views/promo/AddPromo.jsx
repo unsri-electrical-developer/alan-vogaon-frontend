@@ -5,7 +5,7 @@ import {
   InputAdornment,
   Switch,
 } from "@material-ui/core";
-import React, { useLayoutEffect, useState } from "react";
+import React, { useLayoutEffect, useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "../../../styles/css/DetailUser.css";
 
@@ -16,7 +16,6 @@ import GeneralButton from "../../components/buttons/GeneralButton.jsx";
 import { DatePickerComponent } from "../../components";
 import { getPaymentMethod } from "../../redux/actions/Payment/PaymentMethodActions";
 import PaymentMethodCardStatic from "../Payment/PaymentMethodCardStatic";
-import { useEffect } from "react";
 import { addPromo } from "../../redux/actions/PromoActions";
 
 const AddPromo = () => {

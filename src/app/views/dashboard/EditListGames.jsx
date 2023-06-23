@@ -4,7 +4,6 @@ import "../../../styles/css/DetailUser.css";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 import { useParams, useHistory } from "react-router-dom";
-import { makeStyles } from "@material-ui/core/styles";
 import { UploadImageWithButton } from "../../components";
 import {
   editGamesList,
@@ -28,26 +27,6 @@ const theme = createTheme({
 const EditListGames = () => {
   const history = useHistory();
   const { id } = useParams();
-  const useStyles = makeStyles((theme) => ({
-    root: {
-      display: "flex",
-      alignItems: "center",
-      width: "100%",
-      flexWrap: "wrap",
-      "& > *": {
-        margin: theme.spacing(0.5),
-      },
-    },
-    "& .MuiOutlinedInput-root": {
-      "& fieldset": {
-        border: "1px solid #e6e9ed",
-      },
-    },
-    input: {
-      marginBlock: "auto",
-    },
-  }));
-  const classes = useStyles();
   const goToTop = () => {
     global.scrollTo({
       top: 0,
@@ -198,7 +177,7 @@ const EditListGames = () => {
               marginBottom: "30px",
             }}
           >
-            <Grid item sm={6}>
+            <Grid item sm={5}>
               <h1
                 className="mb-5 font-semimedium text-14"
                 style={{ color: "#0a0a0a" }}
@@ -208,12 +187,15 @@ const EditListGames = () => {
               <TextField
                 required={true}
                 size="small"
-                inputProps={{
-                  className: classes.input,
+                InputProps={{
+                  style: {
+                    borderRadius: 5,
+                    minHeight: 46,
+                  },
                 }}
+                className="w-full"
                 value={fieldList[index].name}
                 name="name"
-                className={`${classes.outlined} border-radius-5 w-full`}
                 placeholder="Nama"
                 variant="outlined"
                 onChange={handleFieldChange(index, "name")}
@@ -249,7 +231,7 @@ const EditListGames = () => {
             </Grid>
 
             {onlyOne() ? (
-              <Grid item className="mt-10" sm={1}>
+              <Grid item className="mt-10" sm={2}>
                 <div
                   className="border-radius-circle bg-primary text-white w-35 h-35"
                   style={{ padding: "8.7px" }}
@@ -261,7 +243,7 @@ const EditListGames = () => {
                 </div>
               </Grid>
             ) : isLastInput(index) ? (
-              <Grid item className="mt-10" sm={1}>
+              <Grid item className="mt-10" sm={2}>
                 <div
                   className="border-radius-circle bg-error w-35 h-35"
                   style={{ padding: "8.7px" }}
@@ -273,16 +255,35 @@ const EditListGames = () => {
                 </div>
               </Grid>
             ) : (
-              <Grid item className="mt-10" sm={1}>
-                <div
-                  className="border-radius-circle bg-primary w-35 h-35 text-white"
-                  style={{ padding: "8.7px" }}
-                  onClick={handleAddField}
-                >
-                  <Icon className="mr-1" fontSize="medium">
-                    add-icon
-                  </Icon>
-                </div>
+              <Grid
+                item
+                className="mt-10"
+                sm={2}
+                container
+                justifyContent="start"
+              >
+                <Grid item>
+                  <div
+                    className="border-radius-circle bg-primary w-35 h-35 text-white"
+                    style={{ padding: "8.7px", marginRight: "9px" }}
+                    onClick={handleAddField}
+                  >
+                    <Icon className="mr-1" fontSize="medium">
+                      add-icon
+                    </Icon>
+                  </div>
+                </Grid>
+                <Grid item>
+                  <div
+                    className="border-radius-circle bg-error w-35 h-35"
+                    style={{ padding: "8.7px" }}
+                    onClick={() => handleRemoveField(index)}
+                  >
+                    <Icon className="mr-1" fontSize="medium">
+                      delete-outline-icon
+                    </Icon>
+                  </div>
+                </Grid>
               </Grid>
             )}
           </Grid>
@@ -419,12 +420,15 @@ const EditListGames = () => {
               <TextField
                 required={true}
                 size="small"
-                inputProps={{
-                  className: classes.input,
+                InputProps={{
+                  style: {
+                    borderRadius: 5,
+                    minHeight: 46,
+                  },
                 }}
+                className="w-full"
                 value={productList[index].title}
                 name="title"
-                className={`${classes.outlined} border-radius-5 w-full`}
                 placeholder="Nama"
                 variant="outlined"
                 onChange={handleProductChange(index, "title")}
@@ -502,12 +506,15 @@ const EditListGames = () => {
                 <TextField
                   required={true}
                   size="small"
-                  inputProps={{
-                    className: classes.input,
+                  InputProps={{
+                    style: {
+                      borderRadius: 5,
+                      minHeight: 46,
+                    },
                   }}
+                  className="w-full"
                   value={productList[index].denomination_id}
                   name="denomination_id"
-                  className={`${classes.outlined} border-radius-5 w-full`}
                   placeholder="Denomination ID"
                   variant="outlined"
                   onChange={handleProductChange(index, "denomination_id")}
@@ -527,12 +534,15 @@ const EditListGames = () => {
               <TextField
                 required={true}
                 size="small"
-                inputProps={{
-                  className: classes.input,
+                InputProps={{
+                  style: {
+                    borderRadius: 5,
+                    minHeight: 46,
+                  },
                 }}
+                className="w-full"
                 value={productList[index].price}
                 name="price"
-                className={`${classes.outlined} border-radius-5 w-full`}
                 placeholder="Harga Member"
                 variant="outlined"
                 onChange={handleProductChange(index, "price")}
@@ -548,12 +558,15 @@ const EditListGames = () => {
               <TextField
                 required={true}
                 size="small"
-                inputProps={{
-                  className: classes.input,
+                InputProps={{
+                  style: {
+                    borderRadius: 5,
+                    minHeight: 46,
+                  },
                 }}
+                className="w-full"
                 value={productList[index].price_not_member}
                 name="price_not_member"
-                className={`${classes.outlined} border-radius-5 w-full`}
                 placeholder="Harga Non Member"
                 variant="outlined"
                 onChange={handleProductChange(index, "price_not_member")}
@@ -652,12 +665,15 @@ const EditListGames = () => {
               <TextField
                 required={true}
                 size="small"
-                inputProps={{
-                  className: classes.input,
+                InputProps={{
+                  style: {
+                    borderRadius: 5,
+                    minHeight: 46,
+                  },
                 }}
+                className="w-full"
                 value={state.title}
                 name="title"
-                className={`${classes.outlined} border-radius-5 w-full`}
                 placeholder="Games"
                 variant="outlined"
                 onChange={handleChange}
@@ -691,12 +707,15 @@ const EditListGames = () => {
               <TextField
                 required={true}
                 size="small"
-                inputProps={{
-                  className: classes.input,
+                InputProps={{
+                  style: {
+                    borderRadius: 5,
+                    minHeight: 46,
+                  },
                 }}
+                className="w-full"
                 value={state.kode_game}
                 name="kode_game"
-                className={`${classes.outlined} border-radius-5 w-full`}
                 placeholder="Kode Game"
                 variant="outlined"
                 onChange={handleChange}

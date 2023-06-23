@@ -14,6 +14,8 @@ const DetailTopUp = ({ getDetailTopUp, detailTopup }) => {
     getDetailTopUp(id);
   };
 
+  console.log(detailTopup)
+
   useEffect(() => {
     getData();
   }, [id]);

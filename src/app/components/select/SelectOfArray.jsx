@@ -7,7 +7,6 @@ import {
   Icon,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-
 import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
 
 export default function SelectOfArray({
@@ -22,7 +21,7 @@ export default function SelectOfArray({
   index,
   scaleY = "1",
   menuItemFontSize = "text-14",
-  onChange
+  onChange,
 }) {
   const handleChange = (id, e) => {
     const newArray = state.map((arr, index) => {
@@ -39,28 +38,54 @@ export default function SelectOfArray({
   };
 
   const useStyles = makeStyles((theme) => ({
-    input: {
-      transform: "scaleY(0.88)",
+    root: {
+      width: "100%",
+      "& .MuiOutlinedInput-root": {
+        backgroundColor: "#fbfbfb ",
+        height: "42px",
+      },
+      "& .MuiOutlinedInput-notchedOutline": {
+        borderColor: "#e6e9ed",
+        borderWidth: "1px",
+      },
+      "& .MuiSelect-select": {
+        fontWeight: "400",
+        fontSize: "14px",
+        color: "#0A0A0A",
+      },
+      "& .MuiInputLabel-outlined": {
+        color: "#9196ab",
+        fontSize: "14px",
+        top: "10px",
+        left: "14px",
+        transform: "translate(0, 1px) scale(1)",
+        '&[data-shrink="true"]': {
+          top: "-6px",
+          fontSize: "12px",
+          fontWeight: "400",
+          color: "#6B7280",
+          transform: "translate(0, 0) scale(1)",
+        },
+      },
     },
   }));
 
-  const handleClasses = () => {
-    if (scaleY === "1.25") {
-      return classes.input;
-    } else {
-      return "";
-    }
-  };
-
   const classes = useStyles();
+
   return (
     <div>
       <FormControl
         size={size}
         variant="outlined"
-        className="bg-white rounded-lg"
+        className={classes.root}
         style={{ width }}
         required={required}
+        InputProps={{
+          style: {
+            borderRadius: 5,
+            minHeight: 46,
+          },
+        }}
       >
         <InputLabel htmlFor="outlined-age-native-simple">
           <span style={{ color: "#555c64b7" }} className="my-auto bg-white">
@@ -72,11 +97,13 @@ export default function SelectOfArray({
             <KeyboardArrowDownIcon size="medium" style={{ fontWeight: 700 }} />
           )}
           onChange={onChange ? onChange : (e) => handleChange(index, e)}
-
           value={state[index][name]}
           inputProps={{
             name,
-            className: handleClasses(),
+            style: {
+              borderRadius: 5,
+              minHeight: 46,
+            },
           }}
           size={size}
           className="bg-white"

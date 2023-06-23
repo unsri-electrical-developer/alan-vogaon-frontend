@@ -254,11 +254,11 @@ const renderFields = (object, setState) => {
                         dataSelect={[
                           {
                             text: "Aktif",
-                            value: "active",
+                            value: "1",
                           },
                           {
                             text: "Tidak Aktif",
-                            value: "inactive",
+                            value: "0",
                           },
                         ]}
                         state={group}
@@ -286,6 +286,15 @@ const renderFields = (object, setState) => {
                     ) : isLastGroup && itemIndex === group.length - 1 ? (
                       
                       <Grid item className="mt-8" sm={2}>
+                        <div style={{display: "flex", gap: "15px"}}>
+                        
+                         <div
+                          className="border-radius-circle bg-error w-35 h-35"
+                          style={{ display: "flex", alignItems: "center", justifyContent: "center" }}
+                          onClick={() => handleRemoveField( setState, key, itemIndex)}
+                        >
+                          <Icon fontSize="medium">delete-outline-icon</Icon>
+                        </div>
                         <div
                           className="border-radius-circle bg-primary w-35 h-35 text-white"
                           style={{ display: "flex", alignItems: "center", justifyContent: "center" }}
@@ -293,9 +302,13 @@ const renderFields = (object, setState) => {
                         >
                           <Icon fontSize="medium">add-icon</Icon>
                         </div>
+                        </div>
+                        
                       </Grid>
+                      
+                     
                     ) : (
-                      <Grid item className="mt-10" sm={2}>
+                      <Grid item className="mt-8" sm={2}>
                         <div
                           className="border-radius-circle bg-error w-35 h-35"
                           style={{ display: "flex", alignItems: "center", justifyContent: "center" }}
@@ -305,6 +318,10 @@ const renderFields = (object, setState) => {
                         </div>
                       </Grid>
                     )}
+
+                   
+
+
                   </Grid>
                 </div>
               )})}

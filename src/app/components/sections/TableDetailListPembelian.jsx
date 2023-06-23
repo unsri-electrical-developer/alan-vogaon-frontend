@@ -17,13 +17,8 @@ import Aksieye from "./../../assets/components/icons/Aksieye.svg";
 const RenderTable = ({
   data,
   state,
-  search,
-  getData,
   customColumns,
   TotalColspan = 18,
-  aksiSpan = 3,
-  detailLink,
-  id,
 }) => {
   const handleNumbering = () => {
     if (state.rowsPerPage === 5) {
@@ -34,14 +29,8 @@ const RenderTable = ({
       return state.page * 25;
     }
   };
-
   return data?.length > 0 ? (
-    data
-      .slice(
-        state.page * state.rowsPerPage,
-        state.page * state.rowsPerPage + state.rowsPerPage
-      )
-      .map((item, index) => (
+    data.map((item, index) => (
         <TableRow
           hover
           key={index}
@@ -56,15 +45,16 @@ const RenderTable = ({
             style={{ color: "#0A0A0A" }}
             colSpan={1}
           >
-            {index + 1 + handleNumbering()}
+          {index + 1 + handleNumbering()}
           </TableCell>
           {customColumns?.map((column, index) => (
             <TableCell
-              key={index}
               className="text-14 pl-2"
               style={{ color: "#0A0A0A" }}
               colSpan={column.colSpan}
               align={column.align}
+              key={index}
+              
             >
               {column.type === "price" && item[column.key]
                 ? `Rp ${item[column.key]
@@ -75,11 +65,6 @@ const RenderTable = ({
                 : item[column.key]}
             </TableCell>
           ))}
-          <TableCell align="center" colSpan={aksiSpan} className=" pl-2">
-            <Link to={`${detailLink}/${item[id]}`}>
-              <img src={Aksieye} alt="eye" />
-            </Link>
-          </TableCell>
         </TableRow>
       ))
   ) : (
@@ -99,16 +84,10 @@ const RenderTable = ({
   );
 };
 
-const TableCustom = ({
-  search,
+const TableDetailListPembelian = ({
   data,
-  getData,
   tableHeadItems,
   customColumns,
-  TotalColspan,
-  aksiSpan,
-  detailLink,
-  id,
 }) => {
   const [state, setState] = useState({
     page: 0,
@@ -122,21 +101,19 @@ const TableCustom = ({
     });
   };
 
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
-
   const setRowsPerPage = (event) => {
     setState({
       ...state,
       rowsPerPage: event.target.value,
     });
   };
+
   const tableHead = tableHeadItems?.map((item, index) => (
-    <TableCell key={index} align={item.align} colSpan={item.colSpan}>
+    <TableCell key={index} align={item.align} colSpan={item.colSpan} style={{backgroundColor: "#ebf0f4"}}>
       <div className="table-head-font"> {item.name}</div>
     </TableCell>
   ));
+
   return (
     <div className="w-full overflow-auto bg-white izincuti-tabs-slide">
       <Table
@@ -153,36 +130,12 @@ const TableCustom = ({
           <RenderTable
             data={data}
             state={state}
-            getData={getData}
-            search={search}
             customColumns={customColumns}
-            aksiSpan={aksiSpan}
-            detailLink={detailLink}
-            id={id}
           />
         </TableBody>
       </Table>
-      <TablePagination
-        className="px-16"
-        rowsPerPageOptions={[5, 10, 25]}
-        component="div"
-        count={data?.length ? data?.length : 0}
-        rowsPerPage={state.rowsPerPage}
-        labelRowsPerPage={"From"}
-        page={state.page}
-        backIconButtonProps={{
-          "aria-label": "Previous page",
-        }}
-        nextIconButtonProps={{
-          "aria-label": "Next page",
-        }}
-        backIconButtonText="Previous page"
-        nextIconButtonText="Next page"
-        onChangePage={handleChangePage}
-        onChangeRowsPerPage={setRowsPerPage}
-      />
     </div>
   );
 };
 
-export default TableCustom;
+export default TableDetailListPembelian;

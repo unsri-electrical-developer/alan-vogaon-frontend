@@ -234,24 +234,28 @@ const EditListGames = () => {
               <Grid item className="mt-10" sm={2}>
                 <div
                   className="border-radius-circle bg-primary text-white w-35 h-35"
-                  style={{ padding: "8.7px" }}
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
                   onClick={handleAddField}
                 >
-                  <Icon className="mr-1" fontSize="medium">
-                    add-icon
-                  </Icon>
+                  <Icon fontSize="medium">add-icon</Icon>
                 </div>
               </Grid>
             ) : isLastInput(index) ? (
               <Grid item className="mt-10" sm={2}>
                 <div
                   className="border-radius-circle bg-error w-35 h-35"
-                  style={{ padding: "8.7px" }}
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
                   onClick={() => handleRemoveField(index)}
                 >
-                  <Icon className="mr-1" fontSize="medium">
-                    delete-outline-icon
-                  </Icon>
+                  <Icon fontSize="medium">delete-outline-icon</Icon>
                 </div>
               </Grid>
             ) : (
@@ -262,26 +266,30 @@ const EditListGames = () => {
                 container
                 justifyContent="start"
               >
-                <Grid item>
+                <Grid item className="mr-2">
                   <div
                     className="border-radius-circle bg-primary w-35 h-35 text-white"
-                    style={{ padding: "8.7px", marginRight: "9px" }}
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
                     onClick={handleAddField}
                   >
-                    <Icon className="mr-1" fontSize="medium">
-                      add-icon
-                    </Icon>
+                    <Icon fontSize="medium">add-icon</Icon>
                   </div>
                 </Grid>
                 <Grid item>
                   <div
                     className="border-radius-circle bg-error w-35 h-35"
-                    style={{ padding: "8.7px" }}
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
                     onClick={() => handleRemoveField(index)}
                   >
-                    <Icon className="mr-1" fontSize="medium">
-                      delete-outline-icon
-                    </Icon>
+                    <Icon fontSize="medium">delete-outline-icon</Icon>
                   </div>
                 </Grid>
               </Grid>

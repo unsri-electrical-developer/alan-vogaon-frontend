@@ -5,7 +5,6 @@ import {
   getDetailCategory,
   editCategory,
 } from "../../redux/actions/GamesActions";
-import { makeStyles } from "@material-ui/core/styles";
 import Swal from "sweetalert2";
 import { useParams, useHistory } from "react-router-dom";
 import { connect } from "react-redux";
@@ -51,8 +50,8 @@ const EditGamesCategory = () => {
   const history = useHistory();
 
   const handleSubmit = () => {
-      try {
-          console.log(state.category_name);
+    try {
+      console.log(state.category_name);
       dispatch(
         editCategory({
           category_code: id,
@@ -61,96 +60,77 @@ const EditGamesCategory = () => {
       );
       setTimeout(() => {
         history.push("/games/category");
-        Swal.fire("Success!", "Data Games Category berhasil disimpan", "success");
+        Swal.fire(
+          "Success!",
+          "Data Games Category berhasil disimpan",
+          "success"
+        );
       }, 2000);
     } catch (e) {
       Swal.fire("Oopss!", "Data Games Category gagal disimpan", "error");
     }
   };
 
-  const useStyles = makeStyles((theme) => ({
-    root: {
-      display: "flex",
-      alignItems: "center",
-      width: "100%",
-      flexWrap: "wrap",
-      "& > *": {
-        margin: theme.spacing(0.5),
-      },
-    },
-    "& .MuiOutlinedInput-root": {
-      "& fieldset": {
-        border: "1px solid #e6e9ed",
-      },
-    },
-    input: {
-      transform: "scaleY(0.88)",
-      marginBlock: "auto",
-    },
-  }));
-    const classes = useStyles();
-    
   return (
     <div className="analytics m-sm-30 mt-7 text-black">
-    <h1 className="fw-600 m-0">Edit Category</h1>
-    <Grid
+      <h1 className="fw-600 m-0">Edit Category</h1>
+      <Grid
         item
         xs={12}
         sm
         className="d-flex mr-8"
         style={{ justifyContent: "flex-end" }}
-    >
+      >
         <ThemeProvider theme={theme}>
-        <GeneralButton variant="contained" name="Save" data={handleSubmit} />
+          <GeneralButton variant="contained" name="Save" data={handleSubmit} />
         </ThemeProvider>
-    </Grid>
-    <Card className="mt-5 py-10 px-10">
+      </Grid>
+      <Card className="mt-5 py-10 px-10">
         <div className="mx-8 px-10 mt-5 mb-8">
-        <Grid
+          <Grid
             container
             spacing={3}
             alignItems="center"
             justifyContent="space-between"
             className="mb-8"
-        >
+          >
             <Grid
-            container
-            className="mt-2"
-            spacing={5}
-            justifyContent="center"
-            alignItems="center"
+              container
+              className="mt-2"
+              spacing={5}
+              justifyContent="center"
+              alignItems="center"
             >
-            <Grid item xs={12} sm>
+              <Grid item xs={12} sm>
                 <h1
-                className="mb-5 font-semimedium text-14"
-                style={{ color: "#0a0a0a" }}
+                  className="mb-5 font-semimedium text-14"
+                  style={{ color: "#0a0a0a" }}
                 >
-                Kategori
+                  Kategori
                 </h1>
                 <TextField
-                required={true}
-                size="small"
-                inputProps={{
-                    className: classes.input,
-                }}
-                style={{
-                    transform: "scaleY(1.25)",
-                }}
-                value={state.category_name}
-                name="category_name"
-                className={`${classes.outlined} border-radius-5 w-full`}
-                placeholder="Kategori"
-                variant="outlined"
-                onChange={handleChange}
+                  required={true}
+                  size="small"
+                  InputProps={{
+                    style: {
+                      borderRadius: 5,
+                      minHeight: 46,
+                    },
+                  }}
+                  className="w-full"
+                  value={state.category_name}
+                  name="category_name"
+                  placeholder="Kategori"
+                  variant="outlined"
+                  onChange={handleChange}
                 />
+              </Grid>
             </Grid>
-            </Grid>
-        </Grid>
+          </Grid>
         </div>
-    </Card>
+      </Card>
     </div>
   );
 };
 
 export default EditGamesCategory;
-

@@ -55,7 +55,7 @@ const DetailPembelian = ({ getDetailPembelian, detailPembelian }) => {
 
   const tableBodyItems = [
     { key: "games_title", align: "left", colSpan: 4 },
-    { key: "price", align: "center", colSpan: 3 },
+    { key: "price", align: "center", colSpan: 3, type: "price"},
     { key: "userid", align: "center", colSpan: 3 },
     { key: "from", align: "center", colSpan: 3 },
     { key: "status", align: "center", colSpan: 3 },
@@ -120,7 +120,7 @@ const DetailPembelian = ({ getDetailPembelian, detailPembelian }) => {
                     style={
                       detailPembelian?.status == "processing" ? { color: "#1253FA" }
                       : detailPembelian?.status == "waiting" || detailPembelian?.status == "pending"  ? { color: "#DF8838" }
-                      : detailPembelian?.status == "success" ? { color: "#D55454" }
+                      : detailPembelian?.status == "success" ? { color: "#51AF77" }
                       : { color: "#0A0A0A" }
                     }
                   >

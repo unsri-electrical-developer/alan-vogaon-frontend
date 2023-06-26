@@ -62,11 +62,12 @@ const RenderTable = ({
             <TableCell
               key={index}
               className="text-14 pl-2"
-              style={{ color: "#0A0A0A" }}
+              // style={{ color: "#0A0A0A" }}
+              style={column.type === "topup" && item[column.key] > 0 ? {color: "#51AF77"} : column.type === "topup" && item[column.key] < 0 ? {color:"#D55454"} :   {color: "#0A0A0A" }}
               colSpan={column.colSpan}
               align={column.align}
             >
-              {column.type === "price" && item[column.key]
+              {column.type === "price" || column.type === "topup"  && item[column.key]
                 ? `Rp ${item[column.key]
                     .toString()
                     .replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.")}`

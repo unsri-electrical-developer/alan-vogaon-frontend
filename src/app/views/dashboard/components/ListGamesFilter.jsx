@@ -1,15 +1,13 @@
 import {
-Select,
-FormControl,
-MenuItem,
-InputLabel,
-Icon,
+  Select,
+  FormControl,
+  MenuItem,
+  InputLabel,
+  Icon,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
-import {
-  getAllCategories,
-} from "../../../redux/actions/GamesActions";
+import { getAllCategories } from "../../../redux/actions/GamesActions";
 import React, { useState, useLayoutEffect, useEffect } from "react";
 
 export default function ListGamesFilter({
@@ -22,12 +20,11 @@ export default function ListGamesFilter({
   scaleY = "1",
   menuItemFontSize = "text-14",
   search = "",
-  value = ""
+  value = "",
 }) {
-
   // for filter
-   const [state, setState] = useState([]);
-  
+  const [state, setState] = useState([]);
+
   const getDataCategories = () => {
     getAllCategories().then((res) => {
       const data = res.data?.data;
@@ -72,14 +69,6 @@ export default function ListGamesFilter({
     },
   }));
 
-  const handleClasses = () => {
-    if (scaleY === "1.25") {
-      return classes.input;
-    } else {
-      return "";
-    }
-  };
-
   const classes = useStyles();
 
   const menuList = state?.map((state, index) => {
@@ -98,7 +87,7 @@ export default function ListGamesFilter({
         variant="outlined"
         className={classes.root}
         InputLabelProps={{ classes: { root: classes.inputLabel } }}
-        style = {{ width: width }}
+        style={{ width: width }}
       >
         <InputLabel shrink={false}>{value ? null : label}</InputLabel>
 
@@ -108,7 +97,6 @@ export default function ListGamesFilter({
           className=" w-full"
           IconComponent={KeyboardArrowDownIcon}
           variant="outlined"
-          
         >
           {search && (
             <MenuItem key="semua" value="">

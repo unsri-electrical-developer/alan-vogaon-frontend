@@ -1,5 +1,4 @@
 import React, { useEffect, useLayoutEffect, useState } from "react";
-import { makeStyles } from "@material-ui/core/styles";
 import { Button, TextField, Grid, Card } from "@material-ui/core";
 import Swal from "sweetalert2";
 import { useDispatch, useSelector } from "react-redux";
@@ -132,27 +131,6 @@ const GeneralInfo = () => {
     }
   };
 
-  const useStyles = makeStyles((theme) => ({
-    root: {
-      display: "flex",
-      alignItems: "center",
-      width: "100%",
-      flexWrap: "wrap",
-      "& > *": {
-        margin: theme.spacing(0.5),
-      },
-    },
-    "& .MuiOutlinedInput-root": {
-      "& fieldset": {
-        border: "1px solid #e6e9ed",
-      },
-    },
-    input: {
-      transform: "scaleY(0.88)",
-      marginBlock: "auto",
-    },
-  }));
-  const classes = useStyles();
   return (
     <div className="m-sm-30">
       <Grid
@@ -220,15 +198,15 @@ const GeneralInfo = () => {
                 <TextField
                   required={true}
                   size="small"
-                  style={{
-                    transform: "scaleY(1.25)",
+                  InputProps={{
+                    style: {
+                      borderRadius: 5,
+                      minHeight: 46,
+                    },
                   }}
-                  inputProps={{
-                    className: classes.input,
-                  }}
+                  className="w-full"
                   value={state.contact_whatsapp}
                   name="contact_whatsapp"
-                  className={`${classes.outlined} border-radius-4 w-full`}
                   placeholder="Whatsapp"
                   variant="outlined"
                   onChange={handleChange}
@@ -239,15 +217,15 @@ const GeneralInfo = () => {
                 <TextField
                   required={true}
                   size="small"
-                  style={{
-                    transform: "scaleY(1.25)",
+                  InputProps={{
+                    style: {
+                      borderRadius: 5,
+                      minHeight: 46,
+                    },
                   }}
-                  inputProps={{
-                    className: classes.input,
-                  }}
+                  className="w-full"
                   value={state.contact_telegram}
                   name="contact_telegram"
-                  className={`${classes.outlined} border-radius-4 w-full`}
                   placeholder="Telegram"
                   variant="outlined"
                   onChange={handleChange}
@@ -258,15 +236,15 @@ const GeneralInfo = () => {
                 <TextField
                   required={true}
                   size="small"
-                  style={{
-                    transform: "scaleY(1.25)",
+                  InputProps={{
+                    style: {
+                      borderRadius: 5,
+                      minHeight: 46,
+                    },
                   }}
-                  inputProps={{
-                    className: classes.input,
-                  }}
+                  className="w-full"
                   value={state.contact_email}
                   name="contact_email"
-                  className={`${classes.outlined} border-radius-4 w-full`}
                   placeholder="Email"
                   variant="outlined"
                   onChange={handleChange}
@@ -277,15 +255,15 @@ const GeneralInfo = () => {
                 <TextField
                   required={true}
                   size="small"
-                  style={{
-                    transform: "scaleY(1.25)",
+                  InputProps={{
+                    style: {
+                      borderRadius: 5,
+                      minHeight: 46,
+                    },
                   }}
-                  inputProps={{
-                    className: classes.input,
-                  }}
+                  className="w-full"
                   value={state.contact_message}
                   name="contact_message"
-                  className={`${classes.outlined} border-radius-4 w-full`}
                   placeholder="Telepon"
                   variant="outlined"
                   onChange={handleChange}
@@ -307,15 +285,15 @@ const GeneralInfo = () => {
                 <TextField
                   required={true}
                   size="small"
-                  style={{
-                    transform: "scaleY(1.25)",
+                  InputProps={{
+                    style: {
+                      borderRadius: 5,
+                      minHeight: 46,
+                    },
                   }}
-                  inputProps={{
-                    className: classes.input,
-                  }}
+                  className="w-full"
                   value={state.social_contact_instagram}
                   name="social_contact_instagram"
-                  className={`${classes.outlined} border-radius-4 w-full`}
                   placeholder="Instagram"
                   variant="outlined"
                   onChange={handleChange}
@@ -326,39 +304,40 @@ const GeneralInfo = () => {
                 <TextField
                   required={true}
                   size="small"
-                  style={{
-                    transform: "scaleY(1.25)",
+                  InputProps={{
+                    style: {
+                      borderRadius: 5,
+                      minHeight: 46,
+                    },
                   }}
-                  inputProps={{
-                    className: classes.input,
-                  }}
+                  className="w-full"
                   value={state.social_contact_facebook}
                   name="social_contact_facebook"
-                  className={`${classes.outlined} border-radius-4 w-full`}
                   placeholder="Facebook"
                   variant="outlined"
                   onChange={handleChange}
                 />
               </Grid>
-              <Grid item xs={12} sm={12}>
+              <Grid item xs={12} sm={6}>
                 <h3 className="mb-5 fw-500 text-15 text-black">TikTok</h3>
                 <TextField
                   required={true}
                   size="small"
-                  style={{
-                    transform: "scaleY(1.25)",
+                  InputProps={{
+                    style: {
+                      borderRadius: 5,
+                      minHeight: 46,
+                    },
                   }}
-                  inputProps={{
-                    className: classes.input,
-                  }}
+                  className="w-full"
                   value={state.social_contact_tiktok}
                   name="social_contact_tiktok"
-                  className={`${classes.outlined} border-radius-4 w-full`}
                   placeholder="TikTok"
                   variant="outlined"
                   onChange={handleChange}
                 />
               </Grid>
+              <Grid item xs={12} sm={6}></Grid>
             </Grid>
           </div>
         </Card>

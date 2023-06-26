@@ -1,37 +1,70 @@
-import { Card, Grid, Icon } from '@material-ui/core';
-import React, { useEffect, useLayoutEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { UploadImageWithButton } from '../../components';
+import { Card, Grid, Icon } from "@material-ui/core";
+import React, { useEffect, useLayoutEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { UploadImageWithButton } from "../../components";
 import {
   getSliders,
   addSlider,
   updateSlider,
   deleteSlider,
-} from '../../redux/actions/SlidersAction';
+} from "../../redux/actions/SlidersAction";
+import Swal from "sweetalert2";
 
 const Sliders = () => {
   const dispatch = useDispatch();
   const { dataSliders } = useSelector((state) => state.sliders);
-  console.log(dataSliders);
   const getData = () => {
     dispatch(getSliders());
+  };
+
+  const handleDelete = (id) => {
+    Swal.fire({
+      title: "Hapus",
+      text: "Apakah kamu yakin",
+      showCancelButton: true,
+      confirmButtonText: "Yakin",
+      cancelButtonText: "Batal",
+      icon: "warning",
+    }).then((res) => {
+      if (res.isConfirmed) {
+        deleteSlider(id)
+          .then((res) => {
+            if (res.data.code == 0) {
+              Swal.fire({
+                title: "Berhasil",
+                text: "Data berhasil dihapus",
+                timer: 2000,
+                icon: "success",
+              });
+            }
+
+            getData();
+          })
+          .catch((err) => {
+            Swal.fire({
+              title: "gagal",
+              text: "Data Gagal dihapus",
+              timer: 2000,
+              icon: "error",
+            });
+          });
+      }
+    });
   };
 
   const [state, setState] = useState({});
 
   const handleChangePhoto = (file, path, id) => {
-    if (id === 'New') {
+    if (id === "New") {
       addSlider({
         image: file,
       }).then((res) => {
-        console.log(res);
         getData();
       });
     } else {
       updateSlider(id, {
         image: file,
       }).then((res) => {
-        console.log(res);
         getData();
       });
     }
@@ -52,10 +85,8 @@ const Sliders = () => {
       }
       obj = {
         ...obj,
-        [`previewNew`]: '',
+        [`previewNew`]: "",
       };
-
-      console.log(obj);
 
       setState((prev) => ({
         ...prev,
@@ -89,7 +120,7 @@ const Sliders = () => {
                   preview={state[`preview${data.id}`]}
                   formatIcon={false}
                   state={{ index: index + 1, id: data.id }}
-                  handleDelete={deleteSlider}
+                  handleDelete={handleDelete}
                   getData={getData}
                 />
               </Grid>
@@ -100,8 +131,8 @@ const Sliders = () => {
               uploadFoto={handleChangePhoto}
               preview={state[`previewNew`]}
               formatIcon={false}
-              state={{ index: 'New', id: 'New' }}
-              handleDelete={deleteSlider}
+              state={{ index: "New", id: "New" }}
+              handleDelete={handleDelete}
               getData={getData}
             />
           </Grid>

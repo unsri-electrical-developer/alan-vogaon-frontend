@@ -98,7 +98,7 @@ export default function SelectOfArray({
           )}
           onChange={onChange ? onChange : (e) => handleChange(index, e)}
           value={state[index][name]}
-          inputProps={{
+          InputProps={{
             name,
             style: {
               borderRadius: 5,

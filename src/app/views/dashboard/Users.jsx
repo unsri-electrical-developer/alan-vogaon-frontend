@@ -11,6 +11,7 @@ import AddIcon from "@material-ui/icons/Add";
 import  SimpleCard   from '../../assets/components/cards/SimpleCard';
 import TableUsers from './components/TableUsers';
 import {getAllUsers} from '../../redux/actions/UserActions';
+import { useSelector } from "react-redux";
 
 // Start of Component
 const Users = () => {
@@ -18,6 +19,10 @@ const Users = () => {
     const [state, setState] = useState({
         users:[],
     });
+
+     const { profile_pict, fullname, users_type, name } = useSelector(
+    ({ user }) => user
+  );
 
     const getData = () => {
     const params = `?search=${search}`;

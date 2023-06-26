@@ -12,6 +12,7 @@ import { getGamesVoucher, addGamesVoucher,editGamesVoucher,getGameItems } from "
 import { useParams  } from "react-router-dom";
 import { useSelector } from 'react-redux';
 import SelectOfArray from "../../components/select/SelectOfArray";
+import { useLocation } from 'react-router-dom';
 
 
 const theme = createTheme({
@@ -24,8 +25,10 @@ const theme = createTheme({
 
 const RedeemListCode = () => {
       const [fieldList, setFieldList] = useState();
+      const location = useLocation();
+    const redeemState = location.state?.stateRedeem;
 
-      const { id } = useParams();
+      const { id} = useParams();
   const { gameVoucher } = useSelector((state) => state.game);
 
   const dispatch = useDispatch();
@@ -51,7 +54,6 @@ const RedeemListCode = () => {
   }));
   const classes = useStyles();
 
-  const [gameItems, setGameItems] = useState();
 
   const getData = () => {
     dispatch(getGamesVoucher(id));
@@ -61,11 +63,14 @@ const RedeemListCode = () => {
 
   };
 
+const [gameItems, setGameItems] = useState();
+
 const getDataItems = () => {
   const transformedData = {};
 
   getGameItems(id).then((res) => {
     const data = res.data?.data
+     setGameItems(data);
       data.forEach((item) => {
         const key = item.code;
         transformedData[key] = [{
@@ -81,6 +86,7 @@ const getDataItems = () => {
     }
   ).then(() => {
     setFieldList(transformedData);
+   
   });
 };
 
@@ -205,7 +211,7 @@ const renderFields = (object, setState) => {
           <Card className="mt-5 py-10 px-10" key={groupIndex}>
             <div className="mx-8 mt-5 mb-8">
               <h1 className="text-22 font-bold mb-8" style={{ color: "#0A0A0A" }}>
-                Product {groupIndex + 1}
+              {gameItems && gameItems[groupIndex]?.title }
               </h1>
               {group?.map((item, itemIndex) => {
                         const isLastGroup = itemIndex === group.length - 1;
@@ -341,8 +347,6 @@ const renderFields = (object, setState) => {
 
  
 
- 
-
   
 
   return (
@@ -354,7 +358,7 @@ const renderFields = (object, setState) => {
         className="d-flex mr-8"
         style={{ justifyContent: "space-between" }}
       >
-              <h2 className="fw-600 m-0">List Redeem Code</h2>
+              <h2 className="fw-600 m-0">List Redeem Code {redeemState} </h2>
 
         <ThemeProvider theme={theme}>
           <GeneralButton variant="contained" name="Save" data={handleSubmit} />

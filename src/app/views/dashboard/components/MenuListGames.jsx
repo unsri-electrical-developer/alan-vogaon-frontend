@@ -18,7 +18,8 @@ export default function MenuCategory({
   setState,
   getData,
   category,
-  redeemPath
+  redeemPath,
+  stateRedeem
 }) {
   const [anchorEl, setAnchorEl] = useState(null);
   const dispatch = useDispatch();
@@ -90,6 +91,7 @@ export default function MenuCategory({
   <Link
           to={{
             pathname: redeemPath,
+            state: {  stateRedeem },
           }}
         >
           <MenuItem className="mb-3" onClick={() => handleClose}>

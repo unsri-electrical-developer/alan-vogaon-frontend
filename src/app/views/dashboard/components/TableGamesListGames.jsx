@@ -61,6 +61,7 @@ const RenderTable = ({ data, state, search, getData }) => {
               detailPath={`/games/listGames/detail/${item.game_code}`}
               editPath={`/games/listGames/edit/${item.game_code}`}
               redeemPath={`/games/redeem-list-code/${item.game_code}`}
+              stateRedeem={item.title}
               category={item?.category_code}
             ></MenuListGames>
           </TableCell>

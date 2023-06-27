@@ -17,11 +17,11 @@ import VisibilityOffIcon from "@material-ui/icons/VisibilityOff";
 import { UploadImage } from "../../components";
 import { updAdmin2 } from "../../redux/actions/AdminActions";
 import { getProfile } from "../../redux/actions/UserActions";
-
+import { useSelector } from "react-redux";
 const EditProfile = () => {
   const history = useHistory();
   const [user, setUser] = useState({
-    fullname: "",
+    name: "",
     email: "",
     password: "",
     users_code: "",
@@ -32,17 +32,22 @@ const EditProfile = () => {
   });
   const [submit, setSubmit] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+ const { name, admin_profile_pic, users_type, } = useSelector(
+    ({ user }) => user
+  );
+
+  
 
   const getData = () => {
     getProfile()
       .then(({ data }) => {
         setUser((pref) => ({
           ...pref,
-          fullname: data?.data?.fullname,
-          email: data?.data?.email,
-          profile_pict: "",
-          profile_pict_preview: data?.data?.profile_pict,
-          profile_pict_ori: data?.data?.profile_pict_ori || "default.png",
+          name: data?.data?.name,
+            email:data?.data?.email,
+                      profile_pict: data?.data?.admin_profile_pic,
+          profile_pict_preview: data?.data?.admin_profile_pic,
+          profile_pict_ori: data?.data?.admin_profile_pic || "default.png",
           users_code: data?.data?.users_code,
         }));
       })
@@ -50,6 +55,11 @@ const EditProfile = () => {
         showAlert("Gagal mengambil data profile", false);
         setSubmit(true);
       });
+
+      setUser((pref) => ({
+          ...pref,
+          peran: users_type,
+        }));
   };
 
   useEffect(() => {
@@ -149,8 +159,8 @@ const EditProfile = () => {
                         variant="outlined"
                         onChange={handleChange}
                         type="text"
-                        name="fullname"
-                        value={user.fullname || ""}
+                        name="name"
+                        value={user.name || ""}
                         validators={["required"]}
                         errorMessages={["Masukkan nama anda terlebih dahulu"]}
                       />
@@ -166,7 +176,7 @@ const EditProfile = () => {
                         variant="outlined"
                         onChange={handleChange}
                         type="text"
-                        name="Peran"
+                        name="peran"
                         value={user.peran || ""}
                         validators={["required"]}
                         errorMessages={["Masukkan peran anda terlebih dahulu"]}

@@ -55,7 +55,7 @@ const Layout1Topbar = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const { settings } = useSelector(({ layout }) => layout);
-  const { profile_pict, fullname, users_type } = useSelector(
+  const { profile_pict, fullname, users_type, name } = useSelector(
     ({ user }) => user
   );
 
@@ -120,7 +120,7 @@ const Layout1Topbar = () => {
             <div>
               <p className="font-semibold mb-0">{fullname}</p>
               <p className="text-11 text-muted mb-0 text-right">
-                {users_type === "SA" ? "Super Admin" : "Admin Biasa"}
+                {name}
               </p>
             </div>
             <MatxMenu

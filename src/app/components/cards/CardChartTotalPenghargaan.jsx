@@ -24,25 +24,22 @@ ChartJS.register(
   Filler,
   Legend
 );
-const options = {
-  responsive: true,
-  plugins: {
-    legend: {
-      display: false,
-    },
-  },
-  scales: {
-    y: {
-      ticks: {
-        callback: (val) => {
-          return val % 1 === 0 ? val : null;
-        },
-        beginAtZero: true,
-        min: 0,
-      },
-    },
-  },
-};
+
+
+
+
+const formatData = (value) => {
+              if (value >= 1000000) {
+                return (value / 1000000) + ' Jt';
+              } else if (value >= 1000) {
+                return (value / 1000) + ' Rb';
+              } else {
+                return value;
+              }
+
+            }
+
+
 
 const CardChartTotalPenghargaan = ({
   loading,
@@ -86,7 +83,6 @@ const CardChartTotalPenghargaan = ({
         datasets: [
           {
             fill: true,
-            label: "Penghargaan",
             data: chart?.data,
             borderColor: borderColor,
             backgroundColor: number
@@ -101,6 +97,56 @@ const CardChartTotalPenghargaan = ({
       setdata([]);
     }
   }, [labels, chart.data]);
+
+  const options = {
+  responsive: true,
+  plugins: {
+    legend: {
+      display: false,
+    },
+    tooltip: {
+        titleFontSize: 0,
+        bodyColor	: "black",
+        bodyAlign : "center",
+        bodyFont: {weight: "bold", size: 12},
+        backgroundColor: "white",
+        callbacks: {
+                  labelColor: (tooltipItem, chart) => {
+                    return {
+                      borderColor: 'transparent',
+                      backgroundColor: 'transparent'
+                    };
+                  },
+                    label: function(context) {
+                                let label = context.dataset.label || '';
+
+                                
+
+                  
+                        
+            if (label) {
+                   label += ': ';
+                }
+                if (context.parsed.y !== null) {
+                      label +=  number ? context.parsed.y+" Pengguna" : formatData(context.parsed.y);
+                }
+                        return label;
+                    }
+        }
+    }
+  },
+  scales: {
+    y: {
+      ticks: {
+        callback: (val) => {
+          return val % 1 === 0 ? val : null;
+        },
+        beginAtZero: true,
+        min: 0,
+      },
+    },
+  },
+};
   return (
     <Card className="border-0 p-5 card-chart-pendidikan h-full" elevation={0}>
       <Grid

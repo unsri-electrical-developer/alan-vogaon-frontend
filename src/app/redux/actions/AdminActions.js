@@ -1,5 +1,9 @@
-import { API, setAuthToken } from '../../../config/API.js';
-import { GET_ADMIN, SET_LOADING_ADMIN, SET_PAGINATION_ADMIN } from '../constant.js';
+import { API, setAuthToken } from "../../../config/API.js";
+import {
+  GET_ADMIN,
+  SET_LOADING_ADMIN,
+  SET_PAGINATION_ADMIN,
+} from "../constant.js";
 
 export const getAdmin = (params) => {
   return (dispatch) => {
@@ -60,5 +64,5 @@ export const delAdmin = (code) => {
 export const updAdmin2 = (params) => {
   const token = localStorage.getItem("jwt_token");
   setAuthToken(token);
-  return API.post("admin/profile/edit", params);
+  return API.patch("/profile/edit_profile", params);
 };

@@ -57,7 +57,7 @@ const EditAdmin = () => {
 
   const handleSubmit = () => {
     try {
-      if (!state.name || !state.email || !state.img) {
+      if (!state.name || !state.email) {
         throw new Error("Lengkapi semua inputan !");
       }
 
@@ -113,28 +113,6 @@ const EditAdmin = () => {
                 className="mb-5 font-semimedium text-14"
                 style={{ color: "#0a0a0a" }}
               >
-                Foto Profil
-              </h1>
-              <UploadImageWithButton
-                uploadFoto={handleChangePhoto}
-                preview={state.img}
-                formatIcon={false}
-                state={{ index: 5, id: 5 }}
-                autoCall={false}
-                handleDelete={() => {
-                  setState((prev) => ({
-                    ...prev,
-                    img: "",
-                  }));
-                }}
-              />
-            </Grid>
-            <Grid item xs={6}></Grid>
-            <Grid item xs={12} sm={6}>
-              <h1
-                className="mb-5 font-semimedium text-14"
-                style={{ color: "#0a0a0a" }}
-              >
                 Nama
               </h1>
               <TextField
@@ -185,51 +163,6 @@ const EditAdmin = () => {
                 className="mb-5 font-semimedium text-14"
                 style={{ color: "#0a0a0a" }}
               >
-                Konfirmasi Password
-              </h1>
-              <TextField
-                required={true}
-                size="small"
-                value={state.konfirmasi_password}
-                name="konfirmasi_password"
-                className={`w-full`}
-                InputProps={{
-                  style: {
-                    borderRadius: 5,
-                    minHeight: 46,
-                  },
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <IconButton
-                        aria-label="toggle password visibility"
-                        onClick={() =>
-                          setState({
-                            ...state,
-                            showPassword: !state.showPassword,
-                          })
-                        }
-                        edge="end"
-                      >
-                        {state.showPassword ? (
-                          <VisibilityOffIcon />
-                        ) : (
-                          <VisibilityIcon />
-                        )}
-                      </IconButton>
-                    </InputAdornment>
-                  ),
-                }}
-                placeholder="Konfirmasi Password"
-                variant="outlined"
-                onChange={handleChange}
-                type={state.showPassword ? "text" : "password"}
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <h1
-                className="mb-5 font-semimedium text-14"
-                style={{ color: "#0a0a0a" }}
-              >
                 Password
               </h1>
               <TextField
@@ -265,6 +198,51 @@ const EditAdmin = () => {
                   ),
                 }}
                 placeholder="Password"
+                variant="outlined"
+                onChange={handleChange}
+                type={state.showPassword ? "text" : "password"}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <h1
+                className="mb-5 font-semimedium text-14"
+                style={{ color: "#0a0a0a" }}
+              >
+                Konfirmasi Password
+              </h1>
+              <TextField
+                required={true}
+                size="small"
+                value={state.konfirmasi_password}
+                name="konfirmasi_password"
+                className={`w-full`}
+                InputProps={{
+                  style: {
+                    borderRadius: 5,
+                    minHeight: 46,
+                  },
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={() =>
+                          setState({
+                            ...state,
+                            showPassword: !state.showPassword,
+                          })
+                        }
+                        edge="end"
+                      >
+                        {state.showPassword ? (
+                          <VisibilityOffIcon />
+                        ) : (
+                          <VisibilityIcon />
+                        )}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
+                placeholder="Konfirmasi Password"
                 variant="outlined"
                 onChange={handleChange}
                 type={state.showPassword ? "text" : "password"}

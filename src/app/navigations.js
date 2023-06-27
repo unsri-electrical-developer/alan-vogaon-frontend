@@ -8,6 +8,7 @@ import {
   ic_transaction,
   ic_user,
 } from "./assets/components/exportIcons";
+import SupervisedUserCircleIcon from "@material-ui/icons/SupervisedUserCircle";
 
 export const navigations = [
   {
@@ -79,7 +80,7 @@ export const navigations = [
   {
     name: "Kode Promo",
     path: "/kode_promo",
-    icon: 'discount',
+    icon: "discount",
     auth: authRoles.all,
     exact: true,
   },
@@ -88,6 +89,12 @@ export const navigations = [
     icon: ic_setting(),
     auth: authRoles.all,
     children: [
+      {
+        name: "Admin",
+        path: "/admin",
+        auth: authRoles.all,
+        exact: true,
+      },
       {
         name: "General Info",
         path: "/settings/general_info",

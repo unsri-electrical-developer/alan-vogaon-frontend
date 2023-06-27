@@ -5,14 +5,13 @@ import {
   Icon,
   InputAdornment,
   Grid,
-  Chip,
+  Avatar,
 } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import AddIcon from "@material-ui/icons/Add";
 
 import SimpleCard from "../../assets/components/cards/SimpleCard";
 import { useDispatch, useSelector } from "react-redux";
-import { delPromo, getPromo } from "../../redux/actions/PromoActions";
 import { useState } from "react";
 import {
   TablePagination,
@@ -24,21 +23,27 @@ import {
 } from "@material-ui/core";
 import Swal from "sweetalert2";
 import MenuComponent from "../../components/Menu/MenuComponent";
+import {
+  delCrudAdmin,
+  getCrudAdmin,
+} from "../../redux/actions/CrudAdminActions";
 
-const KodePromo = () => {
+import {formatTanggal} from '../../../utlis/formatTanggal'
+
+const Admin = () => {
   const dispatch = useDispatch();
 
   const [search, setSearch] = React.useState("");
 
   const getData = () => {
-    dispatch(getPromo(search));
+    dispatch(getCrudAdmin(search));
   };
   const RenderTable = ({ data, state, getData }) => {
     const handleDelete = (id) => {
       try {
         Swal.fire({
           title: "Konfirmasi",
-          text: "Anda yakin ingin menghapus Voucher ini?",
+          text: "Anda yakin ingin menghapus Admin ini?",
           icon: "warning",
           buttons: ["Batal", "Hapus"],
           showCancelButton: true,
@@ -47,14 +52,14 @@ const KodePromo = () => {
         }).then(function (res) {
           console.log(res);
           if (res.isConfirmed) {
-            delPromo(id).then(() => {
-              Swal.fire("Success!", "Promo berhasil dihapus", "success");
+            delCrudAdmin(id).then(() => {
+              Swal.fire("Success!", "Admin berhasil dihapus", "success");
               getData();
             });
           }
         });
       } catch (e) {
-        Swal.fire("Error!", "Promo gagal dihapus", "error");
+        Swal.fire("Error!", "Admin gagal dihapus", "error");
       }
     };
 
@@ -67,19 +72,8 @@ const KodePromo = () => {
         return state.page * 25;
       }
     };
-    return data?.filter(
-      (item) =>
-        item?.vouchers_title?.toLowerCase().includes(search.toLowerCase()) ||
-        item?.vouchers_redeem_code?.toLowerCase().includes(search.toLowerCase())
-    )?.length > 0 ? (
+    return data?.length > 0 ? (
       data
-        .filter(
-          (item) =>
-            item.vouchers_title.toLowerCase().includes(search.toLowerCase()) ||
-            item.vouchers_redeem_code
-              .toLowerCase()
-              .includes(search.toLowerCase())
-        )
         .slice(
           state.page * state.rowsPerPage,
           state.page * state.rowsPerPage + state.rowsPerPage
@@ -94,22 +88,29 @@ const KodePromo = () => {
               {index + 1 + handleNumbering()}
             </TableCell>
             <TableCell className="text-14 text-black" colSpan={5}>
-              {item.vouchers_title}
+              <div
+                className=" z-100 text-14 d-flex items-center"
+                style={{ gap: "16px" }}
+              >
+                <Avatar
+                  variant="square"
+                  src={item.admin_profile_pic}
+                  width={"50px"}
+                  style={{ borderRadius: "5px" }}
+                />
+                {item.name}
+              </div>
+            </TableCell>
+            <TableCell className="text-14 text-black" colSpan={5}>
+              {item.email}
             </TableCell>
             <TableCell className="text-14 text-black" colSpan={4}>
-              {item.vouchers_redeem_code}
+              {formatTanggal(item?.created_at)}
             </TableCell>
-            <TableCell className="text-14 text-black" colSpan={2}>
-              {item.isActive ? (
-                <Chip className="text-white" label="Aktif" color="primary" />
-              ) : (
-                <Chip className="text-white" label="Non-aktif" color="error" />
-              )}
-            </TableCell>
-            <TableCell className="pl-3" align="center" colSpan={1}>
+            <TableCell className="" align="center" colSpan={1}>
               <MenuComponent
-                editPath={`kode_promo/edit/${item.vouchers_code}`}
-                deletePath={() => handleDelete(item.vouchers_code)}
+                editPath={`admin/edit/${item.id}`}
+                deletePath={() => handleDelete(item.id)}
               />
             </TableCell>
           </TableRow>
@@ -118,7 +119,7 @@ const KodePromo = () => {
       <TableRow hover>
         <TableCell
           className="font-medium text-12 line-height-28 text-body"
-          colSpan={12}
+          colSpan={16}
           align="center"
         >
           Data kosong
@@ -154,7 +155,9 @@ const KodePromo = () => {
     getData();
   }, []);
 
-  const { promo } = useSelector((state) => state.promo);
+  const { admin } = useSelector((state) => state.crudAdmin);
+
+  console.log(admin);
 
   return (
     <div className="m-sm-30">
@@ -166,10 +169,10 @@ const KodePromo = () => {
         justifyContent="space-between"
       >
         <Grid item xs={12} sm>
-          <h1 className="text-black fw-600 text-25 my-auto">Kode Promo</h1>
+          <h1 className="text-black fw-600 text-25 my-auto">Admin</h1>
         </Grid>
         <Grid item xs={12} sm className="d-flex mr-8 justify-end">
-          <Link to="/kode_promo/add">
+          <Link to="/admin/add">
             <Button
               variant="contained"
               color="primary"
@@ -186,7 +189,7 @@ const KodePromo = () => {
             size="small"
             variant="outlined"
             className={`w-250`}
-            placeholder="Cari Nama/Kode Promo"
+            placeholder="Cari Nama Admin"
             name="search"
             InputProps={{
               startAdornment: (
@@ -205,6 +208,11 @@ const KodePromo = () => {
               setSearch(e.target.value);
               handleChangePage(e, 0);
             }}
+            onKeyDown={(e) => {
+              if (e.keyCode == 13) {
+                getData();
+              }
+            }}
           />
         </div>
         <div className="w-full overflow-auto bg-white">
@@ -222,19 +230,19 @@ const KodePromo = () => {
                   colSpan={5}
                   className="font-medium text-15 text-black"
                 >
-                  Nama Promo
+                  Nama Admin
+                </TableCell>
+                <TableCell
+                  colSpan={5}
+                  className="font-medium text-15 text-black"
+                >
+                  Email
                 </TableCell>
                 <TableCell
                   colSpan={4}
                   className="font-medium text-15 text-black"
                 >
-                  Kode Promo
-                </TableCell>
-                <TableCell
-                  colSpan={2}
-                  className="font-medium text-15 text-black"
-                >
-                  Status
+                  Dibuat Tanggal
                 </TableCell>
                 <TableCell
                   colSpan={1}
@@ -247,7 +255,7 @@ const KodePromo = () => {
             </TableHead>
             <TableBody>
               <RenderTable
-                data={promo}
+                data={admin}
                 state={state}
                 getData={getData}
                 search={search}
@@ -259,7 +267,7 @@ const KodePromo = () => {
             className="px-10 my-7"
             rowsPerPageOptions={[5, 10, 25]}
             component="div"
-            count={promo?.length ? promo?.length : 0}
+            count={admin?.length ? admin?.length : 0}
             rowsPerPage={state.rowsPerPage}
             labelRowsPerPage={"From"}
             page={state.page}
@@ -280,4 +288,4 @@ const KodePromo = () => {
   );
 };
 
-export default KodePromo;
+export default Admin;

@@ -39,8 +39,12 @@ const AddGamesListGames = () => {
 
   const [state, setState] = useState({
     foto: "",
+    foto2: "",
     title: "",
     kode_game: "",
+    game_description: "",
+    field_description: "",
+    field_img: "",
   });
 
   const [category, setCategory] = useState("");
@@ -80,18 +84,26 @@ const AddGamesListGames = () => {
 
       if (
         !state.foto &&
+        !state.foto2 &&
         !state.title &&
         !state.category_code &&
-        !state.kode_game
+        !state.kode_game &&
+        !state.game_description &&
+        !state.field_description &&
+        !state.field_img
       ) {
         throw new Error("data isian Game tidak lengkap");
       }
 
+      console.log("state", state);
       addGamesList({
         img: state.foto,
+        field_img: state.foto2,
         title: state.title,
         category_code: category,
         kode_game: state.kode_game,
+        game_description: state.game_description,
+        field_description: state.field_description,
         fieldList,
         productList,
       })
@@ -596,6 +608,14 @@ const AddGamesListGames = () => {
       preview: path,
     });
   };
+  
+  const handleChangePhoto2 = (file, path) => {
+    setState({
+      ...state,
+      foto2: file,
+      preview2: path,
+    });
+  };
 
   return (
     <div className="analytics m-sm-30 mt-7 text-black">
@@ -696,6 +716,70 @@ const AddGamesListGames = () => {
                 placeholder="Kode Game"
                 variant="outlined"
                 onChange={handleChange}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <h1
+                className="mb-5 font-semimedium text-14"
+                style={{ color: "#0a0a0a" }}
+              >
+                Field Deskripsi
+              </h1>
+              <TextField
+                required={true}
+                size="small"
+                InputProps={{
+                  style: {
+                    borderRadius: 5,
+                    minHeight: 46,
+                  },
+                }}
+                className="w-full"
+                value={state.field_description}
+                name="field_description"
+                placeholder="Field Deskripsi"
+                variant="outlined"
+                onChange={handleChange}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <h1
+                className="mb-5 font-semimedium text-14"
+                style={{ color: "#0a0a0a" }}
+              >
+                Game Deskripsi
+              </h1>
+              <TextField
+                required={true}
+                size="small"
+                multiline
+                rows={10}
+                InputProps={{
+                  style: {
+                    borderRadius: 5,
+                    minHeight: 46,
+                  },
+                }}
+                className="w-full mt-2"
+                value={state.game_description}
+                name="game_description"
+                placeholder="Game Deskripsi"
+                variant="outlined"
+                onChange={handleChange}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <h1
+                className="font-semimedium text-14"
+                style={{ color: "#0a0a0a" }}
+              >
+                Foto
+              </h1>
+              <UploadImage
+                uploadFoto={handleChangePhoto2}
+                label="Banner"
+                preview={state.preview2}
+                formatIcon={false}
               />
             </Grid>
           </Grid>

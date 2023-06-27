@@ -7,6 +7,7 @@ import Swal from "sweetalert2";
 import { Link, useParams, useHistory } from "react-router-dom";
 import { getDetailTopUp } from "../../redux/actions/Transaction/TransactionActions";
 import { formatRupiah } from "../../../utlis/formatRupiah";
+import { parse } from "date-fns";
 
 const DetailTopUp = ({ getDetailTopUp, detailTopup }) => {
   const { id } = useParams();
@@ -14,7 +15,7 @@ const DetailTopUp = ({ getDetailTopUp, detailTopup }) => {
     getDetailTopUp(id);
   };
 
-  console.log(detailTopup)
+  console.log(detailTopup);
 
   useEffect(() => {
     getData();
@@ -45,35 +46,35 @@ const DetailTopUp = ({ getDetailTopUp, detailTopup }) => {
             <Grid container spacing={2}>
               <Grid item sm={6} xs={12}>
                 <h5>Nama Pengguna</h5>
-                <div>{detailTopup?.nama}</div>
+                <div>{detailTopup?.name}</div>
               </Grid>
               <Grid item sm={6} xs={12} className="mb-20px">
                 <h5>Referensi</h5>
-                <div>{detailTopup?.referensi}</div>
+                <div>{detailTopup?.no_reference}</div>
               </Grid>
 
               <Grid item sm={6} xs={12} className="mb-20px">
                 <h5>Nominal Top Up</h5>
                 {/* <div>{formatRupiah(detailTopup?.nominal)}</div> */}
-                <div>{nominal}</div>
+                <div>{formatRupiah(parseInt(detailTopup.total_amount))}</div>
               </Grid>
               <Grid item sm={6} xs={12}>
                 <h5>No.Transaksi</h5>
-                <div>{detailTopup?.no_transaksi}</div>
+                <div>{detailTopup?.transaction_code}</div>
               </Grid>
 
               <Grid item sm={6} xs={12} className="mb-20px">
                 <h5>Waktu Transaksi</h5>
-                <div>{detailTopup?.waktu_transaksi}</div>
+                <div>{detailTopup?.tanggal}</div>
               </Grid>
               <Grid item sm={6} xs={12}>
                 <h5>Status</h5>
                 <div
                   style={
-                    detailTopup?.status === "Selesai"
-                      ? { color: "#72BE42" }
-                      : { color: "#e63535" }
-                  }
+                    detailTopup?.status == "processing" ? { color: "#1253FA" }
+                    : detailTopup?.status == "waiting" || detailTopup?.status == "pending"  ? { color: "#DF8838" }
+                    : detailTopup?.status == "success" ? { color: "#51AF77" }
+                    : { color: "#0A0A0A" }}
                 >
                   {detailTopup?.status}
                 </div>

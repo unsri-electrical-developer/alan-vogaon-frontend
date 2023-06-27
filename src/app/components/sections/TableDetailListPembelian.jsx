@@ -13,6 +13,7 @@ import {
 import IcDot from "./../../assets/components/icons/IcDot.svg";
 import { Link } from "react-router-dom";
 import Aksieye from "./../../assets/components/icons/Aksieye.svg";
+import { formatRupiah } from "../../../utlis/formatRupiah";
 
 const RenderTable = ({
   data,
@@ -57,12 +58,12 @@ const RenderTable = ({
               
             >
               {column.type === "price" && item[column.key]
-                ? `Rp ${item[column.key]
-                    .toString()
-                    .replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.")}`
-                : column.type === "date" && item[column.key]
-                ? new Date(item[column.key]).toLocaleDateString("en-US")
-                : item[column.key]}
+            ? `Rp ${item[column.key]
+                .toString()
+                .replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.")}`
+            : column.type === "date" && item[column.key]
+            ? new Date(item[column.key]).toLocaleDateString("en-US")
+            : item[column.key]}
             </TableCell>
           ))}
         </TableRow>

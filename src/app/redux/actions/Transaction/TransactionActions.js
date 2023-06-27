@@ -112,11 +112,11 @@ export const getTotalTopUp = () => {
     const token = localStorage.getItem("jwt_token");
     setAuthToken(token);
     API.get(`/transaction/total_topupsaldo`)
-      .then((res) => {
-        dispatch({
-          type: GET_TOTAL_TOPUP,
-          payload: res.data.data || [],
-        });
+    .then((res) => {
+      dispatch({
+        type: GET_TOTAL_TOPUP,
+        payload: res.data.data || [],
+      });
       })
       .catch(() => {
         dispatch({

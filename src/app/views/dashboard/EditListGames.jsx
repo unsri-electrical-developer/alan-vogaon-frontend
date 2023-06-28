@@ -1,8 +1,8 @@
 import { Card, Grid, Icon, TextField, Button } from "@material-ui/core";
-import React, { useState, useLayoutEffect } from "react";
+import React, { useState, useLayoutEffect, useEffect } from "react";
 import "../../../styles/css/DetailUser.css";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-
+import QuestionMarkIcon from '@mui/icons-material/QuestionMark';
 import { useParams, useHistory } from "react-router-dom";
 import { UploadImageWithButton } from "../../components";
 import {
@@ -34,8 +34,32 @@ const EditListGames = () => {
     });
   };
 
+  const [onHoverFieldInfo, setOnHoverFieldInfo] = useState(false);
+
+  useEffect(() => {
+    if (onHoverFieldInfo) {
+      document.body.style.cursor = "pointer";
+    } else {
+      document.body.style.cursor = "default";
+    }
+  }, [onHoverFieldInfo]);
+
+  const handleOnHoverFieldInfo = () => {
+    setOnHoverFieldInfo(true);
+    console.log("onHoverFieldInfo", onHoverFieldInfo);
+  };
+  
+  const handleOnLeaveFieldInfo = () => {
+    setOnHoverFieldInfo(false);
+    console.log("onHoverFieldInfo", onHoverFieldInfo);
+  };
+
   const [state, setState] = useState({
     foto: "",
+    foto2: "",
+    game_description: "",
+    field_description: "",
+    field_img: "",
     title: "",
     kode_game: "",
     category_code: "",
@@ -48,6 +72,10 @@ const EditListGames = () => {
       setState((prev) => ({
         ...prev,
         foto: data.img,
+        foto2: data.field_img,
+        field_img: data.field_img,
+        game_description: data.game_description,
+        field_description: data.field_description,
         title: data.title,
         kode_game: data.code,
         category_code: data.category?.category_code,
@@ -69,6 +97,7 @@ const EditListGames = () => {
         })),
       }));
     });
+
   }, []);
 
   const handleChange = (e) => {
@@ -82,35 +111,41 @@ const EditListGames = () => {
   const handleSubmit = () => {
     try {
       fieldList.forEach((obj) => {
-        if (!obj.name && !obj.type) {
+        if (!obj.name || !obj.type) {
           throw new Error("data isian Field tidak lengkap");
         }
       });
 
       productList.forEach((obj) => {
+        console.log("obj", obj);
         if (
-          !obj.title &&
-          !obj.isActive &&
-          !obj.from &&
-          !obj.denomination_id &&
-          !obj.price &&
-          !obj.price_not_member
+          !obj.title ||
+          !obj.from ||
+          !obj.price ||
+          !obj.price_not_member || 
+          !obj.price_reseller || 
+          (obj.from == 'unipin' && !obj.denomination_id)
         ) {
           throw new Error("data isian Product tidak lengkap");
         }
       });
 
       if (
-        !state.foto &&
-        !state.title &&
-        !state.category_code &&
-        !state.kode_game
+        !state.foto ||
+        !state.foto2 ||
+        !state.title ||
+        !state.kode_game ||
+        !state.game_description ||
+        !state.field_description
       ) {
         throw new Error("data isian Game tidak lengkap");
       }
 
       editGamesList({
         img: state.foto,
+        field_img: state.foto2,
+        game_description: state.game_description,
+        field_description: state.field_description,
         id: state.kode_game,
         title: state.title,
         category_code: state.category_code,
@@ -332,6 +367,7 @@ const EditListGames = () => {
       denomination_id: "",
       price: "",
       price_not_member: "",
+      price_reseller: "",
     },
   ]);
 
@@ -580,6 +616,30 @@ const EditListGames = () => {
                 onChange={handleProductChange(index, "price_not_member")}
               />
             </Grid>
+            <Grid item sm={6}>
+              <h1
+                className="mb-5 font-semimedium text-14"
+                style={{ color: "#0a0a0a" }}
+              >
+                Harga Reseller
+              </h1>
+              <TextField
+                required={true}
+                size="small"
+                InputProps={{
+                  style: {
+                    borderRadius: 5,
+                    minHeight: 46,
+                  },
+                }}
+                className="w-full"
+                value={productList[index].price_reseller}
+                name="price_reseller"
+                placeholder="Harga Reseller"
+                variant="outlined"
+                onChange={handleProductChange(index, "price_reseller")}
+              />
+            </Grid>
           </Grid>
         ))}
       </>
@@ -614,6 +674,14 @@ const EditListGames = () => {
       ...prev,
       foto,
       path,
+    }));
+  };
+
+  const handleChangePhoto2 = (foto2, path2, id) => {
+    setState((prev) => ({
+      ...prev,
+      foto2,
+      path2,
     }));
   };
 
@@ -727,6 +795,101 @@ const EditListGames = () => {
                 placeholder="Kode Game"
                 variant="outlined"
                 onChange={handleChange}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <h1
+                className="mb-5 font-semimedium text-14"
+                style={{ color: "#0a0a0a" }}
+              >
+                Field Deskripsi
+              </h1>
+              <TextField
+                required={true}
+                size="small"
+                InputProps={{
+                  style: {
+                    borderRadius: 5,
+                    minHeight: 46,
+                  },
+                }}
+                className="w-full"
+                value={state.field_description}
+                name="field_description"
+                placeholder="Field Deskripsi"
+                variant="outlined"
+                onChange={handleChange}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <h1
+                className="my-2 font-semimedium text-14"
+                style={{ color: "#0a0a0a" }}
+              >
+                Game Deskripsi
+              </h1>
+              <TextField
+                required={true}
+                size="small"
+                multiline
+                rows={10}
+                InputProps={{
+                  style: {
+                    borderRadius: 5,
+                    minHeight: 46,
+                  },
+                }}
+                className="w-full mt-2"
+                value={state.game_description}
+                name="game_description"
+                placeholder="Game Deskripsi"
+                variant="outlined"
+                onChange={handleChange}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <h1
+                className="font-semimedium text-14 mb-4"
+                style={{ color: "#0a0a0a" }}
+              >
+                Foto 
+                <span className="mx-2 border-radius-circle bg-primary w-20 h-20 text-white"
+                      style={{
+                        display: "inline-flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        fontSize: "1rem",
+                        padding: "0 0 2px 0.5px"
+                      }}
+                      onMouseEnter={handleOnHoverFieldInfo}
+                      onMouseLeave={handleOnLeaveFieldInfo}
+                      >
+                    <span onClick={handleAddField}>
+                      <QuestionMarkIcon style={{fontSize: "15px", fontWeight: "700"}}>add-icon</QuestionMarkIcon>
+                    </span>
+                </span>
+                {onHoverFieldInfo ?
+                  <div className="img-helper" >
+                    <div id="img-helper-element" style={{position:"absolute", zIndex:"999", left: "40%"}}>
+                      <img src="https://vogaon.com/wp-content/plugins/woo-unipin/unipin/assets/img/default-guide.png" style={{position:"relative", zIndex:"1000"}}/>
+                    </div>
+                  </div>
+                : null
+                }
+              </h1>
+            
+              <UploadImageWithButton
+                uploadFoto={handleChangePhoto2}
+                preview={state.foto2}
+                formatIcon={false}
+                state={{ index: 5, id: 5 }}
+                autoCall={false}
+                handleDelete={() => {
+                  setState((prev) => ({
+                    ...prev,
+                    foto2: "",
+                  }));
+                }}
               />
             </Grid>
           </Grid>

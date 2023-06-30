@@ -172,7 +172,7 @@ const EditListGames = () => {
                 history.push("/games/listGames");
                 Swal.fire(
                   "Success!",
-                  "List Games berhasil disimpan",
+                  "List Games berhasil diperbarui",
                   "success"
                 );
               }, 4000);

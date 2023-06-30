@@ -92,12 +92,6 @@ const Admin = () => {
                 className=" z-100 text-14 d-flex items-center"
                 style={{ gap: "16px" }}
               >
-                <Avatar
-                  variant="square"
-                  src={item.admin_profile_pic}
-                  width={"50px"}
-                  style={{ borderRadius: "5px" }}
-                />
                 {item.name}
               </div>
             </TableCell>

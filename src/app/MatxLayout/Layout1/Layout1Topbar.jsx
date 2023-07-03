@@ -119,7 +119,7 @@ const Layout1Topbar = () => {
           <div className="flex items-center gap-3">
             <div>
               <p className="font-semibold mb-0">{fullname}</p>
-              <p className="text-11 text-muted mb-0 text-right">
+              <p className="text-15 text-muted mb-0 text-right">
                 {name}
               </p>
             </div>

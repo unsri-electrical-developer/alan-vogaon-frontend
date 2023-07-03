@@ -169,7 +169,7 @@ const EditPromo = () => {
   return (
     <div className="analytics m-sm-30 mt-7 text-black">
       <div className="d-flex justify-content-between">
-        <h1 className="fw-600 m-0">Add Kode Promo</h1>
+        <h1 className="fw-600 m-0">Edit Kode Promo</h1>
         <GeneralButton variant="contained" name="Save" data={handleSubmit} />
       </div>
       <Card className="mt-5 py-10 px-10">

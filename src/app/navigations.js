@@ -85,16 +85,17 @@ export const navigations = [
     exact: true,
   },
   {
+    name: "Admin",
+    path: "/admin",
+    icon: ic_user(),
+    auth: authRoles.all,
+    exact: true,
+  },
+  {
     name: "Settings",
     icon: ic_setting(),
     auth: authRoles.all,
     children: [
-      {
-        name: "Admin",
-        path: "/admin",
-        auth: authRoles.all,
-        exact: true,
-      },
       {
         name: "General Info",
         path: "/settings/general_info",

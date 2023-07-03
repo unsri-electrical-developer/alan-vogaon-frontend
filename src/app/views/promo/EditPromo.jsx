@@ -122,12 +122,12 @@ const EditPromo = () => {
 
       updPromo(params)
         .then((res) => {
-          Swal.fire("Success!", "Data berhasil disimpan", "success");
+          Swal.fire("Success!", "Data berhasil diperbarui", "success");
           history.push("/kode_promo");
         })
         .catch((err) => {
           console.log(err);
-          Swal.fire("Error!", "Data gagal disimpan !", "error");
+          Swal.fire("Error!", "Data gagal diperbarui !", "error");
         });
     } catch (e) {
       Swal.fire("Oopss!", e.message, "error");

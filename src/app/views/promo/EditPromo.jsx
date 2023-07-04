@@ -149,17 +149,21 @@ const EditPromo = () => {
   };
 
   const handleSwitchChange = (pm_code, status) => {
-    console.log(pm_code, status);
-    if (status == 0 || status == false) {
-      let newPM = payment_method.filter((item) => item.pm_code != pm_code);
-      setPaymentMethod(newPM);
-    } else {
-      let pm = {
-        pm_code: pm_code,
-        status: status,
-      };
-      payment_method.push(pm);
-    }
+    // console.log(pm_code, status);
+    // if (status == 0 || status == false) {
+    //   let newPM = payment_method.filter((item) => item.pm_code != pm_code);
+    //   setPaymentMethod(newPM);
+    // } 
+    // else {
+    //   let pm = {
+    //     pm_code: pm_code,
+    //     status: status,
+    //   };
+    //   payment_method.push(pm);
+    // }
+    status = status ? 1 : 0;
+    payment_method.find((item) => item.pm_code == pm_code).status = status;
+    console.log(payment_method);
   };
 
   useLayoutEffect(() => {

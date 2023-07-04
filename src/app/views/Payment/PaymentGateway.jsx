@@ -58,7 +58,7 @@ const PaymentGateway = () => {
             size="small"
             variant="outlined"
             className="w-250"
-            placeholder="Cari Kategori"
+            placeholder="Cari"
             name="search"
             InputProps={{
               startAdornment: (

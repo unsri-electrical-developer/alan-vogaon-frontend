@@ -122,12 +122,12 @@ const EditPromo = () => {
 
       updPromo(params)
         .then((res) => {
-          Swal.fire("Success!", "Data berhasil disimpan", "success");
+          Swal.fire("Success!", "Data berhasil diperbarui", "success");
           history.push("/kode_promo");
         })
         .catch((err) => {
           console.log(err);
-          Swal.fire("Error!", "Data gagal disimpan !", "error");
+          Swal.fire("Error!", "Data gagal diperbarui !", "error");
         });
     } catch (e) {
       Swal.fire("Oopss!", e.message, "error");
@@ -169,7 +169,7 @@ const EditPromo = () => {
   return (
     <div className="analytics m-sm-30 mt-7 text-black">
       <div className="d-flex justify-content-between">
-        <h1 className="fw-600 m-0">Add Kode Promo</h1>
+        <h1 className="fw-600 m-0">Edit Kode Promo</h1>
         <GeneralButton variant="contained" name="Save" data={handleSubmit} />
       </div>
       <Card className="mt-5 py-10 px-10">

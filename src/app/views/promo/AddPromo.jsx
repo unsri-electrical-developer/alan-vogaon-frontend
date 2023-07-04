@@ -326,6 +326,7 @@ const AddPromo = () => {
                   <PaymentMethodCardStatic
                     data={data}
                     handleSwitch={handleSwitchChange}
+                    checked={data?.status || false}
                   />
                 </Grid>
               ))}

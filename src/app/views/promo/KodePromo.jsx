@@ -69,8 +69,8 @@ const KodePromo = () => {
     };
     return data?.filter(
       (item) =>
-        item.vouchers_title.toLowerCase().includes(search.toLowerCase()) ||
-        item.vouchers_redeem_code.toLowerCase().includes(search.toLowerCase())
+        item?.vouchers_title?.toLowerCase().includes(search.toLowerCase()) ||
+        item?.vouchers_redeem_code?.toLowerCase().includes(search.toLowerCase())
     )?.length > 0 ? (
       data
         .filter(
@@ -197,7 +197,7 @@ const KodePromo = () => {
               style: {
                 borderRadius: 5,
                 minHeight: 46,
-                backgroundColor: '#FFFFFF'
+                backgroundColor: "#FFFFFF",
               },
             }}
             value={search}

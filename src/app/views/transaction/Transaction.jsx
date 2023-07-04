@@ -81,8 +81,8 @@ const Transaction = ({
   const [pembelian, setPembelian] = useState(false);
   let [jumlahSaldoPembelian, setJumlahSaldoPembelian] = useState(0);
   let [jumlahPendapatanPembelian, setJumlahPendapatanPembelian] = useState(0);
-  let [jumlahSaldoTopup, setJumlahSaldoTopup] = useState(0);
-  let [jumlahPendapatanTopup, setJumlahPendapatanTopup] = useState(0);
+  // let [jumlahSaldoTopup, setJumlahSaldoTopup] = useState(0);
+  // let [jumlahPendapatanTopup, setJumlahPendapatanTopup] = useState(0);
   
 
 
@@ -132,23 +132,23 @@ const Transaction = ({
   };
   
   
-  const updateJumlahSaldoTopup = () => {
-    jumlahSaldoTopup = dataRiwayatTopup.reduce((total, item) => total + item.total_amount, 0);
-    setJumlahSaldoTopup(jumlahSaldoTopup);
-  };
+  // const updateJumlahSaldoTopup = () => {
+  //   jumlahSaldoTopup = dataRiwayatTopup.reduce((total, item) => total + item.total_amount, 0);
+  //   setJumlahSaldoTopup(jumlahSaldoTopup);
+  // };
 
-  const updateJumlahPendapatanTopup = () => {
-    jumlahPendapatanTopup = totalTopup?.jumlah_pendapatan;
-    setJumlahPendapatanTopup(jumlahPendapatanTopup);
-  };
+  // const updateJumlahPendapatanTopup = () => {
+  //   jumlahPendapatanTopup = totalTopup?.jumlah_pendapatan;
+  //   setJumlahPendapatanTopup(jumlahPendapatanTopup);
+  // };
   
   useEffect(() => {
     setSearch("");
     setSearchTgl(new Date());
     updateJumlahSaldoPembelian();
     updateJumlahPendapatanPembelian();
-    updateJumlahSaldoTopup();
-    updateJumlahPendapatanTopup();
+    // updateJumlahSaldoTopup();
+    // updateJumlahPendapatanTopup();
   }, [pembelian]);
   
   useEffect(() => {
@@ -159,8 +159,8 @@ const Transaction = ({
   }, []);
   
   useLayoutEffect(() => {
-    updateJumlahSaldoTopup();
-    updateJumlahPendapatanTopup();
+    // updateJumlahSaldoTopup();
+    // updateJumlahPendapatanTopup();
   })
 
   const submitSearch = (e) => {
@@ -221,7 +221,7 @@ const Transaction = ({
         <h1 className="mt-4 font-semibold text-25 mx-2 ">Transaction</h1>
       </Grid>
 
-      <div style={{ marginBottom: "30px" }}>
+      {/* <div style={{ marginBottom: "30px" }}>
         <Grid container spacing={4}>
           <Grid item sm={6} xs={12}>
             <SimpleCard loading={false} heightInput={150}>
@@ -232,42 +232,42 @@ const Transaction = ({
 
                 <Grid container spacing={2} alignItems="flex-start">
                   <div className="money-icon">
-                    <img src={pembelian ? ic_money : ic_topup} />
-                  </div>
-                  <div style={{ paddingLeft: "15px" }}>
-                    <h1>
-                      {/* {formatRupiah(TotalGaji())} */}{" "}
-                      {pembelian
+                    {/* <img src={pembelian ? ic_money : ic_topup} /> */}
+                  {/* </div> */}
+                  {/* // <div style={{ paddingLeft: "15px" }}> */}
+                    {/* <h1> */}
+                      {/* {pembelian
                         ? formatRupiah(parseInt(jumlahSaldoPembelian))
-                        : formatRupiah(parseInt(jumlahSaldoTopup))}
-                    </h1>
-                    {pembelian ? (
-                      <h5
-                        style={
-                          totalPembelian?.grafik_pendapatan === "naik"
-                            ? { color: "#51AF77" }
-                            : { color: "#D55454" }
-                        }
-                      >
-                        {totalPembelian?.persentase}%
-                      </h5>
-                    ) : (
-                      <h5
-                        style={
-                          totalTopup?.grafik_pendapatan === "naik"
-                            ? { color: "#51AF77" }
-                            : { color: "#D55454" }
-                        }
-                      >
-                        {totalTopup?.persentase}%
-                      </h5>
-                    )}
-                  </div>
+                        : formatRupiah(parseInt(jumlahSaldoTopup))} */}
+                      {/* {"0"} */}
+                    {/* </h1> */}
+                    {/* // {pembelian ? ( */}
+                    {/* //   <h5 */}
+                    {/* //     style={
+                    //       totalPembelian?.grafik_pendapatan === "naik"
+                    //         ? { color: "#51AF77" }
+                    //         : { color: "#D55454" }
+                    //     }
+                    //   >
+                    //     {totalPembelian?.persentase}%
+                    //   </h5>
+                    // ) : (
+                    //   <h5
+                    //     style={
+                    //       totalTopup?.grafik_pendapatan === "naik"
+                    //         ? { color: "#51AF77" }
+                    //         : { color: "#D55454" }
+                    //     }
+                    //   >
+                    //     {totalTopup?.persentase}%
+                    //   </h5>
+                    // )} */}
+                  {/* </div>
                 </Grid>
               </div>
             </SimpleCard>
-          </Grid>
-          <Grid item sm={6} xs={12}>
+          </Grid> */}
+          {/* <Grid item sm={6} xs={12}>
             <SimpleCard loading={false} heightInput={150}>
               <div className="mt-4 riwayat-gaji-card">
                 <Grid container spacing={2} alignItems="flex-start">
@@ -280,8 +280,11 @@ const Transaction = ({
                   </div>
                   <div style={{ paddingLeft: "15px" }}>
                     <h1>
-                      {pembelian ? formatRupiah(parseInt(jumlahPendapatanPembelian)) : formatRupiah(parseInt(jumlahPendapatanTopup))}
-                    </h1> 
+                      {/* {pembelian ?
+                      formatRupiah(parseInt(jumlahPendapatanPembelian)) :
+                      formatRupiah(parseInt(jumlahPendapatanTopup))} */}
+                      {/* {"0"} */}
+                    {/* </h1> 
                     <h5
                       style={
                         totalPembelian?.grafik_pendapatan === "naik"
@@ -297,7 +300,7 @@ const Transaction = ({
             </SimpleCard>
           </Grid>
         </Grid>
-      </div>
+      </div> */}
       <SimpleCard loading={false} currency="" saldo="">
         <Fragment>
           <div

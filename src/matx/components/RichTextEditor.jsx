@@ -26,7 +26,7 @@ const useStyles = makeStyles(({ palette, ...theme }) => ({
   },
 }));
 
-const RichTextEditor = ({ content, placeholder, handleContentChange }) => {
+const RichTextEditor = ({ content = "", placeholder, handleContentChange }) => {
   const classes = useStyles();
 
   return (

@@ -12,10 +12,15 @@ import {
 const GeneralInfo = () => {
   const dispatch = useDispatch();
   const { dataGeneralInfo } = useSelector((state) => state.generalInfo);
-  console.log(dataGeneralInfo);
+  // console.log(dataGeneralInfo);
 
+  const [aboutDetail, setAbout] = useState({
+    body: "",
+    meta_title: "",
+    meta_desc: "",
+    meta_keyword: ""
+  });
   const [state, setState] = useState({
-    about: "",
     contact_whatsapp: "",
     contact_telegram: "",
     contact_email: "",
@@ -36,12 +41,13 @@ const GeneralInfo = () => {
   useEffect(() => {
     if (dataGeneralInfo.hasOwnProperty("about")) {
       const { about, contact, social_contact } = dataGeneralInfo;
+      // console.log('abt',about);
 
       const contactValue = (params) => {
         const value = contact.filter(
           (data) => data?.contact_code === params
         )[0];
-        console.log(value);
+        // console.log(value);
         return value?.contact_url;
       };
 
@@ -49,13 +55,14 @@ const GeneralInfo = () => {
         const value = social_contact.filter(
           (data) => data?.social_contact_code === params
         )[0];
-        console.log(value);
+        // console.log(value);
         return value?.social_contact_url;
       };
 
+      setAbout(about)
       setState((prev) => ({
         ...prev,
-        about,
+        // about: about,
         contact_whatsapp: contactValue("whatsapp"),
         contact_telegram: contactValue("telegram"),
         contact_email: contactValue("email"),
@@ -74,19 +81,27 @@ const GeneralInfo = () => {
       [e.target.name]: e.target.value,
     }));
   };
-  const handleChangeContent = (e) => {
-    setState((prev) => ({
+  const handleChangeContent = (e, name) => {
+    setAbout((prev) => ({
       ...prev,
-      about: e,
+      [name]: e,
+    }), console.log(aboutDetail));
+  };
+  const handleChangeContentMetaTitle = (e) => {
+    e.persist();
+    setAbout((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
     }));
   };
 
   const history = useHistory();
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
+    console.log(aboutDetail);
     try {
       const obj = {
-        about: state.about,
+        about: aboutDetail,
         contact: [
           {
             contact_code: "whatsapp",
@@ -121,8 +136,8 @@ const GeneralInfo = () => {
         ],
       };
 
-      addGeneralInfo(obj).then((res) => {
-        console.log(res);
+      await addGeneralInfo(obj).then((res) => {
+        // console.log(res);
         Swal.fire("Success!", "Data General Info berhasil disimpan", "success");
         getData();
       });
@@ -169,12 +184,62 @@ const GeneralInfo = () => {
                 </h3>
                 <RichTextEditor
                   content={
-                    state.about.hasOwnProperty("body")
-                      ? state.about.body
-                      : state.about
+                    // state.about.hasOwnProperty("body")
+                    //   ? 
+                    aboutDetail.body
+                      // : state.about
                   }
                   placeholder=""
-                  handleContentChange={handleChangeContent}
+                  handleContentChange={(e) => handleChangeContent(e, 'body')}
+                />
+              </Grid>
+              <Grid item xs={12} sm={12}>
+                <h3 className="mb-5 fw-500 text-15 text-black">Meta Title</h3>
+                <TextField
+                  required={true}
+                  size="small"
+                  InputProps={{
+                    style: {
+                      borderRadius: 5,
+                      minHeight: 46,
+                    },
+                  }}
+                  className="w-full"
+                  value={aboutDetail?.meta_title}
+                  name="meta_title"
+                  placeholder="Meta Title"
+                  variant="outlined"
+                  onChange={handleChangeContentMetaTitle}
+                />
+              </Grid>
+              <Grid item xs={12} sm={12}>
+                <h3 className="mb-5 fw-500 text-15 text-black">
+                  Meta Description
+                </h3>
+                <RichTextEditor
+                  content={
+                    // state.about.hasOwnProperty("meta_description")
+                    //   ? 
+                    aboutDetail?.meta_desc
+                      // : state.about
+                  }
+                  placeholder=""
+                  handleContentChange={(e) => handleChangeContent(e, 'meta_desc')}
+                />
+              </Grid>
+              <Grid item xs={12} sm={12}>
+                <h3 className="mb-5 fw-500 text-15 text-black">
+                  Meta Keyword
+                </h3>
+                <RichTextEditor
+                  content={
+                    // state.about.hasOwnProperty("meta_keyword")
+                      // ? 
+                      aboutDetail?.meta_keyword
+                      // : state.about
+                  }
+                  placeholder=""
+                  handleContentChange={(e) => handleChangeContent(e, 'meta_keyword')}
                 />
               </Grid>
             </Grid>

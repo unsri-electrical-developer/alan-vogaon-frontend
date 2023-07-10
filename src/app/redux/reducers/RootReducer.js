@@ -20,6 +20,7 @@ import {
 import TransactionReducer from "./TransactionReducer";
 import DashboardReducer from "./DashboardReducer";
 import PromoReducer from "./PromoReducer";
+import CrudAdminReducer from "./CrudAdminReducer";
 
 const RootReducer = combineReducers({
   login: LoginReducer,
@@ -39,6 +40,7 @@ const RootReducer = combineReducers({
   snk: SnkReducer,
   game: gamesReducer,
   promo: PromoReducer,
+  crudAdmin: CrudAdminReducer,
   privacyPolicy: PrivacyPolicyReducer,
 });
 

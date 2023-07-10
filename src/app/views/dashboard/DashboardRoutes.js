@@ -24,37 +24,37 @@ const dashboardRoutes = [
   {
     path: "/users",
     component: Users,
-    auth: authRoles.all,
+    auth: authRoles.adm,
     exact: true,
   },
   {
     path: "/games/redeem-list-code/:id",
     component: RedeemListCode,
-    auth: authRoles.all,
+    auth: authRoles.adm,
     exact: true,
   },
   {
     path: "/users/:id",
     component: DetailUser,
-    auth: authRoles.all,
+    auth: authRoles.adm,
     exact: true,
   },
   {
     path: "/games/category",
     component: GamesCategory,
-    auth: authRoles.all,
+    auth: authRoles.adm,
     exact: true,
   },
   {
     path: "/games/category/add",
     component: AddGamesCategory,
-    auth: authRoles.all,
+    auth: authRoles.adm,
     exact: true,
   },
   {
     path: "/games/category/edit/:id",
     component: EditGamesCategory,
-    auth: authRoles.all,
+    auth: authRoles.adm,
     exact: true,
   },
   {
@@ -78,25 +78,25 @@ const dashboardRoutes = [
   {
     path: "/games/listGames",
     component: GamesListGames,
-    auth: authRoles.all,
+    auth: authRoles.adm,
     exact: true,
   },
   {
     path: "/games/listGames/add",
     component: AddGamesListGames,
-    auth: authRoles.all,
+    auth: authRoles.adm,
     exact: true,
   },
   {
     path: "/games/listGames/detail/:id",
     component: DetailListGames,
-    auth: authRoles.all,
+    auth: authRoles.adm,
     exact: true,
   },
   {
     path: "/games/listGames/edit/:id",
     component: EditListGames,
-    auth: authRoles.all,
+    auth: authRoles.adm,
     exact: true,
   },
 ];

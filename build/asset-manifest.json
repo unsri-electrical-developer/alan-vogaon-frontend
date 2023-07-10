@@ -1,0 +1,43 @@
+{
+  "files": {
+    "static/js/0.49b6e98f.chunk.js": "/static/js/0.49b6e98f.chunk.js",
+    "static/js/0.49b6e98f.chunk.js.map": "/static/js/0.49b6e98f.chunk.js.map",
+    "static/js/1.25552288.chunk.js": "/static/js/1.25552288.chunk.js",
+    "static/js/1.25552288.chunk.js.map": "/static/js/1.25552288.chunk.js.map",
+    "main.css": "/static/css/main.f1c19270.chunk.css",
+    "main.js": "/static/js/main.2e51463c.chunk.js",
+    "main.js.map": "/static/js/main.2e51463c.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.72d86187.js",
+    "runtime-main.js.map": "/static/js/runtime-main.72d86187.js.map",
+    "static/css/4.6480a25c.chunk.css": "/static/css/4.6480a25c.chunk.css",
+    "static/js/4.7349525d.chunk.js": "/static/js/4.7349525d.chunk.js",
+    "static/js/4.7349525d.chunk.js.map": "/static/js/4.7349525d.chunk.js.map",
+    "static/js/5.16df8e96.chunk.js": "/static/js/5.16df8e96.chunk.js",
+    "static/js/5.16df8e96.chunk.js.map": "/static/js/5.16df8e96.chunk.js.map",
+    "static/js/6.716e5d8e.chunk.js": "/static/js/6.716e5d8e.chunk.js",
+    "static/js/6.716e5d8e.chunk.js.map": "/static/js/6.716e5d8e.chunk.js.map",
+    "index.html": "/index.html",
+    "precache-manifest.977cc308a694c1930207037107489644.js": "/precache-manifest.977cc308a694c1930207037107489644.js",
+    "service-worker.js": "/service-worker.js",
+    "static/css/4.6480a25c.chunk.css.map": "/static/css/4.6480a25c.chunk.css.map",
+    "static/css/main.f1c19270.chunk.css.map": "/static/css/main.f1c19270.chunk.css.map",
+    "static/js/4.7349525d.chunk.js.LICENSE.txt": "/static/js/4.7349525d.chunk.js.LICENSE.txt",
+    "static/js/main.2e51463c.chunk.js.LICENSE.txt": "/static/js/main.2e51463c.chunk.js.LICENSE.txt",
+    "static/media/Aksieye.svg": "/static/media/Aksieye.9177faa1.svg",
+    "static/media/IcDot.svg": "/static/media/IcDot.9a39b4ae.svg",
+    "static/media/ic_bin.svg": "/static/media/ic_bin.ad6b065d.svg",
+    "static/media/ic_calendar.svg": "/static/media/ic_calendar.f0a428a2.svg",
+    "static/media/ic_delete.svg": "/static/media/ic_delete.6d292554.svg",
+    "static/media/ic_input.svg": "/static/media/ic_input.8038e5b5.svg",
+    "static/media/ic_money.svg": "/static/media/ic_money.8dfd625f.svg",
+    "static/media/ic_plus.svg": "/static/media/ic_plus.51b01787.svg",
+    "static/media/ic_topup.svg": "/static/media/ic_topup.4489861d.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.72d86187.js",
+    "static/css/4.6480a25c.chunk.css",
+    "static/js/4.7349525d.chunk.js",
+    "static/css/main.f1c19270.chunk.css",
+    "static/js/main.2e51463c.chunk.js"
+  ]
+}

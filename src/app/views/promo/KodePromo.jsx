@@ -33,6 +33,7 @@ const KodePromo = () => {
   const getData = () => {
     dispatch(getPromo(search));
   };
+
   const RenderTable = ({ data, state, getData }) => {
     const handleDelete = (id) => {
       try {
@@ -67,10 +68,13 @@ const KodePromo = () => {
         return state.page * 25;
       }
     };
+
+    console.log(data);
+
     return data?.filter(
       (item) =>
-        item.vouchers_title.toLowerCase().includes(search.toLowerCase()) ||
-        item.vouchers_redeem_code.toLowerCase().includes(search.toLowerCase())
+        item?.vouchers_title?.toLowerCase().includes(search.toLowerCase()) ||
+        item?.vouchers_redeem_code?.toLowerCase().includes(search.toLowerCase())
     )?.length > 0 ? (
       data
         .filter(
@@ -93,20 +97,29 @@ const KodePromo = () => {
             >
               {index + 1 + handleNumbering()}
             </TableCell>
-            <TableCell className="text-14 text-black" colSpan={5}>
+            <TableCell className="text-14 text-black" colSpan={3}>
               {item.vouchers_title}
             </TableCell>
-            <TableCell className="text-14 text-black" colSpan={4}>
+            <TableCell className="text-14 text-black" colSpan={3}>
               {item.vouchers_redeem_code}
             </TableCell>
             <TableCell className="text-14 text-black" colSpan={2}>
+              {item.voucher_discount}
+            </TableCell>
+            <TableCell className="text-14 text-black" colSpan={4}>
+              {item.voucher_start + " - " + item.voucher_end}
+            </TableCell>
+            <TableCell className="text-14 text-black text-center" colSpan={4}>
+              {item.voucher_discount_max}
+            </TableCell>
+            <TableCell className="text-14 text-black text-center" colSpan={2}>
               {item.isActive ? (
                 <Chip className="text-white" label="Aktif" color="primary" />
               ) : (
                 <Chip className="text-white" label="Non-aktif" color="error" />
               )}
             </TableCell>
-            <TableCell className="pl-3" align="center" colSpan={1}>
+            <TableCell className="pl-3" colSpan={1}>
               <MenuComponent
                 editPath={`kode_promo/edit/${item.vouchers_code}`}
                 deletePath={() => handleDelete(item.vouchers_code)}
@@ -197,7 +210,7 @@ const KodePromo = () => {
               style: {
                 borderRadius: 5,
                 minHeight: 46,
-                backgroundColor: '#FFFFFF'
+                backgroundColor: "#FFFFFF",
               },
             }}
             value={search}
@@ -219,13 +232,13 @@ const KodePromo = () => {
                   No
                 </TableCell>
                 <TableCell
-                  colSpan={5}
+                  colSpan={3}
                   className="font-medium text-15 text-black"
                 >
                   Nama Promo
                 </TableCell>
                 <TableCell
-                  colSpan={4}
+                  colSpan={3}
                   className="font-medium text-15 text-black"
                 >
                   Kode Promo
@@ -234,11 +247,29 @@ const KodePromo = () => {
                   colSpan={2}
                   className="font-medium text-15 text-black"
                 >
+                  Nominal
+                </TableCell>
+                <TableCell
+                  colSpan={4}
+                  className="font-medium text-15 text-black"
+                >
+                  Tanggal
+                </TableCell>
+                <TableCell
+                  colSpan={4}
+                  className="font-medium text-15 text-black text-center"
+                >
+                  Maks Penggunaan
+                </TableCell>
+                <TableCell
+                  colSpan={2}
+                  className="font-medium text-15 text-black text-center"
+                >
                   Status
                 </TableCell>
                 <TableCell
                   colSpan={1}
-                  className="font-medium text-15 text-black"
+                  className="font-medium text-15 text-black text-center"
                   align="center"
                 >
                   Aksi

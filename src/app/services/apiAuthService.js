@@ -4,8 +4,8 @@ import { API, setAuthToken } from '../../config/API';
 import localStorageService from './localStorageService';
 
 class apiAuthService {
-  loginWithEmailAndPassword = (email, password) => {
-    const params = { email, password };
+  loginWithEmailAndPassword = (email, password, token) => {
+    const params = { email, password, token };
     return API.post('/login', params).then((response) => {
       const data = response.data.data;
       this.setSession(data.access_token);
@@ -27,14 +27,15 @@ class apiAuthService {
     setAuthToken(token);
     return API.get('admin/profile').then((response) => {
       this.setSession(token);
-      this.setUser(response.data.data);
+      const ss = localStorage.getItem('ss')
+      this.setUser(response.data.data, ss);
       return response.data.data;
     });
   };
 
   logout = (token) => {
     setAuthToken(token);
-    return API.post('admin/logout')
+    return API.post('logout')
       .then((response) => {
         this.setSession(null);
         this.removeUser();
@@ -74,7 +75,14 @@ class apiAuthService {
   };
 
   // Save user to localstorage
-  setUser = (user) => {
+  setUser = (user, ss = false) => {
+    const ss_set = localStorage.getItem('ss')
+    user.ss = ss
+    if (ss_set == 'true') {
+      // ss = true;
+      user.ss = true;
+    }
+    // localStorageService.setItem('ss', ss);
     localStorageService.setItem('auth_user', user);
   };
   // Remove user from localstorage

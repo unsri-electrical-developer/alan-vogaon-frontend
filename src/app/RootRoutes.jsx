@@ -9,6 +9,7 @@ import PaymentRoutes from "./views/Payment/PaymentRoutes";
 import SettingsRoutes from "./views/Settings/SettingsRoutes";
 import transactionRoutes from "./views/transaction/TransactionRoutes";
 import PromoRoutes from "./views/promo/PromoRoutes";
+import AdminRoutes from "./views/admin/AdminRoutes";
 
 const redirectRoute = [
   {
@@ -33,6 +34,7 @@ const routes = [
   ...profileRoutes,
   ...transactionRoutes,
   ...PromoRoutes,
+  ...AdminRoutes,
   ...redirectRoute,
   ...errorRoute,
 ];

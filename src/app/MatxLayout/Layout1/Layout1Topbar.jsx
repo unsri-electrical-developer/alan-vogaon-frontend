@@ -4,19 +4,23 @@ import {
   Icon,
   IconButton,
   MenuItem,
+  Switch,
   useMediaQuery,
 } from "@material-ui/core";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import { ArrowDropDownRounded } from "@material-ui/icons";
 import clsx from "clsx";
 import { merge } from "lodash";
-import React from "react";
+import React, { useEffect, useLayoutEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 import { MatxMenu } from "../../../matx";
 import { setLayoutSettings } from "../../redux/actions/LayoutActions";
 import apiAuthService from "../../services/apiAuthService";
+import { setMaintenanceMode } from "../../redux/actions/AppActions";
+import { useState } from "react";
+import { getGeneralInfo } from "../../redux/actions/Settings";
 
 const useStyles = makeStyles(({ palette, ...theme }) => ({
   topbar: {
@@ -58,6 +62,7 @@ const Layout1Topbar = () => {
   const { profile_pict, fullname, users_type, name } = useSelector(
     ({ user }) => user
   );
+  const [maintenance, setMaintenance] = useState(0);
 
   const isMdScreen = useMediaQuery(theme.breakpoints.down("md"));
   const fixed = settings?.layout1Settings?.topbar?.fixed;
@@ -97,19 +102,46 @@ const Layout1Topbar = () => {
     updateSidebarMode({ mode });
   };
 
+  const handleMaintenanceMode = (e) => {
+    setMaintenance(!maintenance);
+    setMaintenanceMode({ status: !maintenance }).then((res) => {
+      console.log(res);
+    });
+  };
+
+  const getData = () => {
+    dispatch(getGeneralInfo());
+  };
+
+  useLayoutEffect(() => {
+    getData();
+  }, []);
+
+  const { dataGeneralInfo } = useSelector((state) => state.generalInfo);
+
+  useEffect(() => {
+    if (dataGeneralInfo.hasOwnProperty("about")) {
+      const { about } = dataGeneralInfo;
+      setMaintenance(about?.maintenance_mode);
+    }
+  }, [dataGeneralInfo]);
+
   return (
     <div className={classes.topbar}>
       <div className={clsx({ "topbar-hold": true, fixed: fixed })}>
         <div className="flex justify-between items-center h-full">
           <div className="flex">
-            {/* <Hidden smDown>
-                            <Switch
-                                onChange={handleSidebarToggle}
-                                checked={leftSidebar.mode !== 'full'}
-                                color="default"
-                                size="small"
-                            />
-                        </Hidden> */}
+            <div>
+              <h5>
+                <Switch
+                  onChange={handleMaintenanceMode}
+                  checked={maintenance}
+                  color="primary"
+                  size="small"
+                />
+                Maintenance
+              </h5>
+            </div>
             <Hidden lgUp>
               <IconButton onClick={handleSidebarToggle}>
                 <Icon color="action">menu</Icon>
@@ -119,9 +151,7 @@ const Layout1Topbar = () => {
           <div className="flex items-center gap-3">
             <div>
               <p className="font-semibold mb-0">{fullname}</p>
-              <p className="text-11 text-muted mb-0 text-right">
-                {name}
-              </p>
+              <p className="text-15 text-muted mb-0 text-right">{name}</p>
             </div>
             <MatxMenu
               menuButton={

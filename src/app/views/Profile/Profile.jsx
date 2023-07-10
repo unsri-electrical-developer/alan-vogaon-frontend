@@ -88,22 +88,28 @@ const Profile = () => {
                                                     </td>
                                                     <th className="py-2 d-flex items-center">
                                                         :{' '}
-                                                        <p className="ml-1 fw-normal font-12 px-3 py-1 m-0 rounded-pill bg-primary text-white text-center">
+                                                        {/* <p className="ml-1 fw-normal font-12 px-3 py-1 m-0 rounded-pill bg-primary text-white text-center">
                                                             {user?.role === 'SA'
                                                                 ? 'Super Admin'
                                                                 : 'Admin Biasa'}
-                                                        </p>
+                                                        </p> */}
                                                     </th>
                                                 </tr>
                                             </tbody>
                                         </table>
                                     </Grid>
                                     <Grid item xs={12} md={2}>
-                                        <Link
+                                        {/* <Link
                                             to="/profile/edit"
                                             className="btn btn-primary border-radius-0 text-white font-14 w-full"
                                         >
                                             Edit Profile
+                                        </Link> */}
+                                        <Link
+                                            to="/profile/2fa"
+                                            className="btn btn-primary border-radius-0 text-white font-14 w-full"
+                                        >
+                                            Set 2FA Auth
                                         </Link>
                                     </Grid>
                                 </Grid>

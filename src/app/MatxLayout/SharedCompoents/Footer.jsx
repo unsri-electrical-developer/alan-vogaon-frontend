@@ -43,7 +43,7 @@ const Footer = () => {
             <p className="m-0">
               &copy; {date.getFullYear()}{" "}
               <a
-                href="https://www.wikarealty.co.id/"
+                href="https://www.vogaon.com/"
                 target="_blank"
                 className="text-primary fw-bold"
                 rel="noopener noreferrer"

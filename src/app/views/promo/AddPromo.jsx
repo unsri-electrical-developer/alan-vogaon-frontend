@@ -94,6 +94,8 @@ const AddPromo = () => {
         throw new Error("Lengkapi semua inputan !");
       }
 
+      console.log(state.start, state.end)
+
       if (state.con_payment_method && payment_method.length == 0) {
         throw new Error("Pilih minimal 1 payment method yang diaktifkan !");
       }
@@ -142,8 +144,10 @@ const AddPromo = () => {
       };
       payment_method.push(pm);
     }
-
     console.log(payment_method);
+    // status = status ? 1 : 0;
+    // payment_method.find((item) => item.pm_code == pm_code).status = status;
+    // console.log(payment_method);
   };
 
   useLayoutEffect(() => {
@@ -326,6 +330,7 @@ const AddPromo = () => {
                   <PaymentMethodCardStatic
                     data={data}
                     handleSwitch={handleSwitchChange}
+                    checked={data?.status || false}
                   />
                 </Grid>
               ))}

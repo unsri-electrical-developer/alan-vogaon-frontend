@@ -1,5 +1,5 @@
-import React from 'react';
-import { withStyles, makeStyles } from '@material-ui/core/styles';
+import React from "react";
+import { withStyles, makeStyles } from "@material-ui/core/styles";
 import {
   Card,
   Dialog,
@@ -8,20 +8,20 @@ import {
   Switch,
   Button,
   TextField,
-} from '@material-ui/core';
-import { useDispatch } from 'react-redux';
+} from "@material-ui/core";
+import { useDispatch } from "react-redux";
 
-import MoreVertIcon from '@material-ui/icons/MoreVert';
-import UploadImageWithButton from '../../components/inputs/UploadImageWithButton';
-import SelectWithTextAndValue from '../../components/select/SelectWithTextAndValue';
-import MenuComponent from '../../components/Menu/MenuComponent';
+import MoreVertIcon from "@material-ui/icons/MoreVert";
+import UploadImageWithButton from "../../components/inputs/UploadImageWithButton";
+import SelectWithTextAndValue from "../../components/select/SelectWithTextAndValue";
+import MenuComponent from "../../components/Menu/MenuComponent";
 import {
   addPaymentMethod,
   deletePaymentMethod,
   togglePaymentStatus,
   updatePaymentMethod,
-} from '../../redux/actions/Payment/PaymentMethodActions';
-import Swal from 'sweetalert2';
+} from "../../redux/actions/Payment/PaymentMethodActions";
+import Swal from "sweetalert2";
 
 const PaymentMethodCard = ({
   isThereContent,
@@ -33,14 +33,14 @@ const PaymentMethodCard = ({
   const useStyles = makeStyles({
     dialog: {
       // height: 'fit-content',
-      scrollbarColor: 'transparent',
-      scrollbarWidth: '0px',
-      minWidth: '800px',
-      maxWidth: '1200px,',
+      scrollbarColor: "transparent",
+      scrollbarWidth: "0px",
+      minWidth: "800px",
+      maxWidth: "1200px,",
       // overflow: 'hidden',
     },
     backDrop: {
-      backgroundColor: 'rgba(0, 0, 0, 0.2)',
+      backgroundColor: "rgba(0, 0, 0, 0.2)",
     },
   });
   const classes = useStyles();
@@ -49,15 +49,15 @@ const PaymentMethodCard = ({
       width: 38,
       height: 19,
       padding: 0,
-      display: 'flex',
+      display: "flex",
     },
     switchBase: {
       padding: 2,
       color: theme.palette.grey[500],
-      '&$checked': {
-        transform: 'translateX(19.5px)',
+      "&$checked": {
+        transform: "translateX(19.5px)",
         color: theme.palette.common.white,
-        '& + $track': {
+        "& + $track": {
           opacity: 1,
           backgroundColor: theme.palette.primary.main,
           borderColor: theme.palette.primary.main,
@@ -67,7 +67,7 @@ const PaymentMethodCard = ({
     thumb: {
       width: 15,
       height: 15,
-      boxShadow: 'none',
+      boxShadow: "none",
     },
     track: {
       border: `1px solid ${theme.palette.grey[500]}`,
@@ -79,12 +79,14 @@ const PaymentMethodCard = ({
   }))(Switch);
 
   const [state, setState] = React.useState({
-    checked: Boolean(data.isActive) || data.status || false,
-    pm_logo: data.pm_logo || '',
-    pm_code: data.pm_code || '',
-    from: data.from || '',
-    pm_title: data.pm_title || '',
-    path: '',
+    checked: Boolean(data.status) || data.status || false,
+    pm_logo: data.pm_logo || "",
+    pm_code: data.pm_code || "",
+    from: data.from || "",
+    pm_title: data.pm_title || "",
+    min_order: data.min_order || 0,
+    fee: data.fee || 0,
+    path: "",
     content: false,
     noContent: false,
   });
@@ -105,22 +107,32 @@ const PaymentMethodCard = ({
     }));
   };
 
-  const handleDelete = () => {
+  const handleDelete = (pm_code) => {
     try {
-      deletePaymentMethod(data.pm_code).then((res) => {
-        getData();
-        setState((prev) => ({
-          ...prev,
-          noContent: false,
-        }));
-        Swal.fire(
-          'Berhasil!',
-          'Data Payment Method berhasil dihapus',
-          'success'
-        );
+      Swal.fire({
+        title: "Hapus Data ini ?",
+        showCancelButton: true,
+        confirmButtonText: "Hapus",
+        confirmButtonColor: '#1253fa',
+        icon: 'question'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          deletePaymentMethod(pm_code).then((res) => {
+            getData();
+            setState((prev) => ({
+              ...prev,
+              noContent: false,
+            }));
+            Swal.fire(
+              "Berhasil!",
+              "Data Payment Method berhasil dihapus",
+              "success"
+            );
+          });
+        }
       });
     } catch (e) {
-      Swal.fire('Berhasil!', 'Data Payment Method gagal dihapus', 'success');
+      Swal.fire("Berhasil!", "Data Payment Method gagal dihapus", "success");
     }
   };
 
@@ -130,43 +142,66 @@ const PaymentMethodCard = ({
       pm_code: state.pm_code,
       pm_logo: state.pm_logo,
       from: state.from,
+      min_order: state.min_order,
+      fee: state.fee,
     };
     try {
-      if (type === 'add') {
-        addPaymentMethod(obj).then((res) => {
-          getData();
-          setState((prev) => ({
-            checked: false,
-            pm_logo: '',
-            pm_code: '',
-            from: '',
-            pm_title: '',
-            path: '',
-            content: false,
-            noContent: false,
-          }));
-          Swal.fire(
-            'Berhasil!',
-            'Data Payment Method berhasil disimpan',
-            'success'
-          );
-        });
-      } else if (type === 'update') {
-        updatePaymentMethod(state.pm_code, obj).then((res) => {
-          getData();
-          setState((prev) => ({
-            ...prev,
-            content: false,
-          }));
-          Swal.fire(
-            'Berhasil!',
-            'Data Payment Method berhasil disimpan',
-            'success'
-          );
-        });
+      if (
+        state.pm_title == "" ||
+        state.pm_code == "" ||
+        state.pm_logo == "" ||
+        state.from == "" ||
+        state.min_order == "" ||
+        state.fee == ""
+      ) {
+        Swal.fire("Gagal!", "Harap isi semua inputan !", "warning");
+        return;
+      }
+      if (type === "add") {
+        addPaymentMethod(obj)
+          .then((res) => {
+            getData();
+            setState((prev) => ({
+              checked: false,
+              pm_logo: "",
+              pm_code: "",
+              from: "",
+              pm_title: "",
+              path: "",
+              min_order: 0,
+              fee: 0,
+              content: false,
+              noContent: false,
+            }));
+            Swal.fire(
+              "Berhasil!",
+              "Data Payment Method berhasil disimpan",
+              "success"
+            );
+          })
+          .catch((err) => {
+            Swal.fire("Gagal!", "System Under Maintenance !", "error");
+          });
+      } else if (type === "update") {
+        updatePaymentMethod(state.pm_code, obj)
+          .then((res) => {
+            getData();
+            setState((prev) => ({
+              ...prev,
+              content: false,
+            }));
+            Swal.fire(
+              "Berhasil!",
+              "Data Payment Method berhasil disimpan",
+              "success"
+            );
+          })
+          .catch((err) => {
+            Swal.fire("Gagal!", "System Under Maintenance !", "error");
+          });
       }
     } catch (e) {
-      Swal.fire('Gagal!', 'Data Payment Method gagal disimpan', 'error');
+      Swal.fire("Gagal!", "Data Payment Method gagal disimpan", "error");
     }
   };
 
@@ -192,8 +227,8 @@ const PaymentMethodCard = ({
                 alt="preview foto"
                 className="preview w-full h-35"
                 style={{
-                  objectFit: 'cover',
-                  objectPosition: 'center',
+                  objectFit: "cover",
+                  objectPosition: "center",
                 }}
               />
             </div>
@@ -207,7 +242,7 @@ const PaymentMethodCard = ({
                   checked: !state.checked,
                 }));
                 togglePaymentStatus(data.pm_code, {
-                  isActive: state.checked ? 0 : 1,
+                  status: state.checked ? 0 : 1,
                 });
                 getData();
               }}
@@ -217,7 +252,7 @@ const PaymentMethodCard = ({
           <Grid item xs={6} className="d-flex justify-end items-end">
             <MenuComponent
               deletePath={() => {
-                deletePaymentMethod(data.pm_code);
+                handleDelete(data.pm_code);
                 getData();
               }}
               editAction={() =>
@@ -272,7 +307,7 @@ const PaymentMethodCard = ({
                 handleDelete={() => {
                   setState((prev) => ({
                     ...prev,
-                    pm_logo: '',
+                    pm_logo: "",
                   }));
                 }}
               />
@@ -325,6 +360,34 @@ const PaymentMethodCard = ({
                 variant="outlined"
               />
             </Grid>
+            <Grid item xs={12} md={6}>
+              <h1 className="mb-5 fw-500 text-13 text-black">Minimum Order</h1>
+              <TextField
+                required={true}
+                size="small"
+                name="min_order"
+                value={state.min_order}
+                onChange={handleChange}
+                className={`border-radius-4 w-full`}
+                placeholder="Rp10.000"
+                variant="outlined"
+                type="number"
+              />
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <h1 className="mb-5 fw-500 text-13 text-black">Fee Transaksi</h1>
+              <TextField
+                required={true}
+                size="small"
+                name="fee"
+                value={state.fee}
+                onChange={handleChange}
+                className={`border-radius-4 w-full`}
+                placeholder="Rp10.000"
+                variant="outlined"
+                type="number"
+              />
+            </Grid>
           </Grid>
           <div className="d-flex items-center justify-end gap-11 mt-20">
             <Button
@@ -346,7 +409,7 @@ const PaymentMethodCard = ({
               color="primary"
               className="w-140 border-radius-4 py-2 px-30 text-14 text-center fw-500 text-white"
               type="submit"
-              onClick={() => handleSubmit('update')}
+              onClick={() => handleSubmit("update")}
             >
               Save
             </Button>
@@ -406,7 +469,7 @@ const PaymentMethodCard = ({
                 handleDelete={() => {
                   setState((prev) => ({
                     ...prev,
-                    pm_logo: '',
+                    pm_logo: "",
                   }));
                 }}
               />
@@ -459,6 +522,34 @@ const PaymentMethodCard = ({
                 variant="outlined"
               />
             </Grid>
+            <Grid item xs={12} md={6}>
+              <h1 className="mb-5 fw-500 text-13 text-black">Minimum Order</h1>
+              <TextField
+                required={true}
+                size="small"
+                name="min_order"
+                value={state.min_order}
+                onChange={handleChange}
+                className={`border-radius-4 w-full`}
+                placeholder="Rp10.000"
+                variant="outlined"
+                type="number"
+              />
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <h1 className="mb-5 fw-500 text-13 text-black">Fee Transaksi</h1>
+              <TextField
+                required={true}
+                size="small"
+                name="fee"
+                value={state.fee}
+                onChange={handleChange}
+                className={`border-radius-4 w-full`}
+                placeholder="Rp10.000"
+                variant="outlined"
+                type="number"
+              />
+            </Grid>
           </Grid>
           <div className="d-flex items-center justify-start gap-11 mt-20">
             <Button
@@ -479,7 +570,7 @@ const PaymentMethodCard = ({
               color="primary"
               className="w-140 border-radius-4 py-2 px-30 text-14 text-center fw-500 text-white"
               type="submit"
-              onClick={() => handleSubmit('add')}
+              onClick={() => handleSubmit("add")}
             >
               Save
             </Button>

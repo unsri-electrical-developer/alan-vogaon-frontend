@@ -8,25 +8,25 @@ const SettingsRoutes = [
   {
     path: '/settings/faq',
     component: Faq,
-    auth: authRoles.all,
+    auth: authRoles.adm,
     exact: true,
   },
   {
     path: '/settings/general_info',
     component: GeneralInfo,
-    auth: authRoles.all,
+    auth: authRoles.adm,
     exact: true,
   },
   {
     path: '/settings/snk',
     component: SnK,
-    auth: authRoles.all,
+    auth: authRoles.adm,
     exact: true,
   },
   {
     path: '/settings/privacy_policy',
     component: PrivacyPolicy,
-    auth: authRoles.all,
+    auth: authRoles.adm,
     exact: true,
   },
 ];

@@ -1,0 +1,27 @@
+.image-tooltip-container {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 10px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+}
+
+.tooltip img {
+  width: 100px;
+  height: 100px;
+}
+
+.tooltip span {
+  display: block;
+  text-align: center;
+  margin-top: 5px;
+}

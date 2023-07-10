@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
-import { Button, Menu, MenuItem } from '@material-ui/core';
-import { Link } from 'react-router-dom';
-import Swal from 'sweetalert2';
-import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
-import CreateOutlinedIcon from '@material-ui/icons/CreateOutlined';
-import DeleteOutlineOutlinedIcon from '@material-ui/icons/DeleteOutlineOutlined';
+import React, { useState } from "react";
+import { Button, Menu, MenuItem } from "@material-ui/core";
+import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
+import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
+import CreateOutlinedIcon from "@material-ui/icons/CreateOutlined";
+import DeleteOutlineOutlinedIcon from "@material-ui/icons/DeleteOutlineOutlined";
 
-import { useDispatch } from 'react-redux';
+import { useDispatch } from "react-redux";
 
 export default function MenuComponent({
   icon = <MoreHorizIcon />,

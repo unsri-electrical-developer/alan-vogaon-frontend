@@ -1,15 +1,18 @@
-import { Button, ButtonGroup, Grid, Icon } from "@material-ui/core";
+import { Button, ButtonGroup, Grid, Icon, FormControl, InputLabel, Select, MenuItem } from "@material-ui/core";
 import SimpleCard from "../../assets/components/cards/SimpleCard";
 import React, { Component, Fragment, useEffect, useState } from "react";
 import { connect } from "react-redux";
 
 import Swal from "sweetalert2";
 import { Link, useParams, useHistory } from "react-router-dom";
-import { getDetailPembelian } from "../../redux/actions/Transaction/TransactionActions";
+import { getDetailPembelian, updateStatusPembelian } from "../../redux/actions/Transaction/TransactionActions";
 import { formatRupiah } from "../../../utlis/formatRupiah";
 import TableDetailListPembelian from "../../components/sections/TableDetailListPembelian";
 import { da } from "date-fns/locale";
 import { sum } from "lodash";
+import SelectOfArray from "../../components/select/SelectOfArray";
+import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
+import GeneralButton from "../../components/buttons/GeneralButton.jsx";
 
 const DetailPembelian = ({ getDetailPembelian, detailPembelian }) => {
   const { id } = useParams();
@@ -22,6 +25,7 @@ const DetailPembelian = ({ getDetailPembelian, detailPembelian }) => {
     rowsPerPage: 10,
     totalPembelian: 0,
   });
+
 
   const setPage = (page) => {
     setState({ ...state, page });
@@ -39,10 +43,50 @@ const DetailPembelian = ({ getDetailPembelian, detailPembelian }) => {
     setPage(newPage);
   };
 
+  const [selectedOption, setSelectedOption] = useState('');
+
+  const handleChange = (event) => {
+    setSelectedOption(event.target.value);
+  };
+  
   useEffect(() => {
     getData();
   }, [id]);
 
+  useEffect(() => {
+    setSelectedOption(detailPembelian?.status);
+  }, [detailPembelian])
+
+  // updatePaymentMethod(state.pm_code, obj)
+  // .then((res) => {
+  //   getData();
+  //   setState((prev) => ({
+  //     ...prev,
+  //     content: false,
+  //   }));
+  //   Swal.fire(
+  //     "Berhasil!",
+  //     "Data Payment Method berhasil disimpan",
+  //     "success"
+  //   );
+  // })
+  // .catch((err) => {
+  //   Swal.fire("Gagal!", "System Under Maintenance !", "error");
+  // });
+  
+  const handleSubmit = () => { 
+    const body = {
+      kode_transaksi: detailPembelian?.transaction_code,
+      status: selectedOption,
+    }
+    updateStatusPembelian(body).then((res) => {
+      Swal.fire(
+        "Berhasil!",
+        "Status Pembelian berhasil diperbarui",
+        "success"
+      );
+    })
+  }
 
   const tableHeadItems = [
     { name: "No", align: "center", colSpan: 1 },
@@ -64,6 +108,25 @@ const DetailPembelian = ({ getDetailPembelian, detailPembelian }) => {
   const nominal = detailPembelian?.totalPembelianTransaksi
     ? formatRupiah(detailPembelian?.totalPembelianTransaksi)
     : "";
+
+  const listOfStatus = ['success', 'processing', 'pending', 'waiting']
+  let dataSelectStatus = [];
+  listOfStatus.map((item, index) => {
+    dataSelectStatus.push({
+      text: item,
+      value: item,
+    })
+  })
+
+  // let chek = detailPembelian.status == "sprocessing" ? "oke" : "tidak";
+  // console.log(chek)
+
+  // const [DataStatus, setDataStatus] = useState({
+  //   status: detailPembelian?.status,
+  // });
+
+  // console.log(dataSelectStatus)
+
   const history = useHistory();
   const a = true;
   return a ? (
@@ -116,7 +179,7 @@ const DetailPembelian = ({ getDetailPembelian, detailPembelian }) => {
                 </Grid>
                 <Grid item sm={6} xs={12}>
                   <h5>Status</h5>
-                  <div
+                  {/* <div
                     style={
                       detailPembelian?.status == "processing" ? { color: "#1253FA" }
                       : detailPembelian?.status == "waiting" || detailPembelian?.status == "pending"  ? { color: "#DF8838" }
@@ -125,14 +188,57 @@ const DetailPembelian = ({ getDetailPembelian, detailPembelian }) => {
                     }
                   >
                     {detailPembelian?.status}
-                  </div>
+                  </div> */}
+                  <FormControl
+                    size="small"
+                    variant="outlined"
+                    className="form-control d-inline"
+                    required={true}
+                    InputProps={{
+                      style: {
+                        borderRadius: 5,
+                        minHeight: 46,
+                      },
+                    }}
+                  >
+                    <Select
+                      IconComponent={() => (
+                        <KeyboardArrowDownIcon size="medium" style={{ fontWeight: 700 }} />
+                      )}
+                      onChange={handleChange}
+                      value={selectedOption}
+                      size="small"
+                      className="bg-white"
+                      style={{
+                        paddingRight: "2px",
+                        width: "150px",
+                      }}
+                    >
+                      {dataSelectStatus.map((data, index) => (
+                        <MenuItem
+                          key={index}
+                          value={data.value}
+                          text={data.text}
+                          className={`"text-14 bg-white"`}
+                          style={{
+                            transform: `scaleY(${1 === "1.25" ? "0.92" : "1"})`,
+                          }}
+                        >
+                          {data.text}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+                    <div className="d-inline back-button">
+                      <Button onClick={handleSubmit} className="d-inline ml-3" >Update</Button>
+                    </div>
                 </Grid>
               </Grid>
             </Fragment>
           </div>
         </SimpleCard>
       </div>
-      <div className="mb-20px">
+      {/* <div className="mb-20px">
         <SimpleCard loading={false} currency="" saldo="">
           <div className="py-4 px-8">
             <div className="mx-8 mb-8 bg-white">
@@ -158,7 +264,7 @@ const DetailPembelian = ({ getDetailPembelian, detailPembelian }) => {
             </div>
           </div>
         </SimpleCard>
-      </div>
+      </div> */}
       
     </div>
   ) : (

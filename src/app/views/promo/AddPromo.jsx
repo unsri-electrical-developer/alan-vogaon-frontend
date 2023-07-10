@@ -161,6 +161,8 @@ const AddPromo = () => {
       ...prevState,
       newDataPaymentMethod: dataPaymentMethod,
     }));
+    console.log('ok')
+
   }, [dataPaymentMethod]);
 
   return (

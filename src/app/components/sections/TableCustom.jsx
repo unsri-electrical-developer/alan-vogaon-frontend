@@ -30,6 +30,8 @@ const RenderTable = ({
       return state.page * 5;
     } else if (state.rowsPerPage === 10) {
       return state.page * 10;
+    } else if (state.rowsPerPage === 20) {
+      return state.page * 20;
     } else if (state.rowsPerPage === 25) {
       return state.page * 25;
     }
@@ -63,7 +65,10 @@ const RenderTable = ({
               key={index}
               className="text-14 pl-2"
               // style={{ color: "#0A0A0A" }}
-              style={column.type === "topup" && item[column.key] > 0 ? {color: "#51AF77"} : column.type === "topup" && item[column.key] < 0 ? {color:"#D55454"} :   {color: "#0A0A0A" }}
+              style={column.type === "topup" && item[column.key] > 0 ? {color: "#51AF77"} : column.type === "topup" && item[column.key] < 0 ? {color:"#D55454"} : column.type === "status" && item[column.key] == "processing" ? { color: "#1253FA" }
+              : column.type === "status" && item[column.key] == "waiting" || column.type === "status" && item[column.key] == "pending"  ? { color: "#DF8838" }
+              : column.type === "status" && item[column.key] == "success" ? { color: "#51AF77" }
+              :   {color: "#0A0A0A" }}
               colSpan={column.colSpan}
               align={column.align}
             >
@@ -73,7 +78,12 @@ const RenderTable = ({
                     .replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.")}`
                 : column.type === "date" && item[column.key]
                 ? new Date(item[column.key]).toLocaleDateString("en-US")
-                : item[column.key]}
+                : column.type !== "pembelian" ? item[column.key] : null }
+
+              {/* Nomor Transaksi */}
+              <Link to={`${detailLink}/${item[id]}`}>
+                {column.type === "pembelian" && item[column.key]}
+              </Link>
             </TableCell>
           ))}
           <TableCell align="center" colSpan={aksiSpan} className=" pl-2">
@@ -113,7 +123,7 @@ const TableCustom = ({
 }) => {
   const [state, setState] = useState({
     page: 0,
-    rowsPerPage: 10,
+    rowsPerPage: 20,
   });
 
   const setPage = (page) => {

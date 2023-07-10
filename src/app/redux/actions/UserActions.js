@@ -83,3 +83,15 @@ export const changePin = async (params) => {
   setAuthToken(token);
   return await API.post("users/pin/change", params);
 };
+
+export const getAuthFABarcode = async (secret) => {
+  const token = localStorage.getItem("jwt_token");
+  setAuthToken(token);
+  return await API.get("/fa_barcode");
+};
+
+export const pairAuthFABarcode = async (params) => {
+  const token = localStorage.getItem("jwt_token");
+  setAuthToken(token);
+  return await API.post("/fa_barcode/pair", params);
+};

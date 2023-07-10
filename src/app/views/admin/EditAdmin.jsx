@@ -4,6 +4,9 @@ import {
   TextField,
   InputAdornment,
   IconButton,
+  Select,
+  InputLabel,
+  MenuItem,
 } from "@material-ui/core";
 import React, { useLayoutEffect, useState } from "react";
 import "../../../styles/css/DetailUser.css";
@@ -31,6 +34,7 @@ const EditAdmin = () => {
     konfirmasi_password: "",
     showPassword: false,
     img: "",
+    role: "ADM"
   });
 
   useLayoutEffect(() => {
@@ -42,6 +46,7 @@ const EditAdmin = () => {
         ...prev,
         name: data.name,
         email: data.email,
+        role: data.role,
         img: data.admin_profile_pic,
       }));
     });
@@ -71,6 +76,7 @@ const EditAdmin = () => {
         email: state.email,
         password: state.password,
         img: state.img,
+        role: state.role
       };
 
       if (state.password == "") {
@@ -108,7 +114,7 @@ const EditAdmin = () => {
       <Card className="mt-5 py-10 px-10">
         <div className="mt-5 mb-8">
           <Grid container className="mt-2" spacing={2}>
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12} sm={12}>
               <h1
                 className="mb-5 font-semimedium text-14"
                 style={{ color: "#0a0a0a" }}
@@ -157,6 +163,32 @@ const EditAdmin = () => {
                 onChange={handleChange}
                 type="text"
               />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <InputLabel htmlFor="role" className="mb-5">
+                Role
+              </InputLabel>
+              <Select
+                SelectDisplayProps={{
+                  style: {
+                    paddingTop: 10,
+                    paddingBottom: 10,
+                    borderRadius: 5,
+                    minHeight: 25,
+                  },
+                }}
+                size="small"
+                labelId="role"
+                value={state.role}
+                onChange={handleChange}
+                variant="outlined"
+                className="w-full"
+                name="role"
+                displayEmpty
+              >
+                <MenuItem value="ADM">ADMIN</MenuItem>
+                <MenuItem value="OP">OPERATOR</MenuItem>
+              </Select>
             </Grid>
             <Grid item xs={12} sm={6}>
               <h1

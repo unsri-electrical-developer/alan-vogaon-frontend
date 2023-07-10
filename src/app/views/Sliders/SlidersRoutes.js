@@ -5,7 +5,7 @@ const SlidersRoutes = [
   {
     path: '/sliders',
     component: Sliders,
-    auth: authRoles.all,
+    auth: authRoles.adm,
   },
 ];
 

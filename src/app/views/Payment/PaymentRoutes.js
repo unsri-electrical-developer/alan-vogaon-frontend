@@ -8,25 +8,25 @@ const PaymentRoutes = [
   {
     path: '/payment_gateway',
     component: PaymentGateway,
-    auth: authRoles.all,
+    auth: authRoles.adm,
     exact: true,
   },
   {
     path: '/payment_gateway/add',
     component: AddPaymentGateway,
-    auth: authRoles.all,
+    auth: authRoles.adm,
     exact: true,
   },
   {
     path: '/payment_gateway/:id',
     component: EditPaymentGateway,
-    auth: authRoles.all,
+    auth: authRoles.adm,
     exact: true,
   },
   {
     path: '/payment_method',
     component: PaymentMethod,
-    auth: authRoles.all,
+    auth: authRoles.adm,
     exact: true,
   },
 ];

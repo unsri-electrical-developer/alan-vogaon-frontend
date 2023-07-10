@@ -7,19 +7,19 @@ const AdminRoutes = [
   {
     path: "/admin",
     component: Admin,
-    auth: authRoles.all,
+    auth: authRoles.adm,
     exact: true,
   },
   {
     path: "/admin/add",
     component: AddAdmin,
-    auth: authRoles.all,
+    auth: authRoles.adm,
     exact: true,
   },
   {
     path: "/admin/edit/:id",
     component: EditAdmin,
-    auth: authRoles.all,
+    auth: authRoles.adm,
     exact: true,
   },
 ];

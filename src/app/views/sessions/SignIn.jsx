@@ -5,21 +5,22 @@ import {
   Grid,
   IconButton,
   InputAdornment,
-} from '@material-ui/core';
-import { createStyles, makeStyles } from '@material-ui/core/styles';
-import { Visibility, VisibilityOff } from '@material-ui/icons';
-import clsx from 'clsx';
-import React, { useEffect } from 'react';
-import { useState } from 'react';
-import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator';
-import { useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
-import Swal from 'sweetalert2';
+} from "@material-ui/core";
+import { createStyles, makeStyles } from "@material-ui/core/styles";
+import { Visibility, VisibilityOff } from "@material-ui/icons";
+import clsx from "clsx";
+import React, { useEffect, useRef } from "react";
+import { useState } from "react";
+import { TextValidator, ValidatorForm } from "react-material-ui-form-validator";
+import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
 
 import {
   LOGIN_ERROR,
   loginWithEmailAndPassword,
-} from '../../redux/actions/LoginActions';
+} from "../../redux/actions/LoginActions";
+import ReCAPTCHA from "react-google-recaptcha";
 
 const useStyles = makeStyles(({ palette, ...theme }) =>
   createStyles({
@@ -28,14 +29,14 @@ const useStyles = makeStyles(({ palette, ...theme }) =>
       marginBottom: 30,
     },
     containerForm: {
-      padding: '1rem',
-      [theme.breakpoints.up('md')]: {
-        padding: '1rem 3rem',
+      padding: "1rem",
+      [theme.breakpoints.up("md")]: {
+        padding: "1rem 3rem",
       },
     },
     bgPage: {
       backgroundImage: "url('/assets/images/illustrations/bg-page.webp')",
-      backgroundRepeat: 'repeat',
+      backgroundRepeat: "repeat",
     },
   })
 );
@@ -43,7 +44,8 @@ const useStyles = makeStyles(({ palette, ...theme }) =>
 const SignIn = () => {
   const [loading, setLoading] = useState(false);
   const [userInfo, setUserInfo] = useState({});
-  const [passType, setPassType] = useState('password');
+  const [passType, setPassType] = useState("password");
+  const [recaptchaRef, setRecaptcha] = useState("");
 
   const dispatch = useDispatch();
   const classes = useStyles();
@@ -54,6 +56,14 @@ const SignIn = () => {
     setUserInfo(temp);
   };
 
+  const handleCaptchaChange = (e) => {
+    // setRecaptcha(e)
+    setUserInfo((prevState) => ({
+      ...prevState,
+      token: e,
+    }));
+  };
+
   const handleFormSubmit = () => {
     setLoading(true);
     dispatch(loginWithEmailAndPassword(userInfo)).then(async (res) => {
@@ -62,17 +72,17 @@ const SignIn = () => {
       if (res.type === LOGIN_ERROR) {
         let error = res?.payload?.data;
         Swal.fire({
-          title: 'Oopss!',
+          title: "Oopss!",
           text:
-            error?.code === 2 ? error?.message : 'email or password incorrect',
-          imageUrl: '/assets/images/icons/ic_error.svg',
+            error?.code === 2 ? error?.message : "email or password incorrect",
+          imageUrl: "/assets/images/icons/ic_error.svg",
           imageWidth: 92,
           imageHeight: 92,
           timer: 2000,
-          confirmButtonText: 'OK',
+          confirmButtonText: "OK",
         });
       } else {
-        window.location.href = '/dashboard';
+        window.location.href = "/checkFA";
       }
     });
   };
@@ -89,7 +99,7 @@ const SignIn = () => {
           md={5}
           xs={11}
           className={clsx(
-            'h-full-screen flex flex-column items-start justify-center',
+            "h-full-screen flex flex-column items-start justify-center",
             classes.containerForm
           )}
         >
@@ -112,11 +122,11 @@ const SignIn = () => {
                 onChange={handleChange}
                 type="email"
                 name="email"
-                value={userInfo.email || ''}
-                validators={['required', 'isEmail']}
+                value={userInfo.email || ""}
+                validators={["required", "isEmail"]}
                 errorMessages={[
-                  'Masukkan email terlebih dahulu',
-                  'Format email tidak valid',
+                  "Masukkan email terlebih dahulu",
+                  "Format email tidak valid",
                 ]}
               />
               <TextValidator
@@ -126,9 +136,9 @@ const SignIn = () => {
                 onChange={handleChange}
                 name="password"
                 type={passType}
-                value={userInfo.password || ''}
-                validators={['required']}
-                errorMessages={['Masukkan password terlebih dahulu']}
+                value={userInfo.password || ""}
+                validators={["required"]}
+                errorMessages={["Masukkan password terlebih dahulu"]}
                 InputProps={{
                   endAdornment: (
                     <InputAdornment position="end">
@@ -137,11 +147,11 @@ const SignIn = () => {
                         aria-label="toggle password visibility"
                         onClick={() =>
                           setPassType((type) =>
-                            type === 'password' ? 'text' : 'password'
+                            type === "password" ? "text" : "password"
                           )
                         }
                       >
-                        {passType === 'password' ? (
+                        {passType === "password" ? (
                           <Visibility fontSize="small" />
                         ) : (
                           <VisibilityOff fontSize="small" />
@@ -150,6 +160,11 @@ const SignIn = () => {
                     </InputAdornment>
                   ),
                 }}
+              />
+              <ReCAPTCHA
+                sitekey="6LdW7Q0nAAAAAIt6UHjYEVfZ9v4T1voRH-EMYpD0"
+                size="normal"
+                onChange={handleCaptchaChange}
               />
               <Button
                 variant="contained"
@@ -163,7 +178,7 @@ const SignIn = () => {
                 {loading ? (
                   <CircularProgress size={24} color="primary" />
                 ) : (
-                  'Masuk'
+                  "Masuk"
                 )}
               </Button>
             </ValidatorForm>

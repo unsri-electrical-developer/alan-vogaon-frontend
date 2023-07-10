@@ -16,10 +16,10 @@ export const setAuthLoadingStatus = (status = false) => {
     });
 };
 
-export function loginWithEmailAndPassword({ email, password }) {
+export function loginWithEmailAndPassword({ email, password, token }) {
   return (dispatch) => {
     return apiAuthService
-      .loginWithEmailAndPassword(email, password)
+      .loginWithEmailAndPassword(email, password, token)
       .then((user) => {
         dispatch(setUserData(user));
 

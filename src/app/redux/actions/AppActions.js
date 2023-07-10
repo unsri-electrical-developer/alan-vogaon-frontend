@@ -124,3 +124,9 @@ export const updTerm = (params) => {
   setAuthToken(token);
   return API.post("admin/ptc/edit", params);
 };
+
+export const setMaintenanceMode = (params) => {
+  const token = localStorage.getItem("jwt_token");
+  setAuthToken(token);
+  return API.post("maintenance", params);
+};

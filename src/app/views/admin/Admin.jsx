@@ -28,7 +28,7 @@ import {
   getCrudAdmin,
 } from "../../redux/actions/CrudAdminActions";
 
-import {formatTanggal} from '../../../utlis/formatTanggal'
+import { formatTanggal } from "../../../utlis/formatTanggal";
 
 const Admin = () => {
   const dispatch = useDispatch();
@@ -97,6 +97,14 @@ const Admin = () => {
             </TableCell>
             <TableCell className="text-14 text-black" colSpan={5}>
               {item.email}
+            </TableCell>
+            <TableCell className="text-14 text-black" colSpan={4}>
+              <div
+                className=" z-100 text-14 d-flex items-center"
+                style={{ gap: "16px" }}
+              >
+                {item.role == "ADM" ? "ADMIN" : "OPERATOR"}
+              </div>
             </TableCell>
             <TableCell className="text-14 text-black" colSpan={4}>
               {formatTanggal(item?.created_at)}
@@ -231,6 +239,12 @@ const Admin = () => {
                   className="font-medium text-15 text-black"
                 >
                   Email
+                </TableCell>
+                <TableCell
+                  colSpan={4}
+                  className="font-medium text-15 text-black"
+                >
+                  Role
                 </TableCell>
                 <TableCell
                   colSpan={4}

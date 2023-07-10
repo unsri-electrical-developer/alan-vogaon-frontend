@@ -7,19 +7,19 @@ const PromoRoutes = [
   {
     path: "/kode_promo",
     component: KodePromo,
-    auth: authRoles.all,
+    auth: authRoles.adm,
     exact: true,
   },
   {
     path: "/kode_promo/add",
     component: AddPromo,
-    auth: authRoles.all,
+    auth: authRoles.adm,
     exact: true,
   },
   {
     path: "/kode_promo/edit/:id",
     component: EditPromo,
-    auth: authRoles.all,
+    auth: authRoles.adm,
     exact: true,
   },
 ];

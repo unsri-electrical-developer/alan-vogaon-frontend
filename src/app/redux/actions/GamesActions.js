@@ -7,11 +7,19 @@ export const GET_ALL_CATEGORIES = "GET_ALL_CATEGORIES";
 export const DELETE_CATEGORY = "DELETE_CATEGORY";
 export const GET_DETAIL_CATEGORY = "GET_DETAIL_CATEGORY";
 export const GET_GAMES_VOUCHER = "GET_GAMES_VOUCHER";
+export const GET_ALL_GAMES_VOUCHER = "GET_ALL_GAMES_VOUCHER";
+
 // CATEGORY
 export const getAllCategories = () => {
   const token = localStorage.getItem("jwt_token");
   setAuthToken(token);
   return API.get("/category/");
+};
+
+export const getAllGamesVoucher = () => {
+  const token = localStorage.getItem("jwt_token");
+  setAuthToken(token);
+  return API.get("/game_voucher");
 };
 
 export const getGameItems = (id) => {
@@ -72,6 +80,26 @@ export const getGamesVoucher = (params) => {
       });
   };
 };
+
+// export const getAllGamesVoucher = (params) => {
+//   return (dispatch) => {
+//     const token = localStorage.getItem("jwt_token");
+//     setAuthToken(token);
+//     API.get(`/game_voucher` + params)
+//       .then((res) => {
+//         dispatch({
+//           type: GET_ALL_GAMES_VOUCHER,
+//           payload: res.data.data || [],
+//         });
+//       })
+//       .catch(() => {
+//         dispatch({
+//           type: GET_ALL_GAMES_VOUCHER,
+//           payload: [],
+//         });
+//       });
+//   };
+// };
 
 export const addGamesVoucher = (params, id) => {
   return async (dispatch) => {

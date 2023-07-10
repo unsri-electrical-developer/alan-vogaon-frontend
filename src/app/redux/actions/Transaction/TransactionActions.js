@@ -146,3 +146,9 @@ export const getDetailTotalPembelian = (params) => {
       });
   };
 };
+
+export const updateStatusPembelian = (body) => {
+  const token = localStorage.getItem('jwt_token');
+  setAuthToken(token);
+  return API.patch('/transaction/edit_status', body);
+};

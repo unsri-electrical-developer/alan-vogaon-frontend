@@ -149,6 +149,7 @@ const Transaction = ({
     updateJumlahPendapatanPembelian();
     updateJumlahSaldoTopup();
     // updateJumlahPendapatanTopup();
+    console.log(dataRiwayatPembelian)
   }, [pembelian]);
   
   useEffect(() => {
@@ -201,18 +202,18 @@ const Transaction = ({
 
   const tableHeadItems2 = [
     { name: "No", align: "center", colSpan: 1 },
-    { name: "Nama Pengguna", align: "left", colSpan: 3 },
-    { name: "Harga", align: "center", colSpan: 3 },
     { name: "Waktu Transaksi", align: "center", colSpan: 3 },
-    { name: "Status", align: "center", colSpan: 3 },
+    { name: "Nomor Transaksi", align: "center", colSpan: 3 },
+    { name: "Referensi", align: "center", colSpan: 3 },
+    { name: "Status", align: "center", colSpan: 2 },
     { name: "Aksi", align: "center", colSpan: 3 },
   ];
 
   const tableBodyItems2 = [
-    { key: "name", align: "left", colSpan: 3 },
-    { key: "total_amount", align: "center", colSpan: 3, type: "price" },
     { key: "waktu_transaksi", align: "center", colSpan: 3 },
-    { key: "status", align: "center", colSpan: 3 },
+    { key: "transaction_code", align: "center", colSpan: 3, type: "pembelian" },
+    { key: "no_reference", align: "center", colSpan: 3},
+    { key: "status", align: "center", colSpan: 2, type: "status"},
   ];
 
   return (

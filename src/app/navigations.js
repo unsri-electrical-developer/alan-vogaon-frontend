@@ -41,6 +41,12 @@ export const navigations = [
         auth: authRoles.adm,
         exact: true,
       },
+      {
+        name: "Voucher",
+        path: "/games/voucher",
+        auth: authRoles.all,
+        exact: true,
+      },
     ],
   },
   {

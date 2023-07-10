@@ -10,6 +10,8 @@ import EditGamesCategory from "./EditGamesCategory";
 import DetailListGames from "./DetailListGames";
 import EditListGames from "./EditListGames";
 import RedeemListCode from "./RedeemListCode";
+import GamesVoucher from "./GamesVoucher";
+import AddGamesVoucher from "./AddGamesVoucher";
 
 const dashboardRoutes = [
   {
@@ -55,6 +57,24 @@ const dashboardRoutes = [
     auth: authRoles.all,
     exact: true,
   },
+  {
+    path: "/games/voucher",
+    component: GamesVoucher,
+    auth: authRoles.all,
+    exact: true,
+  },
+  {
+    path: "/games/voucher/add",
+    component: AddGamesVoucher,
+    auth: authRoles.all,
+    exact: true,
+  },
+  // {
+  //   path: "/games/voucher/edit/:id",
+  //   component: EditGamesVoucher,
+  //   auth: authRoles.all,
+  //   exact: true,
+  // },
   {
     path: "/games/listGames",
     component: GamesListGames,

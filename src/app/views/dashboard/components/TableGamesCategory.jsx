@@ -12,7 +12,7 @@ import {
 } from "@material-ui/core";
 import MenuCategory from "./MenuCategory"
 
-const RenderTable = ({ data, state, search, getData }) => {
+const RenderTable = ({ data, state, search, getData, voucher }) => {
   const handleNumbering = () => {
     if (state.rowsPerPage === 5) {
       return state.page * 5;
@@ -38,7 +38,10 @@ const RenderTable = ({ data, state, search, getData }) => {
         >
           {index + 1 + handleNumbering()}
         </TableCell>
-        <TableCell colSpan={10}>{item.category_name}</TableCell>
+        <TableCell colSpan={voucher ? 5 : 10}>{ voucher ? item.redeem_code : item.category_name}</TableCell>
+                { voucher && (        <TableCell colSpan={ 5 }>{item.voucher_status}</TableCell>
+)}
+
         <TableCell align="center" colSpan={1}>
           <MenuCategory
             item={item}
@@ -58,7 +61,7 @@ const RenderTable = ({ data, state, search, getData }) => {
   );
 };
 
-const TableGamesCategory = ({ search, data, getData }) => {
+const TableGamesCategory = ({ search, data, getData, voucher }) => {
   const [state, setState] = useState({
     page: 0,
     rowsPerPage: 10,
@@ -102,12 +105,21 @@ const TableGamesCategory = ({ search, data, getData }) => {
               No
             </TableCell>
             <TableCell
-              colSpan={10}
+              colSpan={voucher ? 5 : 10}
               className="font-medium text-15"
               style={{ color: "#0a0a0a" }}
             >
-              Kategori
+              {voucher ? "Redeem Code" : "Kategori" }
             </TableCell>
+            {voucher && (
+              <TableCell
+              colSpan={ 5}
+              className="font-medium text-15"
+              style={{ color: "#0a0a0a" }}
+            >
+              Status
+            </TableCell>
+            )}
             <TableCell
               colSpan={1}
               className="font-medium text-15"
@@ -124,6 +136,7 @@ const TableGamesCategory = ({ search, data, getData }) => {
             state={state}
             getData={getData}
             search={search}
+            voucher={voucher}
           />
         </TableBody>
       </Table>

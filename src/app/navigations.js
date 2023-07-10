@@ -41,6 +41,12 @@ export const navigations = [
         auth: authRoles.all,
         exact: true,
       },
+      {
+        name: "Voucher",
+        path: "/games/voucher",
+        auth: authRoles.all,
+        exact: true,
+      },
     ],
   },
   {
@@ -79,7 +85,7 @@ export const navigations = [
   {
     name: "Kode Promo",
     path: "/kode_promo",
-    icon: 'discount',
+    icon: "discount",
     auth: authRoles.all,
     exact: true,
   },

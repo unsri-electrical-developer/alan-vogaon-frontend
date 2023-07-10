@@ -11,11 +11,13 @@ import {
   GET_ALL_CATEGORIES,
   GET_DETAIL_CATEGORY,
   DELETE_CATEGORY,
+  GET_ALL_GAMES_VOUCHER,
 } from "../actions/GamesActions";
 
 const initialState = {
   data: [],
   gameVoucher: {},
+  gameVoucherAll: [],
 };
 
 const gamesReducer = function (state = initialState, action) {
@@ -32,6 +34,13 @@ const gamesReducer = function (state = initialState, action) {
         ...state,
 
         gameVoucher: action.payload,
+      };
+    }
+
+    case GET_ALL_GAMES_VOUCHER: {
+      return {
+        ...state,
+        gameVoucherAll: action.payload,
       };
     }
 

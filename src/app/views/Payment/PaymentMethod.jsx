@@ -1,74 +1,93 @@
-import { Card, Grid, Icon } from '@material-ui/core';
-import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 
-import PaymentMethodCard from './PaymentMethodCard';
-import { getPaymentMethod } from '../../redux/actions/Payment/PaymentMethodActions';
-import { getPaymentGateway } from '../../redux/actions/Payment/PaymentGatewayActions';
+import PaymentMethodCard from "./PaymentMethodCard";
+import {
+  changeOrderPaymentMethod,
+  getPaymentMethod,
+} from "../../redux/actions/Payment/PaymentMethodActions";
+import { getPaymentGateway } from "../../redux/actions/Payment/PaymentGatewayActions";
+
+import {
+  GridContextProvider,
+  GridDropZone,
+  GridItem,
+  swap,
+} from "react-grid-dnd";
+import { useEffect } from "react";
+import { useState } from "react";
 
 const PaymentMethod = () => {
   const dispatch = useDispatch();
   const { dataPaymentMethod, dataPaymentGateway } = useSelector(
     (state) => state.payment
   );
-
-  console.log(dataPaymentMethod);
+  const [paymentMethod, setPaymenMethod] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const getData = () => {
     dispatch(getPaymentMethod());
   };
 
+  function onChange(sourceId, sourceIndex, targetIndex, targetId) {
+    console.log(targetId, sourceId);
+    const result = swap(paymentMethod, sourceIndex, targetIndex);
+
+    changeOrderPaymentMethod({ from: sourceIndex, to: targetIndex }).then(
+      (res) => {
+        console.log(res);
+      }
+    );
+
+    return setPaymenMethod([...result]);
+  }
+
   React.useLayoutEffect(() => {
-    dispatch(getPaymentGateway(''));
+    dispatch(getPaymentGateway(""));
     getData();
   }, []);
 
-  return (
-    <div className="m-sm-30 mt-7 text-black">
-      <Grid
-        container
-        spacing={3}
-        className="mb-4 mx-auto px-2"
-        alignItems="center"
-        justifyContent="space-between"
-      >
-        <Grid item xs={12} sm>
-          <h1 className="text-black fw-600 text-25 my-4">Payment Method</h1>
-        </Grid>
-      </Grid>
+  useEffect(() => {
+    if (dataPaymentMethod.length > 0) {
+      setPaymenMethod(dataPaymentMethod);
+      setLoading(false);
+    }
+  }, [dataPaymentMethod]);
 
-      <Card className="mt-5 py-10 px-10">
-        {dataPaymentMethod.length > 0 ? (
-          <Grid container spacing={3}>
-            {dataPaymentMethod.map((data) => (
-              <Grid item xs={6} md={3} key={data.pm_code}>
+  return (
+    <div className="m-3">
+      <h1 className="text-black fw-600 text-25 my-4 ml-5">Payment Method</h1>
+      <GridContextProvider onChange={onChange}>
+        <div className="container">
+          <GridDropZone
+            className="dropzone left"
+            id="left"
+            boxesPerRow={3}
+            rowHeight={150}
+          >
+            {paymentMethod.map((item) => (
+              <GridItem key={item.pm_code}>
+                <div className="grid-item">
+                  <PaymentMethodCard
+                    isThereContent
+                    data={item}
+                    getData={getData}
+                    dataPaymentGateway={dataPaymentGateway}
+                  />
+                </div>
+              </GridItem>
+            ))}
+            <GridItem key={"new"} id="new">
+              <div className="grid-item">
                 <PaymentMethodCard
-                  isThereContent
-                  data={data}
                   getData={getData}
                   dataPaymentGateway={dataPaymentGateway}
                 />
-              </Grid>
-            ))}
-            <Grid item xs={12} sm={6} md={3}>
-              <PaymentMethodCard
-                getData={getData}
-                dataPaymentGateway={dataPaymentGateway}
-              />
-            </Grid>
-          </Grid>
-        ) : (
-          <Grid container spacing={8}>
-            <Grid
-              item
-              xs={12}
-              className="d-flex justify-center my-25 text-20 items-center"
-            >
-              Data Payment Method Kosong
-            </Grid>
-          </Grid>
-        )}
-      </Card>
+              </div>
+            </GridItem>
+          </GridDropZone>
+        </div>
+      </GridContextProvider>
     </div>
   );
 };

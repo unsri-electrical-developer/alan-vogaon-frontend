@@ -4,3 +4,37 @@
 button.swal2-styled {
   border-radius: 0px !important;
 }
+
+.dropzone {
+  flex: 1;
+  height: 500px;
+  border-radius: 1rem;
+}
+
+.dropzone.left {
+  margin-bottom: 150px;
+}
+
+.grid-item {
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  padding: 0.5em;
+}
+
+.grid-item-content {
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  background: #08e;
+  display: flex;
+  justify-content: center;
+  color: white;
+  font-family: Arial, Helvetica, sans-serif;
+  align-items: center;
+  border-radius: 0.5em;
+}
+
+.cursor-grab {
+  cursor: grab;
+}

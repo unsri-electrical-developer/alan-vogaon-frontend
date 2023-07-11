@@ -110,7 +110,7 @@ const RenderTable = ({
   );
 };
 
-const TableCustom = ({
+const TableDetailUserTopup = ({
   search,
   data,
   getData,
@@ -196,4 +196,4 @@ const TableCustom = ({
   );
 };
 
-export default TableCustom;
+export default TableDetailUserTopup;

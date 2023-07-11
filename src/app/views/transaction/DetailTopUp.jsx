@@ -5,28 +5,52 @@ import { connect } from "react-redux";
 
 import Swal from "sweetalert2";
 import { Link, useParams, useHistory } from "react-router-dom";
-import { getDetailTopUp } from "../../redux/actions/Transaction/TransactionActions";
+import { getDetailTopUp, getDetailUserTopup } from "../../redux/actions/Transaction/TransactionActions";
 import { formatRupiah } from "../../../utlis/formatRupiah";
 import { parse } from "date-fns";
+import { useLayoutEffect } from "react";
+import { TableCustom } from "../../components";
 
-const DetailTopUp = ({ getDetailTopUp, detailTopup }) => {
+const DetailTopUp = ({ getDetailTopUp, detailTopup, getDetailUserTopup, detailUserTopup }) => {
   const { id } = useParams();
-  const getData = () => {
-    getDetailTopUp(id);
+  // const getData = () => {
+  //   getDetailTopUp(id);
+  // };
+  
+  const getDataDetailUserTopUp = (code) => {
+    getDetailUserTopup(code);
   };
-
-  console.log(detailTopup);
+  useEffect(() => {
+    console.log(detailUserTopup);
+  }, [detailUserTopup]);
+  
 
   useEffect(() => {
-    getData();
+    getDataDetailUserTopUp(id);
   }, [id]);
   const history = useHistory();
 
-  const nominal = detailTopup?.nominal
-    ? formatRupiah(detailTopup?.nominal)
-    : "";
+  // const nominal = detailTopup?.nominal
+  //   ? formatRupiah(detailTopup?.nominal)
+  //   : "";
 
-  return detailTopup ? (
+  const tableHeadItems = [
+    { name: "No", align: "center", colSpan: 1 },
+    { name: "Waktu Transaksi", align: "center", colSpan: 3 },
+    { name: "No. Transaksi", align: "center", colSpan: 4},
+    { name: "Total Amount", align: "center", colSpan: 2 },
+    { name: "Status", align: "center", colSpan: 2 },
+    { name: "Aksi", align: "center", colSpan: 2 },
+  ];
+
+  const tableBodyItems = [
+    { key: "created_at", align: "center", colSpan: 3 },
+    { key: "transaction_code", align: "center", colSpan: 4},
+    { key: "total_amount", align: "center", colSpan: 2, type: "topup"},
+    { key: "status", align: "center", colSpan: 2, type: "status"},
+  ];
+
+  return detailUserTopup ? (
     <div className="m-sm-30">
       <div
         style={{
@@ -46,43 +70,39 @@ const DetailTopUp = ({ getDetailTopUp, detailTopup }) => {
             <Grid container spacing={2}>
               <Grid item sm={6} xs={12}>
                 <h5>Nama Pengguna</h5>
-                <div>{detailTopup?.name}</div>
-              </Grid>
-              <Grid item sm={6} xs={12} className="mb-20px">
-                <h5>Referensi</h5>
-                <div>{detailTopup?.no_reference}</div>
+                <div>{detailUserTopup.data_user?.name}</div>
               </Grid>
 
               <Grid item sm={6} xs={12} className="mb-20px">
-                <h5>Nominal Top Up</h5>
-                {/* <div>{formatRupiah(detailTopup?.nominal)}</div> */}
-                <div>{formatRupiah(parseInt(detailTopup.total_amount))}</div>
+                <h5>User Code</h5>
+                <div>{detailUserTopup.data_user?.users_code}</div>
+                {/* <div>{formatRupiah(parseInt(detailTopup.total_amount))}</div> */}
               </Grid>
               <Grid item sm={6} xs={12}>
-                <h5>No.Transaksi</h5>
-                <div>{detailTopup?.transaction_code}</div>
+                <h5>Email</h5>
+                <div>{detailUserTopup.data_user?.email}</div>
               </Grid>
 
               <Grid item sm={6} xs={12} className="mb-20px">
-                <h5>Waktu Transaksi</h5>
-                <div>{detailTopup?.tanggal}</div>
-              </Grid>
-              <Grid item sm={6} xs={12}>
-                <h5>Status</h5>
-                <div
-                  style={
-                    detailTopup?.status == "processing" ? { color: "#1253FA" }
-                    : detailTopup?.status == "waiting" || detailTopup?.status == "pending"  ? { color: "#DF8838" }
-                    : detailTopup?.status == "success" ? { color: "#51AF77" }
-                    : { color: "#0A0A0A" }}
-                >
-                  {detailTopup?.status}
-                </div>
+                <h5>Balance</h5>
+                <div>{formatRupiah(parseInt(detailUserTopup.data_user?.users_balance))}</div>
               </Grid>
             </Grid>
           </Fragment>
         </div>
       </SimpleCard>
+      <div className="mt-5">
+        <SimpleCard loading={false} currency="" saldo="">
+          <TableCustom
+            tableHeadItems={tableHeadItems}
+            data={detailUserTopup?.data_topup}
+            customColumns={tableBodyItems}
+            aksiSpan={2}
+            detailLink={"/test"}
+            id={"transaction_code"}
+          />
+        </SimpleCard>
+      </div>
     </div>
   ) : (
     <div>wait</div>
@@ -91,12 +111,14 @@ const DetailTopUp = ({ getDetailTopUp, detailTopup }) => {
 
 const mapStateToProps = (state) => {
   return {
-    detailTopup: state.transaction.detailTopup,
+    // detailTopup: state.transaction.detailTopup,
+    detailUserTopup: state.transaction.detailUserTopup,
   };
 };
 const mapDispatchToProps = (dispatch) => {
   return {
-    getDetailTopUp: (id) => dispatch(getDetailTopUp(id)),
+    // getDetailTopUp: (id) => dispatch(getDetailTopUp(id)),
+    getDetailUserTopup: (params) => dispatch(getDetailUserTopup(params)),
   };
 };
 

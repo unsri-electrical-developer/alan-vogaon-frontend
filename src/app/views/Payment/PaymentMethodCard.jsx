@@ -27,8 +27,7 @@ const PaymentMethodCard = ({
   isThereContent,
   data = {},
   getData,
-  dataPaymentGateway,
-  isDragging
+  dataPaymentGateway
 }) => {
   const dispatch = useDispatch();
   const useStyles = makeStyles({

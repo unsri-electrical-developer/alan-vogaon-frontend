@@ -15,6 +15,7 @@ import {
   getRiwayatTopUp,
   getDetailTopUp,
   getTotalTopUp,
+  getUsersTopUp,
 } from "../../redux/actions/Transaction/TransactionActions";
 import { Link } from "react-router-dom";
 import ArrowDownwardIcon from "@material-ui/icons/ArrowDownward";
@@ -34,6 +35,8 @@ const Transaction = ({
   getTotalTopUp,
   dataRiwayatTopup,
   totalTopup,
+  getUsersTopUp,
+  dataUsersTopup,
 }) => {
   
   const [state, setState] = useState({
@@ -111,7 +114,20 @@ const Transaction = ({
         : `?search=${search}&${dateFormat.slice(1, 20)}`;
 
       getRiwayatTopUp(params);
-    };
+  };
+
+  const getDataUsersTopup = () => {
+    var dateFormat = JSON.stringify(searchTgl);
+    dateFormat = dateFormat.slice(1, 8);
+    dateFormat = dateFormat.split("-").reverse().join("-");
+    dateFormat = `?bulan_tahun=${dateFormat}`;
+    
+    let params =
+      search === ""
+      ? dateFormat
+      : `?search=${search}&${dateFormat.slice(1, 20)}`;
+    getUsersTopUp(params)
+  }
 
   const getDataTotal = () => {
     getTotalPembelian();
@@ -149,7 +165,7 @@ const Transaction = ({
     updateJumlahPendapatanPembelian();
     updateJumlahSaldoTopup();
     // updateJumlahPendapatanTopup();
-    console.log(dataRiwayatPembelian)
+    // console.log(dataRiwayatPembelian)
   }, [pembelian]);
   
   useEffect(() => {
@@ -157,6 +173,8 @@ const Transaction = ({
     getDataTotal();
     getDataTopUp();
     getDataTotalTopUp();
+    getDataUsersTopup();
+    // console.log("dataUsersTopup", dataUsersTopup)
   }, []);
   
   useLayoutEffect(() => {
@@ -187,17 +205,15 @@ const Transaction = ({
   const tableHeadItems = [
     { name: "No", align: "center", colSpan: 1 },
     { name: "Nama Pengguna", align: "left", colSpan: 3 },
-    { name: "Nominal Top Up", align: "center", colSpan: 3},
-    { name: "No. Transaksi", align: "center", colSpan: 4 },
-    { name: "Waktu Transaksi", align: "center", colSpan: 3 },
+    { name: "Email", align: "center", colSpan: 3},
+    { name: "Balance", align: "center", colSpan: 3 },
     { name: "Aksi", align: "center", colSpan: 4 },
   ];
 
   const tableBodyItems = [
     { key: "name", align: "left", colSpan: 3 },
-    { key: "total_amount", align: "center", colSpan: 3, type: "topup" },
-    { key: "transaction_code", align: "center", colSpan: 4 },
-    { key: "waktu_transaksi", align: "center", colSpan: 3 },
+    { key: "email", align: "center", colSpan: 3},
+    { key: "users_balance", align: "center", colSpan: 3,  type: "price" },
   ];
 
   const tableHeadItems2 = [
@@ -380,7 +396,7 @@ const Transaction = ({
         </Fragment>
         <TableCustom
           tableHeadItems={pembelian ? tableHeadItems2 : tableHeadItems}
-          data={pembelian ? dataRiwayatPembelian : dataRiwayatTopup}
+          data={pembelian ? dataRiwayatPembelian : dataUsersTopup}
           customColumns={pembelian ? tableBodyItems2 : tableBodyItems}
           aksiSpan={pembelian ? 3 : 4}
           detailLink={
@@ -388,7 +404,7 @@ const Transaction = ({
               ? "/transaction/payment/detail"
               : "/transaction/topup/detail"
           }
-          id={"transaction_code"} 
+          id={pembelian ? "transaction_code" : "users_code"}
         />
       </SimpleCard>
     </div>
@@ -401,6 +417,7 @@ const mapStateToProps = (state) => {
     totalPembelian: state.transaction.totalPembelian,
     dataRiwayatTopup: state.transaction.dataRiwayatTopup,
     totalTopup: state.transaction.totalTopup,
+    dataUsersTopup: state.transaction.dataUsersTopup,
   };
 };
 const mapDispatchToProps = (dispatch) => {
@@ -409,6 +426,8 @@ const mapDispatchToProps = (dispatch) => {
     getTotalPembelian: () => dispatch(getTotalPembelian()),
     getRiwayatTopUp: (params) => dispatch(getRiwayatTopUp(params)),
     getTotalTopUp: () => dispatch(getTotalTopUp()),
+    getUsersTopUp: (params) => dispatch(getUsersTopUp(params)),
   };
 };
+
 export default connect(mapStateToProps, mapDispatchToProps)(Transaction);

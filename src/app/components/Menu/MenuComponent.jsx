@@ -21,7 +21,7 @@ export default function MenuComponent({
   };
 
   const handleClose = () => {
-    setAnchorEl(null);
+    setAnchorEl(null);  
   };
 
   return (

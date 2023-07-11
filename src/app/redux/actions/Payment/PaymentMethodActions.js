@@ -91,3 +91,9 @@ export const togglePaymentStatus = (params, body) => {
 			
     */
 };
+
+export const changeOrderPaymentMethod = (params) => {
+  const token = localStorage.getItem('jwt_token');
+  setAuthToken(token);
+  return API.post('/payment_method/change/reorder', params);
+};

@@ -28,6 +28,7 @@ const PaymentMethodCard = ({
   data = {},
   getData,
   dataPaymentGateway,
+  isDragging
 }) => {
   const dispatch = useDispatch();
   const useStyles = makeStyles({
@@ -207,7 +208,7 @@ const PaymentMethodCard = ({
 
   return isThereContent ? (
     <>
-      <Card className="p-5 shadow-none h-125 bg-blue-gray border-radius-5 d-flex justify-center items-center">
+      <Card className="p-5 shadow-none h-125 border-radius-5 d-flex justify-center items-center cursor-grab">
         <Grid
           container
           spacing={2}
@@ -287,6 +288,7 @@ const PaymentMethodCard = ({
             content: false,
           }))
         }
+        scroll="body"
       >
         <Card className="p-5">
           <Grid container spacing={4}>
@@ -449,6 +451,7 @@ const PaymentMethodCard = ({
             noContent: false,
           }))
         }
+        scroll="body"
       >
         <Card className="p-5">
           <Grid container spacing={4}>

@@ -67,6 +67,21 @@ const RenderTable = ({ data, state, handleModalEditPin }) => {
                 ) : (
                   ""
                 )}
+                {item.memberType == 2 ? (
+                  <Chip
+                    size="small"
+                    className="text-white"
+                    label={"Reseller"}
+                    style={{ backgroundColor: "#fbc02a" }}
+                  />
+                ) : (
+                  <Chip
+                    size="small"
+                    className="text-white"
+                    label={"Member"}
+                    style={{ backgroundColor: "#66CCC7" }}
+                  />
+                )}
               </div>
             </div>
           </TableCell>
@@ -140,7 +155,7 @@ const TableUsers = ({ search, data, getData }) => {
   };
 
   const handleModalEditPin = (item) => {
-    setUsersToPin(item)
+    setUsersToPin(item);
     setState({ ...state, showEditPin: !state.showEditPin });
   };
 
@@ -240,7 +255,11 @@ const TableUsers = ({ search, data, getData }) => {
         onRowsPerPageChange={setRowsPerPage}
       />
 
-      <ModalEditPin handleClose={handleCloseModalEditPin} open={state.showEditPin} data={usersToPin} />
+      <ModalEditPin
+        handleClose={handleCloseModalEditPin}
+        open={state.showEditPin}
+        data={usersToPin}
+      />
     </div>
   );
 };

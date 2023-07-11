@@ -11,12 +11,36 @@ import {
   Avatar,
   Chip,
   Button,
+  MenuItem,
+  Menu,
+  IconButton,
 } from "@material-ui/core";
-import Aksieye from "../../../assets/components/icons/Aksieye.svg";
 import { Link } from "react-router-dom";
 import ModalEditPin from "../../../components/modals/ModalEditPin";
+import { MatxMenu } from "../../../../matx";
+import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
+import {
+  Block,
+  DeleteOutline,
+  Lock,
+  LockOpen,
+  Visibility,
+} from "@material-ui/icons";
+import { ModeEdit, Pin } from "@mui/icons-material";
+import Swal from "sweetalert2";
+import { changeUserStatus, deleteUser } from "../../../redux/actions/UserActions";
+import ModalEditPassword from "../../../components/modals/ModalEditPassword";
+import ModalEditLevelUser from "../../../components/modals/ModalEditLevelUser";
 
-const RenderTable = ({ data, state, handleModalEditPin }) => {
+const RenderTable = ({
+  data,
+  state,
+  handleModalEditPin,
+  handleModalStatusUser,
+  handleModalEditPassword,
+  handleModalEditLevelUser,
+  handleDeleteUser
+}) => {
   const handleNumbering = () => {
     if (state.rowsPerPage === 5) {
       return state.page * 5;
@@ -25,6 +49,11 @@ const RenderTable = ({ data, state, handleModalEditPin }) => {
     } else if (state.rowsPerPage === 25) {
       return state.page * 25;
     }
+  };
+
+  const [openMenu, setMenuOpen] = useState(false);
+  const handleClose = () => {
+    setMenuOpen(false);
   };
 
   return data?.length > 0 ? (
@@ -43,18 +72,18 @@ const RenderTable = ({ data, state, handleModalEditPin }) => {
           >
             {index + 1 + handleNumbering()}
           </TableCell>
-          <TableCell style={{ color: "#0A0A0A" }} colSpan={3}>
+          <TableCell style={{ color: "#0A0A0A" }} colSpan={5}>
             <div
               className=" z-100 text-14 d-flex items-center"
               style={{ gap: "16px" }}
             >
-              <Avatar
+              {/* <Avatar
                 variant="square"
                 // src={`https://ui-avatars.com/api/?name=nurlestari&background=97CB72&color=ffffff`}
                 src={item.users_profile_pic}
                 width={"50px"}
                 style={{ borderRadius: "5px" }}
-              />
+              /> */}
               <div>
                 <p className="mb-0">{item.name}</p>
                 {item.isSuspend ? (
@@ -94,34 +123,117 @@ const RenderTable = ({ data, state, handleModalEditPin }) => {
           <TableCell align="center" colSpan={3}>
             {item.created_at.slice(0, 10)}
           </TableCell>
+          <TableCell
+            align="center"
+            colSpan={3}
+            className={item.isActive ? "text-primary" : "text-danger"}
+          >
+            {item.isActive ? "Aktif" : "Nonaktif"}
+          </TableCell>
           <TableCell align="center" colSpan={2}>
-            <Link
-              to={{
-                pathname: `/users/${item.users_code}`,
-              }}
+            <MatxMenu
+              menuButton={
+                <div className="flex items-center">
+                  <IconButton size="small">
+                    <MoreHorizIcon />
+                  </IconButton>
+                </div>
+              }
+              horizontalPosition="right"
             >
-              <img src={Aksieye} alt="eye" />
-            </Link>
-            {item.isSuspend ? (
-              <Button
-                size="small"
-                color="primary"
-                variant="contained"
-                disableElevation
-                className="text-white ml-2 border-6"
-                onClick={() => handleModalEditPin(item)}
+              <Link
+                to={{
+                  pathname: `/users/${item.users_code}`,
+                }}
               >
-                Ganti PIN
-              </Button>
-            ) : (
-              ""
-            )}
+                <MenuItem className="text-dark" onClick={handleClose}>
+                  <Visibility />
+                  <span className="pl-3">Lihat Detail</span>
+                </MenuItem>
+              </Link>
+
+              {!item?.isSuspend ? (
+                ""
+              ) : (
+                <MenuItem
+                  className="text-primary"
+                  onClick={() => {
+                    handleModalEditPin(item);
+                    handleClose();
+                  }}
+                >
+                  <span className="">
+                    <Pin />
+                  </span>
+                  <span className="pl-3 ">Reset Pin</span>
+                </MenuItem>
+              )}
+
+              {item.isActive == 1 ? (
+                <MenuItem
+                  className="text-error"
+                  onClick={() => {
+                    handleModalStatusUser(item, 0);
+                    handleClose();
+                  }}
+                >
+                  <span className="">
+                    <LockOpen />
+                  </span>
+                  <span className="pl-3 ">Nonaktifkan</span>
+                </MenuItem>
+              ) : (
+                <MenuItem
+                  className="text-primary"
+                  onClick={() => {
+                    handleModalStatusUser(item, 1);
+                    handleClose();
+                  }}
+                >
+                  <Block />
+                  <span className="pl-3">Aktifkan</span>
+                </MenuItem>
+              )}
+
+              <MenuItem
+                className=""
+                onClick={() => {
+                  handleModalEditPassword(item);
+                  handleClose();
+                }}
+              >
+                <Lock />
+                <span className="pl-3">Reset Password</span>
+              </MenuItem>
+
+              <MenuItem
+                className="text-primary"
+                onClick={() => {
+                  handleModalEditLevelUser(item);
+                  handleClose();
+                }}
+              >
+                <ModeEdit />
+                <span className="pl-3">Edit Level User</span>
+              </MenuItem>
+
+              <MenuItem
+                className="text-error"
+                onClick={() => {
+                  handleDeleteUser(item);
+                  handleClose();
+                }}
+              >
+                <DeleteOutline />
+                <span className="pl-3">Hapus Data</span>
+              </MenuItem>
+            </MatxMenu>
           </TableCell>
         </TableRow>
       ))
   ) : (
     <>
-      <TableCell colSpan={12} align="center">
+      <TableCell colSpan={15} align="center">
         Data kosong
       </TableCell>
     </>
@@ -133,8 +245,10 @@ const TableUsers = ({ search, data, getData }) => {
     page: 0,
     rowsPerPage: 10,
     showEditPin: false,
+    showEditPassword: false,
+    showEditLevelUser: false,
   });
-  const [usersToPin, setUsersToPin] = useState({});
+  const [usersClicked, setUsersClicked] = useState({});
 
   const setPage = (page) => {
     setState({
@@ -155,13 +269,83 @@ const TableUsers = ({ search, data, getData }) => {
   };
 
   const handleModalEditPin = (item) => {
-    setUsersToPin(item);
+    setUsersClicked(item);
     setState({ ...state, showEditPin: !state.showEditPin });
   };
 
-  const handleCloseModalEditPin = (item) => {
+  const handleModalEditPassword = (item) => {
+    setUsersClicked(item);
+    setState({
+      ...state,
+      showEditPassword: !state.showEditPassword,
+    });
+  };
+
+  const handleModalEditLevelUser = (item) => {
+    setUsersClicked(item);
+    setState({
+      ...state,
+      showEditLevelUser: !state.showEditLevelUser,
+    });
+  };
+
+  const handleModalStatusUser = (item, status) => {
+    var newStatus = status == 0 ? "Menonaktifkan" : "Mengaktifkan";
+    Swal.fire({
+      icon: "question",
+      title: `Anda yakin ingin ${newStatus} user ini ?`,
+      showCancelButton: true,
+      confirmButtonText: "Ya",
+      cancelButtonText: "Batal",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const newParams = {
+          users_code: item.users_code,
+          status: status,
+        };
+        changeUserStatus(newParams)
+          .then(() => {
+            Swal.fire("Berhasil!", "", "success");
+            getData();
+          })
+          .catch((err) => {
+            // let error = err?.response?.data;
+            Swal.fire("Gagal !", "", "error");
+          });
+      }
+    });
+  };
+
+  const handleDeleteUser = (item) => {
+    Swal.fire({
+      icon: "question",
+      title: `Anda yakin ingin menghapus user ini ?`,
+      showCancelButton: true,
+      confirmButtonText: "Ya",
+      cancelButtonText: "Batal",
+      confirmButtonColor: '#f44336',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        deleteUser(item.users_code)
+          .then(() => {
+            Swal.fire("Berhasil!", "", "success");
+            getData();
+          })
+          .catch((err) => {
+            Swal.fire("Gagal !", "", "error");
+          });
+      }
+    });
+  };
+
+  const handleCloseModal = (item) => {
     getData();
-    setState({ ...state, showEditPin: false });
+    setState({
+      ...state,
+      showEditPin: false,
+      showEditPassword: false,
+      showEditLevelUser: false,
+    });
   };
 
   return (
@@ -191,7 +375,7 @@ const TableUsers = ({ search, data, getData }) => {
               Nama
             </TableCell>
             <TableCell
-              colSpan={3}
+              colSpan={5}
               className="font-medium text-15"
               style={{ color: "#0a0a0a" }}
               align="center"
@@ -215,6 +399,14 @@ const TableUsers = ({ search, data, getData }) => {
               Tanggal Daftar
             </TableCell>
             <TableCell
+              colSpan={3}
+              className="font-medium text-15"
+              style={{ color: "#0a0a0a" }}
+              align="center"
+            >
+              Status
+            </TableCell>
+            <TableCell
               colSpan={2}
               className="font-medium text-15"
               style={{ color: "#0a0a0a" }}
@@ -231,6 +423,10 @@ const TableUsers = ({ search, data, getData }) => {
             getData={getData}
             search={search}
             handleModalEditPin={handleModalEditPin}
+            handleModalStatusUser={handleModalStatusUser}
+            handleModalEditPassword={handleModalEditPassword}
+            handleModalEditLevelUser={handleModalEditLevelUser}
+            handleDeleteUser={handleDeleteUser}
           />
         </TableBody>
       </Table>
@@ -256,9 +452,21 @@ const TableUsers = ({ search, data, getData }) => {
       />
 
       <ModalEditPin
-        handleClose={handleCloseModalEditPin}
+        handleClose={handleCloseModal}
         open={state.showEditPin}
-        data={usersToPin}
+        data={usersClicked}
+      />
+
+      <ModalEditPassword
+        handleClose={handleCloseModal}
+        open={state.showEditPassword}
+        data={usersClicked}
+      />
+
+      <ModalEditLevelUser
+        handleClose={handleCloseModal}
+        open={state.showEditLevelUser}
+        data={usersClicked}
       />
     </div>
   );

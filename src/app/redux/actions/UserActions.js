@@ -84,6 +84,30 @@ export const changePin = async (params) => {
   return await API.post("users/pin/change", params);
 };
 
+export const changeUserStatus = async (params) => {
+  const token = localStorage.getItem("jwt_token");
+  setAuthToken(token);
+  return await API.post("users/status/change", params);
+};
+
+export const changeUserPassword = async (params) => {
+  const token = localStorage.getItem("jwt_token");
+  setAuthToken(token);
+  return await API.post("users/password/change", params);
+};
+
+export const changeUserLevel = async (params) => {
+  const token = localStorage.getItem("jwt_token");
+  setAuthToken(token);
+  return await API.post("users/level/change", params);
+};
+
+export const deleteUser = async (users_code) => {
+  const token = localStorage.getItem("jwt_token");
+  setAuthToken(token);
+  return await API.delete(`users/delete/${users_code}`);
+};
+
 export const getAuthFABarcode = async (secret) => {
   const token = localStorage.getItem("jwt_token");
   setAuthToken(token);

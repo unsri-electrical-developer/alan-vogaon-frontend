@@ -181,11 +181,11 @@ export const getDetailUserTopup = (params) => {
     const token = localStorage.getItem("jwt_token");
     setAuthToken(token);
     API.get(`/transaction/detail_user_topup/` + params)
-    .then((res) => {
-        dispatch({
-          type: GET_DETAIL_USER_TOPUP,
-          payload: res.data.data || [],
-        });
+      .then((res) => {
+          dispatch({
+            type: GET_DETAIL_USER_TOPUP,
+            payload: res.data.data || [],
+          });
       })
       .catch(() => {
         dispatch({
@@ -193,26 +193,19 @@ export const getDetailUserTopup = (params) => {
           payload: [],
         });
       });
-    };
   };
-  
-//   export const updateUserSaldo = (body) => {
-//     return (dispatch) => {
-//       const token = localStorage.getItem("jwt_token");
-//       setAuthToken(token);
-//       API.patch(`/transaction/ganti_saldo`, body)
-//       .then((res) => {
-//         console.log("updateUserSaldo: actionPage")
-//         dispatch({
-//           type: SET_USER_SALDO,
-//           payload: res.data.data || [],
-//         });
-//       })
-//       .catch(() => {
-//         dispatch({
-//           type: SET_USER_SALDO,
-//           payload: [],
-//         });
-//       });
-//   };
-// };
+};
+
+export const updateUserSaldo = (body) => {
+  const token = localStorage.getItem('jwt_token');
+  setAuthToken(token);
+  return API.patch('/transaction/ganti_saldo', body);
+  // params : pm_code
+  /*
+    - body :
+    -pm_title : Apple Pay
+    -pm_logo : base64
+    -from : dana : payment gateway code
+    -pm_code : apple-pay
+  */
+};

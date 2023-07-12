@@ -10,38 +10,36 @@ import {
 import React, { useEffect, useState } from "react";
 import { TextValidator, ValidatorForm } from "react-material-ui-form-validator";
 import Swal from "sweetalert2";
-import { changePin } from "../../redux/actions/UserActions";
+import { changeUserPassword } from "../../redux/actions/UserActions";
 
-const ModalEditPin = ({ handleClose, open, data }) => {
+const ModalEditPassword = ({ handleClose, open, data }) => {
   const [submit, setSubmit] = useState(false);
   const [params, setParams] = useState({
-    pin: ""
+    password: "",
   });
   const handleChange = ({ target: { value, name } }) => {
-    if(value.toString().length <= 6){
-      setParams((pref) => ({
-        ...pref,
-        [name]: value,
-      }));
-    }
+    setParams((pref) => ({
+      ...pref,
+      [name]: value,
+    }));
   };
   const handleFormSubmit = () => {
     setSubmit(true);
     const newParams = {
-      pin: params.pin,
+      password: params.password,
       users_code: data.users_code,
-    }
-    changePin(newParams)
+    };
+    changeUserPassword(newParams)
       .then(() => {
         setSubmit(false);
-        showAlert("PIN berhasil diubah", true);
+        showAlert("Password berhasil diubah", true);
       })
       .catch((err) => {
         let error = err?.response?.data;
         showAlert(
           Array.isArray(error?.data)
             ? error?.data[0]
-            : "PIN gagal diubah, coba beberapa saat lagi",
+            : "Password gagal diubah, coba beberapa saat lagi",
           false
         );
         setSubmit(false);
@@ -77,7 +75,7 @@ const ModalEditPin = ({ handleClose, open, data }) => {
 
   return (
     <Dialog onClose={handleClose} open={open} maxWidth="sm" fullWidth>
-      <DialogTitle>Ganti PIN untuk mengaktifkan kembali akun</DialogTitle>
+      <DialogTitle>Ganti Password user</DialogTitle>
       <DialogContent className="pb-6">
         <Grid container spacing={2} alignItems="center">
           <Grid item xs={12}>
@@ -85,19 +83,19 @@ const ModalEditPin = ({ handleClose, open, data }) => {
               <Grid container spacing={2} justifyContent="flex-end">
                 <Grid item xs={12}>
                   <InputLabel htmlFor="name" className="mb-4">
-                    Ganti PIN <span className="text-danger">*</span>
+                    Ganti Password <span className="text-danger">*</span>
                   </InputLabel>
                   <TextValidator
-                    id="pin"
-                    placeholder="Input PIN"
+                    id="password"
+                    placeholder="Input Password"
                     className="w-full"
                     variant="outlined"
                     onChange={handleChange}
-                    type="number"
-                    name="pin"
-                    value={params.pin || ""}
+                    type="text"
+                    name="password"
+                    value={params.password || ""}
                     validators={["required"]}
-                    errorMessages={["Masukkan PIN terlebih dahulu"]}
+                    errorMessages={["Masukkan Password terlebih dahulu"]}
                   />
                 </Grid>
                 <Grid item xs={12} className="mt-4">
@@ -112,7 +110,7 @@ const ModalEditPin = ({ handleClose, open, data }) => {
                     {submit ? (
                       <CircularProgress color="secondary" size={25} />
                     ) : (
-                      "Ganti PIN"
+                      "Ganti Password"
                     )}
                   </Button>
                 </Grid>
@@ -125,4 +123,4 @@ const ModalEditPin = ({ handleClose, open, data }) => {
   );
 };
 
-export default ModalEditPin;
+export default ModalEditPassword;

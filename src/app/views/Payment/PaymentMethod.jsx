@@ -30,7 +30,9 @@ const PaymentMethod = () => {
   };
 
   function onChange(sourceId, sourceIndex, targetIndex, targetId) {
-    console.log(targetId, sourceId);
+    if (sourceIndex >= paymentMethod.length || targetIndex >= paymentMethod.length) {
+      return;
+    }
     const result = swap(paymentMethod, sourceIndex, targetIndex);
 
     changeOrderPaymentMethod({ from: sourceIndex, to: targetIndex }).then(

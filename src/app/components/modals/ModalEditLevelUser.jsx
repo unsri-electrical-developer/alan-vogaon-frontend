@@ -5,43 +5,45 @@ import {
   DialogContent,
   DialogTitle,
   Grid,
-  InputLabel,
+  MenuItem,
+  Select,
 } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
-import { TextValidator, ValidatorForm } from "react-material-ui-form-validator";
+import {
+  ValidatorForm,
+} from "react-material-ui-form-validator";
 import Swal from "sweetalert2";
-import { changePin } from "../../redux/actions/UserActions";
+import { changeUserLevel } from "../../redux/actions/UserActions";
+import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
 
-const ModalEditPin = ({ handleClose, open, data }) => {
+const ModalEditLevelUser = ({ handleClose, open, data }) => {
   const [submit, setSubmit] = useState(false);
   const [params, setParams] = useState({
-    pin: ""
+    memberType: "",
   });
   const handleChange = ({ target: { value, name } }) => {
-    if(value.toString().length <= 6){
-      setParams((pref) => ({
-        ...pref,
-        [name]: value,
-      }));
-    }
+    setParams((pref) => ({
+      ...pref,
+      memberType: value,
+    }));
   };
   const handleFormSubmit = () => {
     setSubmit(true);
     const newParams = {
-      pin: params.pin,
+      memberType: params.memberType,
       users_code: data.users_code,
-    }
-    changePin(newParams)
+    };
+    changeUserLevel(newParams)
       .then(() => {
         setSubmit(false);
-        showAlert("PIN berhasil diubah", true);
+        showAlert("Level berhasil diubah", true);
       })
       .catch((err) => {
         let error = err?.response?.data;
         showAlert(
           Array.isArray(error?.data)
             ? error?.data[0]
-            : "PIN gagal diubah, coba beberapa saat lagi",
+            : "Level gagal diubah, coba beberapa saat lagi",
           false
         );
         setSubmit(false);
@@ -71,34 +73,45 @@ const ModalEditPin = ({ handleClose, open, data }) => {
         idx: data?.idx,
         ukuran: data?.ukuran,
         name: data?.name,
+        memberType: data?.memberType,
       }));
     }
   }, [data]);
 
   return (
     <Dialog onClose={handleClose} open={open} maxWidth="sm" fullWidth>
-      <DialogTitle>Ganti PIN untuk mengaktifkan kembali akun</DialogTitle>
+      <DialogTitle>Ganti Level User</DialogTitle>
       <DialogContent className="pb-6">
         <Grid container spacing={2} alignItems="center">
           <Grid item xs={12}>
             <ValidatorForm onSubmit={handleFormSubmit} className="w-full">
               <Grid container spacing={2} justifyContent="flex-end">
                 <Grid item xs={12}>
-                  <InputLabel htmlFor="name" className="mb-4">
-                    Ganti PIN <span className="text-danger">*</span>
-                  </InputLabel>
-                  <TextValidator
-                    id="pin"
-                    placeholder="Input PIN"
-                    className="w-full"
-                    variant="outlined"
+                  <Select
+                    IconComponent={() => (
+                      <KeyboardArrowDownIcon
+                        size="medium"
+                        style={{ fontWeight: 700 }}
+                      />
+                    )}
                     onChange={handleChange}
-                    type="number"
-                    name="pin"
-                    value={params.pin || ""}
-                    validators={["required"]}
-                    errorMessages={["Masukkan PIN terlebih dahulu"]}
-                  />
+                    value={params.memberType}
+                    InputProps={{
+                      style: {
+                        borderRadius: 5,
+                      },
+                    }}
+                    size={"md"}
+                    className="bg-white w-full"
+                    variant="outlined"
+                  >
+                    <MenuItem key={1} value={1} text={"Member"}>
+                      Member
+                    </MenuItem>
+                    <MenuItem key={2} value={2} text={"Reseller"}>
+                      Reseller
+                    </MenuItem>
+                  </Select>
                 </Grid>
                 <Grid item xs={12} className="mt-4">
                   <Button
@@ -112,7 +125,7 @@ const ModalEditPin = ({ handleClose, open, data }) => {
                     {submit ? (
                       <CircularProgress color="secondary" size={25} />
                     ) : (
-                      "Ganti PIN"
+                      "Ganti Level"
                     )}
                   </Button>
                 </Grid>
@@ -125,4 +138,4 @@ const ModalEditPin = ({ handleClose, open, data }) => {
   );
 };
 
-export default ModalEditPin;
+export default ModalEditLevelUser;

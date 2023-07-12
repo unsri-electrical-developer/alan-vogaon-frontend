@@ -8,6 +8,7 @@ import {
   addGeneralInfo,
   getGeneralInfo,
 } from "../../../redux/actions/Settings";
+import { UploadImage } from "../../../components";
 
 const GeneralInfo = () => {
   const dispatch = useDispatch();
@@ -18,7 +19,13 @@ const GeneralInfo = () => {
     body: "",
     meta_title: "",
     meta_desc: "",
-    meta_keyword: ""
+    meta_keyword: "",
+    logo: "",
+    logo_preview: "",
+    favicon: "",
+    favicon_preview: "",
+    footer_logo: "",
+    footer_logo_preview: "",
   });
   const [state, setState] = useState({
     contact_whatsapp: "",
@@ -27,7 +34,7 @@ const GeneralInfo = () => {
     contact_message: "",
     social_contact_instagram: "",
     social_contact_facebook: "",
-    social_contact_tiktok: "",
+    social_contact_tiktok: ""
   });
 
   const getData = () => {
@@ -41,7 +48,7 @@ const GeneralInfo = () => {
   useEffect(() => {
     if (dataGeneralInfo.hasOwnProperty("about")) {
       const { about, contact, social_contact } = dataGeneralInfo;
-      // console.log('abt',about);
+      console.log('abt',about);
 
       const contactValue = (params) => {
         const value = contact.filter(
@@ -59,7 +66,7 @@ const GeneralInfo = () => {
         return value?.social_contact_url;
       };
 
-      setAbout(about)
+      setAbout(about);
       setState((prev) => ({
         ...prev,
         // about: about,
@@ -82,10 +89,13 @@ const GeneralInfo = () => {
     }));
   };
   const handleChangeContent = (e, name) => {
-    setAbout((prev) => ({
-      ...prev,
-      [name]: e,
-    }), console.log(aboutDetail));
+    setAbout(
+      (prev) => ({
+        ...prev,
+        [name]: e,
+      }),
+      console.log(aboutDetail)
+    );
   };
   const handleChangeContentMetaTitle = (e) => {
     e.persist();
@@ -140,10 +150,37 @@ const GeneralInfo = () => {
         // console.log(res);
         Swal.fire("Success!", "Data General Info berhasil disimpan", "success");
         getData();
+        handleChangeLogo('', aboutDetail.logo_preview)
+        handleChangeFavicon('', aboutDetail.favicon_preview)
+        handleChangeFooterLogo('', aboutDetail.footer_logo_preview)
       });
     } catch (e) {
       Swal.fire("Oopss!", "Data General Info gagal disimpan", "error");
     }
+  };
+
+  const handleChangeLogo = (file, path) => {
+    setAbout({
+      ...aboutDetail,
+      logo: file,
+      logo_preview: path,
+    });
+  };
+
+  const handleChangeFavicon = (file, path) => {
+    setAbout({
+      ...aboutDetail,
+      favicon: file,
+      favicon_preview: path,
+    });
+  };
+
+  const handleChangeFooterLogo = (file, path) => {
+    setAbout({
+      ...aboutDetail,
+      footer_logo: file,
+      footer_logo_preview: path,
+    });
   };
 
   return (
@@ -185,12 +222,12 @@ const GeneralInfo = () => {
                 <RichTextEditor
                   content={
                     // state.about.hasOwnProperty("body")
-                    //   ? 
+                    //   ?
                     aboutDetail.body
-                      // : state.about
+                    // : state.about
                   }
                   placeholder=""
-                  handleContentChange={(e) => handleChangeContent(e, 'body')}
+                  handleContentChange={(e) => handleChangeContent(e, "body")}
                 />
               </Grid>
               <Grid item xs={12} sm={12}>
@@ -219,27 +256,73 @@ const GeneralInfo = () => {
                 <RichTextEditor
                   content={
                     // state.about.hasOwnProperty("meta_description")
-                    //   ? 
+                    //   ?
                     aboutDetail?.meta_desc
-                      // : state.about
+                    // : state.about
                   }
                   placeholder=""
-                  handleContentChange={(e) => handleChangeContent(e, 'meta_desc')}
+                  handleContentChange={(e) =>
+                    handleChangeContent(e, "meta_desc")
+                  }
                 />
               </Grid>
               <Grid item xs={12} sm={12}>
-                <h3 className="mb-5 fw-500 text-15 text-black">
-                  Meta Keyword
-                </h3>
+                <h3 className="mb-5 fw-500 text-15 text-black">Meta Keyword</h3>
                 <RichTextEditor
                   content={
                     // state.about.hasOwnProperty("meta_keyword")
-                      // ? 
-                      aboutDetail?.meta_keyword
-                      // : state.about
+                    // ?
+                    aboutDetail?.meta_keyword
+                    // : state.about
                   }
                   placeholder=""
-                  handleContentChange={(e) => handleChangeContent(e, 'meta_keyword')}
+                  handleContentChange={(e) =>
+                    handleChangeContent(e, "meta_keyword")
+                  }
+                />
+              </Grid>
+            </Grid>
+          </div>
+        </Card>
+      </div>
+      <div className="my-8">
+        <Card className="py-8 bg-white">
+          <div className="mx-8 px-10 mb-8 bg-white">
+            <Grid
+              container
+              spacing={5}
+              justifyContent="center"
+              alignItems="center"
+            >
+              <Grid item xs={12} sm={12}>
+                <h3 className="mb-1 fw-500 text-20 text-black">Logo</h3>
+              </Grid>
+              <Grid item sm={12} md={6}>
+                <h1
+                  className="font-semimedium text-14"
+                  style={{ color: "#0a0a0a" }}
+                >
+                  Unggah Logo
+                </h1>
+                <UploadImage
+                  uploadFoto={handleChangeLogo}
+                  label="Logo"
+                  preview={aboutDetail.logo_preview}
+                  formatIcon={false}
+                />
+              </Grid>
+              <Grid item sm={12} md={6}>
+                <h1
+                  className="font-semimedium text-14"
+                  style={{ color: "#0a0a0a" }}
+                >
+                  Unggah Favicon
+                </h1>
+                <UploadImage
+                  uploadFoto={handleChangeFavicon}
+                  label="Favicon"
+                  preview={aboutDetail.favicon_preview}
+                  formatIcon={false}
                 />
               </Grid>
             </Grid>
@@ -403,6 +486,36 @@ const GeneralInfo = () => {
                 />
               </Grid>
               <Grid item xs={12} sm={6}></Grid>
+            </Grid>
+          </div>
+        </Card>
+      </div>
+      <div className="my-8">
+        <Card className="py-8 bg-white">
+          <div className="mx-8 px-10 mb-8 bg-white">
+            <Grid
+              container
+              spacing={5}
+              justifyContent="left"
+              alignItems="left"
+            >
+              <Grid item xs={12} sm={12}>
+                <h3 className="mb-1 fw-500 text-20 text-black">Footer</h3>
+              </Grid>
+              <Grid item sm={12} md={6}>
+                <h1
+                  className="font-semimedium text-14"
+                  style={{ color: "#0a0a0a" }}
+                >
+                  Unggah Logo Footer
+                </h1>
+                <UploadImage
+                  uploadFoto={handleChangeFooterLogo}
+                  label="Footer Logo"
+                  preview={aboutDetail.footer_logo_preview}
+                  formatIcon={false}
+                />
+              </Grid>
             </Grid>
           </div>
         </Card>
